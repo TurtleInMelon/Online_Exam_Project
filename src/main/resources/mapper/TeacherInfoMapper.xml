@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.TeacherInfoMapper">
+    <resultMap id="getTeacherResultMap" type="com.xzq.online_exam.domain.TeacherInfo">
+      <id column="teacherId" property="teacherId"/>
+      <result column="teacherName" property="teacherName" />
+      <result column="teacherAccount" property="teacherAccount"/>
+      <result column="teacherPwd" property="teacherPwd"/>
+      <result column="adminPower" property="adminPower"/>
+      <result column="isWork" property="isWork"/>
+        <association property="classInfo" javaType="com.xzq.online_exam.domain.ClassInfo">
+            <id column="classId" property="classId"/>
+            <result column="className" property="className"/>
+        </association>
+    </resultMap>
+
+    <!-- 根据教师账户获取教师信息 -->
+    <select id="getTeacherByAccount" resultMap="getTeacherResultMap">
+        SELECT * FROM teacherinfo a
+        Left join classinfo b ON a.teacherId=b.teacherId
+        WHERE teacherAccount=#{teacherAccount}
+    </select>
+
+    <!-- 获取教师数据总量 -->
+    <select id="getTeacherTotal" resultType="int">
+        SELECT COUNT(teacherId) FROM teacherinfo
+    </select>
+
+
+</mapper>

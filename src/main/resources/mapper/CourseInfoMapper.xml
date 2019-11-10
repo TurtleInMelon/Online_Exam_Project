@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.CourseInfoMapper">
+
+    <resultMap id="coursesWithGradeName" type="com.xzq.online_exam.domain.CourseInfo">
+        <id column="courseId" property="courseId"/>
+        <result column="courseName" property="courseName"/>
+        <result column="division" property="division"/>
+        <association property="gradeInfo" javaType="com.xzq.online_exam.domain.GradeInfo">
+            <id column="gradeId" property="gradeId"/>
+            <result column="gradeName" property="gradeName"/>
+        </association>
+    </resultMap>
+
+    <!--获取所有学科信息-->
+    <select id="getAllCoursesWithGradeName" parameterType="com.xzq.online_exam.domain.CourseInfo" resultMap="coursesWithGradeName">
+        SELECT * FROM courseinfo a
+        INNER JOIN gradeinfo b ON a.gradeId=b.gradeId
+        <where>
+            <if test="grade != null">
+                <if test="grade.gradeId != null">
+                    gradeId=#{grade.gradeId}
+                </if>
+            </if>
+            <if test="division != null">
+                AND division=#{division}
+            </if>
+        </where>
+        ORDER BY courseId DESC
+    </select>
+
+</mapper>

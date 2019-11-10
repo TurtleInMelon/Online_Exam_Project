@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.ClassInfoMapper">
+
+    <resultMap id="classWithTeacherName" type="com.xzq.online_exam.domain.ClassInfo">
+        <id column="classId" property="classId"/>
+        <result column="className" property="className"/>
+        <association property="gradeInfo" javaType="com.xzq.online_exam.domain.GradeInfo">
+            <id column="gradeId" property="gradeId"/>
+            <result column="gradeName" property="gradeName"/>
+        </association>
+        <association property="teacherInfo" javaType="com.xzq.online_exam.domain.TeacherInfo">
+            <id column="teacherId" property="teacherId"/>
+            <result column="teacherName" property="teacherName"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllClassesWithTeacherName" resultMap="classWithTeacherName">
+        SELECT * FROM classinfo a
+        LEFT JOIN teacherinfo b ON a.teacherId=b.teacherId
+        LEFT JOIN gradeinfo c ON a.gradeId=c.gradeId
+        <where>
+            <!-- 需要先判断grade是否为空
+                如果不判断，且 grade 为空，那么判断 grade.gradeId 就会报错
+             -->
+            <if test="grade != null">
+                <if test="grade.gradeId != null">
+                    a.gradeId=#{grade.gradeId}
+                </if>
+            </if>
+            <if test="classId != null">
+                AND classId=#{classId}
+            </if>
+            <if test="className != null and className != ''">
+                AND className LIKE '%${className}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

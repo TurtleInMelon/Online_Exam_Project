@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.GradeInfoMapper">
+    <!-- 查询所有年级 -->
+    <select id="getAllGrades" resultType="com.xzq.online_exam.domain.GradeInfo">
+		SELECT * FROM gradeinfo
+	</select>
+
+</mapper>
