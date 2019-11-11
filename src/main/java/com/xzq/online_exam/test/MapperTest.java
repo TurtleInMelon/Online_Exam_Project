@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -86,10 +88,18 @@ public class MapperTest {
 
     @Test
     public void testClassInfo(){
-        List<ClassInfo> allClassesWithTeacherName = classInfoService.getAllClassesWithTeacherName(null);
+        //测试查询所有班级的信息
+      /**  List<ClassInfo> allClassesWithTeacherName = classInfoService.getAllClassesWithTeacherName(null);
         for(ClassInfo classInfo:allClassesWithTeacherName){
             System.out.println(classInfo);
+        }**/
+        Map<String, Object> studentCountForClass = classInfoService.getStudentCountForClass(1);
+        //System.out.println(studentCountForClass);
+        Set<String> keys=studentCountForClass.keySet();
+        for(String key:keys){
+            System.out.println("key值："+key+" value值："+studentCountForClass.get(key));
         }
+
     }
 
 }
