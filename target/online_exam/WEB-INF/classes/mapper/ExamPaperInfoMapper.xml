@@ -2,9 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzq.online_exam.dao.ExamPaperInfoMapper">
 
+    <resultMap id="queryExamPaper" type="com.xzq.online_exam.domain.ExamPaperInfo">
+        <id column="examPaperId" property="examPaperId"/>
+        <result column="examPaperName" property="examPaperName"/>
+        <result column="subjectNum" property="subjectNum"/>
+        <result column="examPaperTime" property="examPaperTime"/>
+        <result column="examPaperScore" property="examPaperScore"/>
+        <result column="division" property="division"/>
+        <result column="examPaperEasy" property="examPaperEasy"/>
+        <!--对应年级-->
+        <association property="grade" javaType="com.xzq.online_exam.domain.GradeInfo">
+            <id column="gradeId" property="gradeId"/>
+            <result column="gradeName" property="gradeName"/>
+        </association>
+    </resultMap>
+    
     <!--获取试卷的总数量-->
     <select id="getExamPaperTotal" resultType="int">
 		SELECT COUNT(examPaperId) FROM exampaperinfo
 	</select>
+
+    <select id="getAllExamPapers" resultMap="queryExamPaper">
+        SELECT a.*,b.gradeName FROM exampaperinfo a INNER
+        JOIN gradeinfo b ON a.gradeId=b.gradeId
+    </select>
 
 </mapper>

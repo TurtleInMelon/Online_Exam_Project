@@ -3,10 +3,7 @@ package com.xzq.online_exam.test;
 
 
 import com.xzq.online_exam.dao.TeacherInfoMapper;
-import com.xzq.online_exam.domain.ClassInfo;
-import com.xzq.online_exam.domain.CourseInfo;
-import com.xzq.online_exam.domain.GradeInfo;
-import com.xzq.online_exam.domain.TeacherInfo;
+import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +39,7 @@ public class MapperTest {
 
     @Autowired
     private ClassInfoService classInfoService;
+
 
     @Test
     public void testTeacher(){
@@ -105,6 +103,14 @@ public class MapperTest {
             System.out.println("key值："+key+" value值："+studentCountForClass.get(key));
         }
 
+    }
+
+    @Test
+    public void testPaperExamInfo(){
+        List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
+        for(ExamPaperInfo examPaperInfo:allExamPapers){
+            System.out.println(examPaperInfo);
+        }
     }
 
 }
