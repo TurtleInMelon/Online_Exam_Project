@@ -1,5 +1,7 @@
 package com.xzq.online_exam.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzq.online_exam.domain.TeacherInfo;
 import com.xzq.online_exam.service.TeacherInfoService;
 import com.xzq.online_exam.utils.Msg;
@@ -7,8 +9,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class TeacherInfoController {
@@ -71,6 +75,30 @@ public class TeacherInfoController {
 
         return "redirect:admin/index.jsp";
     }
+
+    @RequestMapping(value = "/getAllTeachers",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getAllTeacherInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
+
+        PageHelper.startPage(pn,5);
+        //List<CourseInfo> allCoursesWithGradeName = courseInfoService.getAllCoursesWithGradeName(null);
+        List<TeacherInfo> allTeacherInfo = teacherInfoService.getALlTeacherInfo();
+        PageInfo pageInfo=new PageInfo(allTeacherInfo);
+        return Msg.success().add("pageInfo",pageInfo);
+    }
+
+    /**
+     * 跳转到admin/teachers.jsp页面中
+     * @return
+     */
+    @RequestMapping("/teachers")
+    public ModelAndView getTeachers(){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("admin/teachers");
+        return modelAndView;
+    }
+
+
 
 
 

@@ -179,6 +179,14 @@
       <version>2.8.5</version>
     </dependency>
 
+  <!--导入第三方库，后端构建echarts的option-->
+    <!-- https://mvnrepository.com/artifact/com.github.abel533/ECharts -->
+    <dependency>
+      <groupId>com.github.abel533</groupId>
+      <artifactId>ECharts</artifactId>
+      <version>3.0.0.5</version>
+    </dependency>
+
   </dependencies>
 
   <build>

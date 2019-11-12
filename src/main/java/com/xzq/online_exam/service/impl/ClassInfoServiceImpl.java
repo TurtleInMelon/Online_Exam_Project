@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClassInfoServiceImpl implements ClassInfoService {
@@ -22,5 +23,15 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     @Override
     public List<ClassInfo> getAllClassesWithTeacherName(ClassInfo classInfo) {
         return classInfoMapper.getAllClassesWithTeacherName(null);
+    }
+
+    /**
+     * 根据班级id获取每个班级学生的数量
+     * @param gradeId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getStudentCountForClass(Integer gradeId) {
+        return classInfoMapper.getStudentCountForClass(gradeId);
     }
 }

@@ -5,16 +5,19 @@
     <resultMap id="classWithTeacherName" type="com.xzq.online_exam.domain.ClassInfo">
         <id column="classId" property="classId"/>
         <result column="className" property="className"/>
+        <!--年级-->
         <association property="gradeInfo" javaType="com.xzq.online_exam.domain.GradeInfo">
             <id column="gradeId" property="gradeId"/>
             <result column="gradeName" property="gradeName"/>
         </association>
+        <!--教师-->
         <association property="teacherInfo" javaType="com.xzq.online_exam.domain.TeacherInfo">
             <id column="teacherId" property="teacherId"/>
             <result column="teacherName" property="teacherName"/>
         </association>
     </resultMap>
 
+    <!--获取班级信息，同事得到教师信息-->
     <select id="getAllClassesWithTeacherName" resultMap="classWithTeacherName">
         SELECT * FROM classinfo a
         LEFT JOIN teacherinfo b ON a.teacherId=b.teacherId
@@ -35,6 +38,19 @@
                 AND className LIKE '%${className}%'
             </if>
         </where>
+    </select>
+
+
+    <select id="getStudentCountForClass" parameterType="int" resultType="com.xzq.online_exam.domain.ClassInfo">
+        select count(s.studentId) as classId,c.className as className
+        from studentinfo s,gradeinfo g,classinfo c
+        <where>
+            g.gradeId = c.gradeId and s.classId = c.classId
+            <if test="_parameter != null">
+                and g.gradeId =#{_parameter}
+            </if>
+        </where>
+        GROUP BY c.classId;
     </select>
 
 </mapper>

@@ -3,10 +3,7 @@ package com.xzq.online_exam.test;
 
 
 import com.xzq.online_exam.dao.TeacherInfoMapper;
-import com.xzq.online_exam.domain.ClassInfo;
-import com.xzq.online_exam.domain.CourseInfo;
-import com.xzq.online_exam.domain.GradeInfo;
-import com.xzq.online_exam.domain.TeacherInfo;
+import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -41,10 +40,16 @@ public class MapperTest {
     @Autowired
     private ClassInfoService classInfoService;
 
+
     @Test
     public void testTeacher(){
-        TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
-        System.out.println(fangzheng);
+        /**TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
+        System.out.println(fangzheng);**/
+
+        List<TeacherInfo> allTeacherInfo = teacherInfoService.getALlTeacherInfo();
+        for(TeacherInfo teacherInfo:allTeacherInfo){
+            System.out.println(teacherInfo);
+        }
     }
 
     @Test
@@ -86,9 +91,25 @@ public class MapperTest {
 
     @Test
     public void testClassInfo(){
-        List<ClassInfo> allClassesWithTeacherName = classInfoService.getAllClassesWithTeacherName(null);
+        //测试查询所有班级的信息
+      /**  List<ClassInfo> allClassesWithTeacherName = classInfoService.getAllClassesWithTeacherName(null);
         for(ClassInfo classInfo:allClassesWithTeacherName){
             System.out.println(classInfo);
+        }**/
+        Map<String, Object> studentCountForClass = classInfoService.getStudentCountForClass(1);
+        //System.out.println(studentCountForClass);
+        Set<String> keys=studentCountForClass.keySet();
+        for(String key:keys){
+            System.out.println("key值："+key+" value值："+studentCountForClass.get(key));
+        }
+
+    }
+
+    @Test
+    public void testPaperExamInfo(){
+        List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
+        for(ExamPaperInfo examPaperInfo:allExamPapers){
+            System.out.println(examPaperInfo);
         }
     }
 
