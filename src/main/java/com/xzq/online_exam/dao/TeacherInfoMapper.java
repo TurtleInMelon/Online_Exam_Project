@@ -3,6 +3,8 @@ package com.xzq.online_exam.dao;
 import com.xzq.online_exam.domain.TeacherInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TeacherInfoMapper {
 
@@ -18,4 +20,10 @@ public interface TeacherInfoMapper {
      * @return
      */
     public int getTeacherTotal();
+
+    /**
+     * 获取教师的所有信息
+     * @return
+     */
+    List<TeacherInfo> getALlTeacherInfo();
 }

@@ -24,7 +24,7 @@ public class CourseInfoController {
     @RequestMapping(value = "/getAllCourses",method = RequestMethod.GET)
     @ResponseBody
     public Msg getCoursesInfoWithGrade(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
-        System.out.println(pn);
+        //System.out.println(pn);
         PageHelper.startPage(pn,5);
         List<CourseInfo> allCoursesWithGradeName = courseInfoService.getAllCoursesWithGradeName(null);
         PageInfo pageInfo=new PageInfo(allCoursesWithGradeName);

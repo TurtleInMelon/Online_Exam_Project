@@ -27,4 +27,10 @@
     </select>
 
 
+    <select id="getALlTeacherInfo" resultMap="getTeacherResultMap">
+        SELECT * FROM teacherinfo a
+        Left join classinfo b ON a.teacherId=b.teacherId
+    </select>
+
+
 </mapper>

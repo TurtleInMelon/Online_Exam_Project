@@ -6,6 +6,8 @@ import com.xzq.online_exam.service.TeacherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class TeacherInfoServiceImpl implements TeacherInfoService {
@@ -31,5 +33,15 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
     @Override
     public int getTeacherTotal() {
         return teacherInfoMapper.getTeacherTotal();
+    }
+
+
+    /**
+     * 获取教师的所有信息
+     * @return
+     */
+    @Override
+    public List<TeacherInfo> getALlTeacherInfo() {
+        return teacherInfoMapper.getALlTeacherInfo();
     }
 }

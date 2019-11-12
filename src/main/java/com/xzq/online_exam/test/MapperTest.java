@@ -45,8 +45,13 @@ public class MapperTest {
 
     @Test
     public void testTeacher(){
-        TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
-        System.out.println(fangzheng);
+        /**TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
+        System.out.println(fangzheng);**/
+
+        List<TeacherInfo> allTeacherInfo = teacherInfoService.getALlTeacherInfo();
+        for(TeacherInfo teacherInfo:allTeacherInfo){
+            System.out.println(teacherInfo);
+        }
     }
 
     @Test
