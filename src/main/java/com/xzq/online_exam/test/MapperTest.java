@@ -2,6 +2,7 @@ package com.xzq.online_exam.test;
 
 
 
+import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.dao.TeacherInfoMapper;
 import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
@@ -68,9 +69,18 @@ public class MapperTest {
 
     @Test
     public void testSubjectInfo(){
-        int total=subjectInfoService.getSubjectTotal();
+        /**int total=subjectInfoService.getSubjectTotal();
         System.out.println("--------------------------------------");
-        System.out.println(total);
+        System.out.println(total);**/
+
+        /**
+        //获取所有试题的信息
+        List<SubjectInfo> allSubjects = subjectInfoService.getAllSubjects();
+        for(SubjectInfo subjectInfo:allSubjects){
+            System.out.println(subjectInfo);
+        }**/
+        SubjectInfo subjectWithId = subjectInfoService.getSubjectWithId(9);
+        System.out.println(subjectWithId);
     }
 
     @Test
@@ -112,5 +122,6 @@ public class MapperTest {
             System.out.println(examPaperInfo);
         }
     }
+
 
 }

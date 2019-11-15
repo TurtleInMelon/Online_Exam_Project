@@ -20,6 +20,60 @@
 </head>
 <body>
 
+    <!--试题自动生成模态框-->
+    <div class="modal fade" id="examPapers_Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">自动生成试题</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">试题数量：</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="email" class="form-control" id="num_add_input" placeholder="试题数量">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">科目：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="dId" id="subject_add_select">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">年级：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="dId" id="grade_add_select">
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">难易程度：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="dId" id="easy_add_select">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="emp_add_btn">添加</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!--表格信息-->
     <div>
         <table class="table table-hover" id="examPapers_table">
@@ -101,19 +155,19 @@
 
                 var editBtn=$("<button></button>").addClass("btn btn-info btn-sm edit_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
-                editBtn.attr("edit-id",item.gradeId);
+                editBtn.attr("edit-id",item.examPaperId);
                 var delBtn=$("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-trash")).append("删除");
-                delBtn.attr("del-id",item.gradeId);
+                delBtn.attr("del-id",item.examPaperId);
                 var lookBtn=$("<button></button>").addClass("btn btn-info btn-sm look_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-search")).append("查看试题");
-                lookBtn.attr("edit-id",item.gradeId);
+                lookBtn.attr("edit-id",item.examPaperId);
                 var addBtn=$("<button></button>").addClass("btn btn-info btn-sm add_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-plus")).append("添加试题");
-                addBtn.attr("edit-id",item.gradeId);
+                addBtn.attr("edit-id",item.examPaperId);
                 var createBtn=$("<button></button>").addClass("btn btn-info btn-sm create_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-ok")).append("生成试题");
-                createBtn.attr("edit-id",item.gradeId);
+                createBtn.attr("edit-id",item.examPaperId);
                 var tdTd=$("<td></td>").append(editBtn).append(" ").append(delBtn)
                     .append(" ").append(lookBtn).append(" ").append(addBtn).append(" ").append(createBtn);
                 $("<tr></tr>").append(checkBoxTd)
@@ -210,6 +264,12 @@
             $("#check_all").prop("checked",flag);
 
         })
+
+
+        //试题自动添加点击事件
+        $(document).on("click",".create_btn",function () {
+            $('#examPapers_Add').modal('show');
+        });
     </script>
 
 
