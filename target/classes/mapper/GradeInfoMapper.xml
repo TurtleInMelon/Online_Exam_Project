@@ -6,4 +6,23 @@
 		SELECT * FROM gradeinfo
 	</select>
 
-</mapper>
+
+    <insert id="addGrade" parameterType="com.xzq.online_exam.domain.GradeInfo">
+        INSERT INTO gradeinfo VALUES(NULL, #{gradeName})
+    </insert>
+
+    <select id="checkGradeName" parameterType="com.xzq.online_exam.domain.GradeInfo" resultType="int">
+        select count(*) from gradeinfo where gradeName=#{gradeName}
+    </select>
+
+    <!---->
+    <update id="updateGrade" parameterType="com.xzq.online_exam.domain.GradeInfo">
+        UPDATE gradeinfo SET gradeName=#{gradeName} where gradeId=#{gradeId}
+    </update>
+
+    <!---->
+    <delete id="deleteGrade" parameterType="int">
+        DELETE From gradeinfo WHERE gradeId=#{id}
+    </delete>
+
+</mapper>                                   

@@ -85,10 +85,20 @@ public class MapperTest {
 
     @Test
     public void testGradeInfo(){
-        List<GradeInfo> allGrades = gradeInfoService.getAllGrades();
+        /**List<GradeInfo> allGrades = gradeInfoService.getAllGrades();
         for(GradeInfo gradeInfo:allGrades){
             System.out.println(gradeInfo);
-        }
+        }**/
+        /**GradeInfo gradeInfo= new GradeInfo();
+        gradeInfo.setGradeName("麻小瓜");
+        gradeInfoService.addGrade(gradeInfo);**/
+        /**boolean result = gradeInfoService.checkGradeName("猪头瓜");
+        System.out.println(result);**/
+        /**GradeInfo gradeInfo= new GradeInfo();
+        gradeInfo.setGradeName("麻小瓜");
+        gradeInfo.setGradeId(6);
+        gradeInfoService.updateGrade(gradeInfo);**/
+        gradeInfoService.deleteGrade(6);
     }
 
     @Test
