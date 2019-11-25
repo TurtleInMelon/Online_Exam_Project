@@ -88,7 +88,7 @@ public class GradeInfoController {
      */
     @RequestMapping(value = "/grade",method = RequestMethod.POST)
     @ResponseBody
-    public Msg savaGrade(@Valid GradeInfo gradeInfo, BindingResult result){
+    public Msg saveGrade(@Valid GradeInfo gradeInfo, BindingResult result){
         //System.out.println(gradeInfo);
         if(result.hasErrors() && gradeInfo!=null){
             Map<String,Object> map=new HashMap<>();
@@ -106,6 +106,17 @@ public class GradeInfoController {
         //System.out.println("插入数据成功！！");
     }
 
+
+    /**
+     * 获取所有年级名称
+     * @return
+     */
+    @RequestMapping(value = "/getAllGradeNames")
+    @ResponseBody
+    public Msg getAllGradeNames(){
+        List<GradeInfo> allGradeNames=gradeInfoService.getAllGrades();
+        return Msg.success().add("list",allGradeNames);
+    }
 
     @RequestMapping("/getGrades")
     @ResponseBody

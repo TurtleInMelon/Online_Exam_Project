@@ -38,4 +38,5 @@ public interface GradeInfoMapper {
      * @param id
      */
     void deleteGrade(Integer id);
+
 }

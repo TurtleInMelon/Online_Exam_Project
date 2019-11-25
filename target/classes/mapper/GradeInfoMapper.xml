@@ -25,4 +25,5 @@
         DELETE From gradeinfo WHERE gradeId=#{id}
     </delete>
 
+
 </mapper>                                   

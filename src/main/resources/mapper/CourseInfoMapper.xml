@@ -29,4 +29,25 @@
         ORDER BY courseId DESC
     </select>
 
+    <!--获取所有年级名字-->
+    <select id="getAllCourseNames" resultType="com.xzq.online_exam.domain.CourseInfo">
+        SELECT * FROM courseinfo
+    </select>
+
+    <insert id="addCourse" parameterType="com.xzq.online_exam.domain.CourseInfo">
+        INSERT INTO courseinfo VALUES(NULL, #{courseName}, #{division}, #{gradeInfo.gradeId})
+    </insert>
+
+    <select id="checkGradeName" resultType="int" parameterType="string">
+        select count(*) from courseinfo where courseName=#{courseName}
+    </select>
+
+    <update id="updateCourse" parameterType="com.xzq.online_exam.domain.CourseInfo">
+        UPDATE courseinfo SET courseName=#{courseName}, division=#{division}, gradeId=#{gradeInfo.gradeId} WHERE courseId=#{courseId}
+    </update>
+
+    <delete id="deleteCourseById" parameterType="int">
+        DELETE From courseinfo WHERE courseId=#{id}
+    </delete>
+
 </mapper>

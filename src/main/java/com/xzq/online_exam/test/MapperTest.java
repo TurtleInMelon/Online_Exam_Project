@@ -98,15 +98,40 @@ public class MapperTest {
         gradeInfo.setGradeName("麻小瓜");
         gradeInfo.setGradeId(6);
         gradeInfoService.updateGrade(gradeInfo);**/
-        gradeInfoService.deleteGrade(6);
+        //gradeInfoService.deleteGrade(6);
     }
 
     @Test
     public void testCourseInfo(){
-        List<CourseInfo> allCoursesWithGradeName = courseInfoService.getAllCoursesWithGradeName(null);
+        /**List<CourseInfo> allCoursesWithGradeName = courseInfoService.getAllCoursesWithGradeName(null);
         for(CourseInfo courseInfo:allCoursesWithGradeName){
             System.out.println(courseInfo);
-        }
+        }**/
+        /**List<CourseInfo> allCourseNames = courseInfoService.getAllCourseNames();
+        for(CourseInfo courseInfo:allCourseNames){
+            System.out.println(courseInfo);
+        }**/
+        /**
+        CourseInfo courseInfo=new CourseInfo();
+        courseInfo.setCourseName("小萌龟");
+        courseInfo.setDivision(1);
+        GradeInfo gradeInfo=new GradeInfo();
+        gradeInfo.setGradeId(1);
+        courseInfo.setGradeInfo(gradeInfo);
+        courseInfoService.addCourse(courseInfo);
+         **/
+        /**boolean count = courseInfoService.checkGradeName("xiaomenggui");
+        System.out.println(count);**/
+        /**CourseInfo courseInfo=new CourseInfo();
+        courseInfo.setCourseName("麻辣小猪头");
+        courseInfo.setDivision(2);
+        courseInfo.setCourseId(21);
+        GradeInfo gradeInfo=new GradeInfo();
+        gradeInfo.setGradeId(3);
+        courseInfo.setGradeInfo(gradeInfo);
+        System.out.println(courseInfo);
+        courseInfoService.updateCourse(courseInfo);**/
+        courseInfoService.deleteCourseById(21);
     }
 
     @Test
