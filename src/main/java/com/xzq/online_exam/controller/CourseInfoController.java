@@ -24,16 +24,21 @@ public class CourseInfoController {
     @Autowired
     private CourseInfoService courseInfoService;
 
+    /**
+     * 删除课程包括批量删除
+     * @param ids
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "course/{ids}",method = RequestMethod.DELETE)
     public Msg deleteCourseById(@PathVariable("ids") String ids){
-        System.out.println(ids);
+        //System.out.println(ids);
         if(ids.contains("-")){
             List<Integer> del_ids=new ArrayList<>();
             String[] split=ids.split("-");
 
             for(String s:split){
-                //System.out.println(s);
+                System.out.println(s);
                 del_ids.add(Integer.parseInt(s));
             }
             courseInfoService.deleteBatch(del_ids);

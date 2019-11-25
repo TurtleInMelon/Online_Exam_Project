@@ -308,7 +308,7 @@
                 url:"${APP_PATH}/getAllGradeNames",
                 type:"GET",
                 success:function (result) {
-                    console.log(result);
+                    //console.log(result);
                     var grades=result.extend.list;
                     $.each(grades,function (index,item) {
                         var optionEle=$("<option></option>").append(item.gradeName).attr("value",item.gradeId);
@@ -459,7 +459,7 @@
                     }
                 });
             }
-        })
+        });
 
         //批量删除
         $("#course_del_model_btn").click(function () {

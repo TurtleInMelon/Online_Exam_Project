@@ -141,13 +141,28 @@ public class MapperTest {
         for(ClassInfo classInfo:allClassesWithTeacherName){
             System.out.println(classInfo);
         }**/
+      /**
         Map<String, Object> studentCountForClass = classInfoService.getStudentCountForClass(1);
         //System.out.println(studentCountForClass);
         Set<String> keys=studentCountForClass.keySet();
         for(String key:keys){
             System.out.println("key值："+key+" value值："+studentCountForClass.get(key));
-        }
-
+        }**/
+        /**
+        boolean result =classInfoService.checkClassName("小萌龟");
+        System.out.println(result);**/
+        /**
+        ClassInfo classInfo=new ClassInfo();
+        classInfo.setClassId(25);
+        classInfo.setClassName("猪头天");
+        GradeInfo gradeInfo= new GradeInfo();
+        gradeInfo.setGradeId(2);
+        TeacherInfo teacherInfo= new TeacherInfo();
+        teacherInfo.setTeacherId(4);
+        classInfo.setGradeInfo(gradeInfo);
+        classInfo.setTeacherInfo(teacherInfo);
+        classInfoService.updateClass(classInfo);**/
+        classInfoService.deleteClassById(26);
     }
 
     @Test

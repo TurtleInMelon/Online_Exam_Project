@@ -25,7 +25,18 @@ public class TeacherInfoController {
 
     private Logger logger=Logger.getLogger(TeacherInfoController.class);
 
+    @RequestMapping(value = "/getAllTeacherNames")
+    @ResponseBody
+    public Msg getAllGradeNames(){
+        List<TeacherInfo> allGradeNames=teacherInfoService.getALlTeacherInfo();
+        return Msg.success().add("list",allGradeNames);
+    }
 
+    /**
+     * 根据教师账户获取教师信息
+     * @param teacherAccount
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/teacherAccount/{teacherAccount}",method = RequestMethod.GET)
     public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount){

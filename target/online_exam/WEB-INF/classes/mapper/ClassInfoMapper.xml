@@ -53,4 +53,20 @@
         GROUP BY c.classId;
     </select>
 
+    <select id="checkClassName" resultType="int">
+        select count(*) from classinfo where className=#{className}
+    </select>
+
+    <insert id="addClass" parameterType="com.xzq.online_exam.domain.ClassInfo">
+        INSERT INTO classinfo VALUES(NULL, #{className}, #{gradeInfo.gradeId}, #{teacherInfo.teacherId})
+    </insert>
+
+    <update id="updateClass" parameterType="com.xzq.online_exam.domain.ClassInfo">
+        UPDATE classinfo SET className=#{className}, gradeId=#{gradeInfo.gradeId}, teacherId=#{teacherInfo.teacherId} WHERE classId=#{classId}
+    </update>
+
+    <delete id="deleteClassById" parameterType="int">
+        DELETE From classinfo WHERE classId=#{id}
+    </delete>
+
 </mapper>
