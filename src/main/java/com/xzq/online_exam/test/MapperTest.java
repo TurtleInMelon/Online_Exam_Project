@@ -46,11 +46,23 @@ public class MapperTest {
     public void testTeacher(){
         /**TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
         System.out.println(fangzheng);**/
-
+        /**
         List<TeacherInfo> allTeacherInfo = teacherInfoService.getALlTeacherInfo();
         for(TeacherInfo teacherInfo:allTeacherInfo){
             System.out.println(teacherInfo);
-        }
+        }**/
+
+        TeacherInfo teacherInfo= new TeacherInfo();
+        teacherInfo.setTeacherId(23);
+        teacherInfo.setAdminPower(1);
+        teacherInfo.setTeacherAccount("mxz123");
+        teacherInfo.setTeacherName("麻小猪");
+        teacherInfo.setTeacherPwd("123456");
+        teacherInfoService.updateTeacher(teacherInfo);
+        /**
+        boolean result = teacherInfoService.checkTeacherName("llll");
+        System.out.println(result);**/
+
     }
 
     @Test

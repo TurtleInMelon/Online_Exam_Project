@@ -44,4 +44,53 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
     public List<TeacherInfo> getALlTeacherInfo() {
         return teacherInfoMapper.getALlTeacherInfo();
     }
+
+    /**
+     * 添加教师信息
+     * @param teacherInfo
+     */
+    @Override
+    public void addTeacher(TeacherInfo teacherInfo) {
+        teacherInfoMapper.addTeacher(teacherInfo);
+    }
+
+    /**
+     * 检查教师名是否可用
+     * @param teacherName
+     * @return
+     */
+    @Override
+    public boolean checkTeacherName(String teacherName) {
+        int count=teacherInfoMapper.checkTeacherName(teacherName);
+        return count==0;
+    }
+
+    /**
+     * 更新教师信息
+     * @param teacherinfo
+     */
+    @Override
+    public void updateTeacher(TeacherInfo teacherinfo) {
+        teacherInfoMapper.updateTeacher(teacherinfo);
+    }
+
+    /**
+     * 根据teacherId删除教师信息
+     * @param id
+     */
+    @Override
+    public void deleteTeacherById(Integer id) {
+        teacherInfoMapper.deleteTeacherById(id);
+    }
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        for(Integer each:del_ids){
+            teacherInfoMapper.deleteTeacherById(each);
+        }
+    }
 }
