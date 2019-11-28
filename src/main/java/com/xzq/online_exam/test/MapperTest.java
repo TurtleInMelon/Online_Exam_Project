@@ -41,6 +41,9 @@ public class MapperTest {
     @Autowired
     private ClassInfoService classInfoService;
 
+    @Autowired
+    private StudentExamInfoService studentExamInfoService;
+
 
     @Test
     public void testTeacher(){
@@ -74,9 +77,13 @@ public class MapperTest {
 
     @Test
     public void testStudentInfo(){
-        int total=studentInfoService.getStudentTotal();
+        /**int total=studentInfoService.getStudentTotal();
         System.out.println("--------------------------------------");
-        System.out.println(total);
+        System.out.println(total);**/
+        List<StudentInfo> students = studentInfoService.getStudentsByClassId(19);
+        for(StudentInfo studentInfo:students){
+            System.out.println(studentInfo);
+        }
     }
 
     @Test
@@ -148,6 +155,9 @@ public class MapperTest {
 
     @Test
     public void testClassInfo(){
+
+        ClassInfo classInfo = classInfoService.getClassByTeacherId(2);
+        System.out.println(classInfo);
         //测试查询所有班级的信息
       /**  List<ClassInfo> allClassesWithTeacherName = classInfoService.getAllClassesWithTeacherName(null);
         for(ClassInfo classInfo:allClassesWithTeacherName){
@@ -174,7 +184,7 @@ public class MapperTest {
         classInfo.setGradeInfo(gradeInfo);
         classInfo.setTeacherInfo(teacherInfo);
         classInfoService.updateClass(classInfo);**/
-        classInfoService.deleteClassById(26);
+        //classInfoService.deleteClassById(26);
     }
 
     @Test
@@ -184,6 +194,21 @@ public class MapperTest {
             System.out.println(examPaperInfo);
         }
     }
+
+    @Test
+    public void testStudentExamInfo(){
+        /**
+        List<StudentExamInfo> allStudentAvgScoreCount = studentExamInfoService.getAllStudentAvgScoreCount(19);
+        for(StudentExamInfo studentExamInfo:allStudentAvgScoreCount){
+            System.out.println(studentExamInfo);
+        }**/
+        List<StudentExamInfo> studentExamInfo = studentExamInfoService.getStudentExamInfoById(1);
+        for(StudentExamInfo each:studentExamInfo){
+            System.out.println(each);
+        }
+    }
+
+
 
 
 }

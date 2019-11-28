@@ -46,4 +46,11 @@ public interface ClassInfoMapper {
     void updateClass(ClassInfo classInfo);
 
     void deleteClassById(Integer id);
+
+    /**
+     * 根据班主任编号获取班级信息
+     * @param teacherId
+     * @return
+     */
+    ClassInfo getClassByTeacherId(Integer teacherId);
 }

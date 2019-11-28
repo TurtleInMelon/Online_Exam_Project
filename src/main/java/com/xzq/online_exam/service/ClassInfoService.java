@@ -41,4 +41,7 @@ public interface ClassInfoService {
      * @param del_ids
      */
     void deleteBatch(List<Integer> del_ids);
+
+    //根据当前班级班主任编号获取当前班级信息
+    ClassInfo getClassByTeacherId(Integer teacherId);
 }

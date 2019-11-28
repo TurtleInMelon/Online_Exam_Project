@@ -83,4 +83,10 @@ public class ClassInfoServiceImpl implements ClassInfoService {
             classInfoMapper.deleteClassById(each);
         }
     }
+
+    //根据当前班级班主任编号获取当前班级信息
+    @Override
+    public ClassInfo getClassByTeacherId(Integer teacherId) {
+        return classInfoMapper.getClassByTeacherId(teacherId);
+    }
 }

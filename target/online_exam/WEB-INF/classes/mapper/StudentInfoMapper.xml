@@ -7,4 +7,8 @@
         SELECT COUNT(studentId) FROM studentinfo
     </select>
 
+    <select id="getStudentsByClassId" resultType="com.xzq.online_exam.domain.StudentInfo" parameterType="int">
+        SELECT studentId,studentName FROM studentinfo WHERE classId=#{classId}
+    </select>
+
 </mapper>

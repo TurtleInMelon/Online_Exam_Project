@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.StudentExamInfoMapper">
+    <resultMap id="baseQueryResultMap" type="com.xzq.online_exam.domain.StudentExamInfo">
+        <result column="studentId" property="studentId" />
+        <result column="studentName" property="studentName" />
+        <result column="examSum" property="examSum" />
+        <result column="avgScore" property="avgScore" />
+        <result column="examScore" property="examScore" />
+        <result column="examPaperName" property="examPaperName" />
+        <result column="examPaperScore" property="examPaperScore" />
+    </resultMap>
+
+    <!-- 后台教师查看指定班级中所有学生的平均成绩以及考试次数 -->
+    <select id="getAllStudentAvgScoreCount" parameterType="int" resultMap="baseQueryResultMap">
+		SELECT
+		SUM(examScore) avgScore, COUNT(historyId) examSum, a.studentName
+		FROM studentinfo a
+		LEFT JOIN examhistoryinfo b ON a.studentId=b.studentId
+		LEFT JOIN exampaperinfo c ON b.examPaperId=c.examPaperId
+		WHERE a.classId=#{classId}
+		GROUP BY a.studentId
+	</select>
+
+
+    <select id="getStudentExamInfoById" parameterType="int" resultMap="baseQueryResultMap">
+        SELECT
+		a.studentId,studentName,examScore,examPaperName,examPaperScore
+		FROM studentinfo a
+		LEFT JOIN examhistoryinfo b ON a.studentId=b.studentId
+		INNER JOIN exampaperinfo c ON b.examPaperId=c.examPaperId
+		WHERE a.studentId=#{studentId};
+    </select>
+</mapper>
