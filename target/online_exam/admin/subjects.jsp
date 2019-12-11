@@ -74,6 +74,7 @@
     });
 
     function to_Page(pg) {
+        //获取所有试题
         $.ajax({
             url:"${APP_PATH}/getAllSubjects",
             data:"pn="+pg,
@@ -81,10 +82,10 @@
             success:function (result) {
                 console.log(result);
                 build_subjects_table(result);
-                subject_page_record(result)
-                build_page_nav(result)
+                subject_page_record(result);
+                build_page_nav(result);
             }
-        })
+        });
     }
 
     //构建表格

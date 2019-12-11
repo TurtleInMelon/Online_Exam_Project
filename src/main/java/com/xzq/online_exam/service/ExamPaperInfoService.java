@@ -14,4 +14,35 @@ public interface ExamPaperInfoService {
 
 
     public List<ExamPaperInfo> getAllExamPapers();
+
+    /**
+     * 添加试卷信息
+     * @param examPaperInfo
+     */
+    void addExamPaper(ExamPaperInfo examPaperInfo);
+
+    /**
+     * 检查试卷名是否重复
+     * @param examPaperName
+     * @return
+     */
+    boolean checkExamPaperName(String examPaperName);
+
+    /**
+     * 更新试卷信息
+     * @param examPaperInfo
+     */
+    void updateExamPaperInfo(ExamPaperInfo examPaperInfo);
+
+    /**
+     * 根据examPaperId删除试卷
+     * @param id
+     */
+    void deleteExamPaperById(Integer id);
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    void deleteBatch(List<Integer> del_ids);
 }

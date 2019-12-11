@@ -26,4 +26,13 @@ public interface SubjectInfoService {
      * @return
      */
     SubjectInfo getSubjectWithId(Integer subjectId);
+
+    /**
+     * 选择合适的试题
+     * @param division
+     * @param gradeId
+     * @param subjectEasy
+     * @return
+     */
+    List<SubjectInfo> chooseSubjects(Integer division, Integer gradeId, Integer subjectEasy);
 }

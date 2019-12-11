@@ -42,4 +42,16 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     public SubjectInfo getSubjectWithId(Integer subjectId) {
         return subjectInfoMapper.getSubjectWithId(subjectId);
     }
+
+    /**
+     * 根据条件寻找合适的试题
+     * @param division
+     * @param gradeId
+     * @param subjectEasy
+     * @return
+     */
+    @Override
+    public List<SubjectInfo> chooseSubjects(Integer division, Integer gradeId, Integer subjectEasy) {
+        return subjectInfoMapper.chooseSubjects(division,gradeId,subjectEasy);
+    }
 }

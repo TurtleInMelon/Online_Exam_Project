@@ -44,4 +44,9 @@
 		LEFT JOIN gradeinfo c ON a.gradeId=c.gradeId
 		WHERE subjectId=#{subjectId}
     </select>
+
+    <select id="chooseSubjects" resultMap="querySubjects">
+        SELECT a.* FROM subjectinfo a
+		WHERE division=#{division} AND gradeId=#{gradeId} AND subjectEasy=#{subjectEasy}
+    </select>
 </mapper>

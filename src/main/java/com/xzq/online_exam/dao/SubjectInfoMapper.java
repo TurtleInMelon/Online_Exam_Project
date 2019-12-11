@@ -2,6 +2,7 @@ package com.xzq.online_exam.dao;
 
 import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.domain.SubjectInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface SubjectInfoMapper {
      * @return
      */
     SubjectInfo getSubjectWithId(Integer subjectId);
+
+    List<SubjectInfo> chooseSubjects(@Param("division") Integer division, @Param("gradeId") Integer gradeId, @Param("subjectEasy") Integer subjectEasy);
 }

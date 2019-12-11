@@ -44,6 +44,9 @@ public class MapperTest {
     @Autowired
     private StudentExamInfoService studentExamInfoService;
 
+    @Autowired
+    private ExamSubjectMiddleInfoService examSubjectMiddleInfoService;
+
 
     @Test
     public void testTeacher(){
@@ -98,8 +101,12 @@ public class MapperTest {
         for(SubjectInfo subjectInfo:allSubjects){
             System.out.println(subjectInfo);
         }**/
-        SubjectInfo subjectWithId = subjectInfoService.getSubjectWithId(9);
-        System.out.println(subjectWithId);
+        //SubjectInfo subjectWithId = subjectInfoService.getSubjectWithId(9);
+        //System.out.println(subjectWithId);
+        List<SubjectInfo> subjectInfos = subjectInfoService.chooseSubjects(0, 1, 0);
+        for(SubjectInfo subjectInfo:subjectInfos){
+            System.out.println(subjectInfo);
+        }
     }
 
     @Test
@@ -189,10 +196,13 @@ public class MapperTest {
 
     @Test
     public void testPaperExamInfo(){
+        /**
         List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
         for(ExamPaperInfo examPaperInfo:allExamPapers){
             System.out.println(examPaperInfo);
-        }
+        }**/
+        boolean result = examPaperInfoService.checkExamPaperName("vfdg");
+        System.out.println(result);
     }
 
     @Test
@@ -202,10 +212,24 @@ public class MapperTest {
         for(StudentExamInfo studentExamInfo:allStudentAvgScoreCount){
             System.out.println(studentExamInfo);
         }**/
+        /**
         List<StudentExamInfo> studentExamInfo = studentExamInfoService.getStudentExamInfoById(1);
         for(StudentExamInfo each:studentExamInfo){
             System.out.println(each);
-        }
+        }**/
+
+    }
+
+    @Test
+    public void testExamSubjectMiddleInfo(){
+        /**List<ExamSubjectMiddleInfo> allESMByExamPaper = examSubjectMiddleInfoService.getAllESMByExamPaperId(2);
+        for(ExamSubjectMiddleInfo each:allESMByExamPaper){
+            System.out.println(each);
+        }**/
+        //examSubjectMiddleInfoService.removeSubjectByExamPaperIdAndSubjectId(2,5902);
+        //examSubjectMiddleInfoService.addESMByOne(1,4);
+        Boolean result=examSubjectMiddleInfoService.checkSubject(1,999);
+        System.out.println(result);
     }
 
 
