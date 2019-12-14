@@ -7,6 +7,16 @@ public class GradeInfo implements Serializable {
     private Integer gradeId;
     private String gradeName;
 
+    public GradeInfo(Integer gradeId) {
+        super();
+        this.gradeId = gradeId;
+    }
+
+    public GradeInfo() {
+        super();
+    }
+
+
     public Integer getGradeId() {
         return gradeId;
     }

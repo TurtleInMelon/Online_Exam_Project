@@ -35,4 +35,28 @@ public interface SubjectInfoService {
      * @return
      */
     List<SubjectInfo> chooseSubjects(Integer division, Integer gradeId, Integer subjectEasy);
+
+    /**
+     * 添加试题
+     * @param subjectInfo
+     */
+    void addSubject(SubjectInfo subjectInfo);
+
+    /**
+     * 更新试题
+     * @param subjectInfo
+     */
+    void updateSubject(SubjectInfo subjectInfo);
+
+    /**
+     * 单个删除
+     * @param id
+     */
+    void deleteSubjectById(Integer id);
+
+    /**
+     * 批量删除
+     * @param del_ids
+     */
+    void deleteBatch(List<Integer> del_ids);
 }

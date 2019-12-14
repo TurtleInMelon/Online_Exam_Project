@@ -49,4 +49,19 @@
         SELECT a.* FROM subjectinfo a
 		WHERE division=#{division} AND gradeId=#{gradeId} AND subjectEasy=#{subjectEasy}
     </select>
+
+    <insert id="addSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo">
+        INSERT INTO subjectinfo VALUES
+		(NULL, #{subjectName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{rightResult}, #{subjectScore}, #{subjectType}, #{course.courseId}, #{grade.gradeId}, #{subjectEasy}, #{division})
+    </insert>
+
+    <update id="updateSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo">
+        UPDATE subjectinfo SET
+		subjectName=#{subjectName}, optionA=#{optionA}, optionB=#{optionB}, optionC=#{optionC}, optionD=#{optionD}, rightResult=#{rightResult}, subjectScore=#{subjectScore}, subjectType=#{subjectType}, courseId=#{course.courseId}, gradeId=#{grade.gradeId}, subjectEasy=#{subjectEasy}, division=#{division}
+		WHERE subjectId=#{subjectId}
+    </update>
+
+    <delete id="deleteSubjectById" parameterType="int">
+        DELETE FROM subjectinfo WHERE subjectId=#{subjectId}
+    </delete>
 </mapper>

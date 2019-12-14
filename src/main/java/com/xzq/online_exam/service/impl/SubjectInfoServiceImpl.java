@@ -54,4 +54,27 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     public List<SubjectInfo> chooseSubjects(Integer division, Integer gradeId, Integer subjectEasy) {
         return subjectInfoMapper.chooseSubjects(division,gradeId,subjectEasy);
     }
+
+    @Override
+    public void addSubject(SubjectInfo subjectInfo) {
+        subjectInfoMapper.addSubject(subjectInfo);
+    }
+
+    @Override
+    public void updateSubject(SubjectInfo subjectInfo) {
+        subjectInfoMapper.updateSubject(subjectInfo);
+    }
+
+    @Override
+    public void deleteSubjectById(Integer id) {
+        subjectInfoMapper.deleteSubjectById(id);
+    }
+
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        for(Integer each:del_ids){
+            System.out.println(each);
+            subjectInfoMapper.deleteSubjectById(each);
+        }
+    }
 }

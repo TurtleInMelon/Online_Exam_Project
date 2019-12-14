@@ -315,7 +315,7 @@
                         optionEle.appendTo("#grade_add_select");
                     })
                 }
-            })
+            });
 
             $('#course_Add').modal('show');
         });

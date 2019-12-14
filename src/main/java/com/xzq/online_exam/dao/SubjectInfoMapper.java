@@ -29,5 +29,27 @@ public interface SubjectInfoMapper {
      */
     SubjectInfo getSubjectWithId(Integer subjectId);
 
+    /**
+     *根据条件寻找合适的题目
+     * @param division
+     * @param gradeId
+     * @param subjectEasy
+     *ao @return
+     */
     List<SubjectInfo> chooseSubjects(@Param("division") Integer division, @Param("gradeId") Integer gradeId, @Param("subjectEasy") Integer subjectEasy);
+
+    /**
+     * 添加试题
+     * @param subjectInfo
+     */
+    void addSubject(SubjectInfo subjectInfo);
+
+    /**
+     * 更新试题
+     * @param subjectInfo
+     */
+    void updateSubject(SubjectInfo subjectInfo);
+
+    //删除试题
+    void deleteSubjectById(Integer id);
 }

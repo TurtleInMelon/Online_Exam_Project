@@ -11,12 +11,23 @@ import com.xzq.online_exam.service.ExamPaperInfoService;
 import com.xzq.online_exam.service.GradeInfoService;
 import com.xzq.online_exam.service.SubjectInfoService;
 import com.xzq.online_exam.utils.Msg;
+import com.xzq.online_exam.utils.SubjectImportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SubjectInfoController {
@@ -33,7 +44,55 @@ public class SubjectInfoController {
     @Autowired
     ExamPaperInfoService examPaperInfoService;
 
+    @RequestMapping(value = "/dispatcherUpload")
+    @ResponseBody
+    public Msg dispatcherUpload(HttpServletRequest request,
+                                @RequestParam("division")Integer division,
+                                @RequestParam("courseId") Integer courseId,
+                                @RequestParam("gradeId") Integer gradeId,
+                                @RequestParam("examPaperId") Integer examPaperId,
+                                @RequestParam("importOption") String importOption,
+                                @RequestParam("examPaperEasy") Integer examPaperEasy,
+                                @RequestParam("examPaperName") String examPaperName,
+                                @RequestParam("examPaperTime") Integer examPaperTime,
+                                @RequestParam("inputfile") MultipartFile excel){
 
+        String savePath="";
+        try {
+            savePath=saveUploadFile(excel,request.getRealPath("/WEB-INF/upload"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<SubjectInfo> subjectInfos = SubjectImportUtil.parseSubjectExcel(savePath, courseId, gradeId, division);
+
+        /**
+         * 只添加试题
+         */
+        if("0".equals(importOption)){
+
+        }
+
+
+        return Msg.success().add("mess","导入试题成功！！");
+    }
+
+    /**
+     * 保存上传的excel文件
+     * @param file
+     * @param rootPath
+     * @return
+     * @throws Exception
+     */
+    private String saveUploadFile(MultipartFile file,String rootPath) throws Exception {
+        String fileName=file.getOriginalFilename();
+        file.transferTo(new File(rootPath+"/"+fileName));
+        return rootPath+"/"+fileName;
+    }
+
+    /**
+     * 导入试题
+     * @return
+     */
     @RequestMapping(value = "/importSubject")
     @ResponseBody
     public Msg importSubject(){
@@ -43,6 +102,83 @@ public class SubjectInfoController {
         List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
         return Msg.success().add("courses",allCoursesWithGradeName)
                 .add("grades",allGrades).add("examPapers",allExamPapers);
+    }
+
+    /**
+     * 添加试题
+     * @param subjectInfo
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/addSubject",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg addSubject(@Valid SubjectInfo subjectInfo, BindingResult result){
+        System.out.println(subjectInfo);
+        if(result.hasErrors() && subjectInfo!=null){
+            Map<String,Object> map=new HashMap<>();
+            List<FieldError> errors = result.getFieldErrors();
+            for(FieldError fieldError:errors){
+                map.put(fieldError.getField(),fieldError.getDefaultMessage());
+            }
+            return Msg.fail().add("errorField",map);
+        }
+        //System.out.println(employee);
+        else{
+            subjectInfoService.addSubject(subjectInfo);
+            return Msg.success();
+        }
+
+    }
+
+    /**
+     * 更新试题
+     * @param subjectInfo
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/updateSubject",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg updateSubject(@Valid SubjectInfo subjectInfo, BindingResult result){
+        System.out.println(subjectInfo);
+        if(result.hasErrors() && subjectInfo!=null){
+            Map<String,Object> map=new HashMap<>();
+            List<FieldError> errors = result.getFieldErrors();
+            for(FieldError fieldError:errors){
+                map.put(fieldError.getField(),fieldError.getDefaultMessage());
+            }
+            return Msg.fail().add("errorField",map);
+        }
+        //System.out.println(employee);
+        else{
+            subjectInfoService.updateSubject(subjectInfo);
+            return Msg.success();
+        }
+
+    }
+
+    /**
+     * 删除试题，包括批量删除
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "deleteSubject")
+    public Msg deleteCourseById(@RequestParam("ids") String ids){
+        System.out.println(ids);
+            if(ids.contains("-")){
+                List<Integer> del_ids=new ArrayList<>();
+                String[] split=ids.split("-");
+
+                for(String s:split){
+                    //System.out.println(s);
+                    del_ids.add(Integer.parseInt(s));
+                }
+                subjectInfoService.deleteBatch(del_ids);
+            }else{
+                Integer id=Integer.parseInt(ids);
+                subjectInfoService.deleteSubjectById(id);
+            }
+        return Msg.success();
     }
 
 

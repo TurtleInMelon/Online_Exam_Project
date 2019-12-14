@@ -30,15 +30,12 @@
     <!--启动定时任务-->
     <task:annotation-driven/>
 
-    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
-        <property name="maxUploadSize">
-            <value>10485760</value>
-        </property>
-
-        <property name="defaultEncoding">
-            <value>UTF-8</value>
-        </property>
-    </bean>-->
+    <!-- springmvc文件上传需要配置的节点-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="-1"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="resolveLazily" value="false"/>
+        <!--<property name="maxInMemorySize" value="104857600"/>-->
+    </bean>
 
 </beans>

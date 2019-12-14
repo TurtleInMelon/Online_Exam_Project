@@ -34,11 +34,11 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-8 column">
-                <form class="form-horizontal" role="form" action="dispatcherUpload" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" role="form" action="${APP_PATH}/dispatcherUpload" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="division" class="col-sm-2 control-label">是否分科</label>
                         <div class="col-sm-10">
-                            <select id="division" class="selectpicker" name="division"  data-live-search="true">
+                            <select class="form-control" id="division" name="division"  data-live-search="true">
                                 <option value="0">不分科</option>
                                 <option value="1">文科</option>
                                 <option value="2">理科</option>
@@ -46,16 +46,16 @@
                         </div>
                     </div>
                     <div class="form-group" id="belong_subject">
-                        <label for="course" class="col-sm-2 control-label">所属科目</label>
+                        <label class="col-sm-2 control-label">所属科目</label>
                         <div class="col-sm-10">
-                            <select id="courseId" class="selectpicker" name="courseId"  data-live-search="true">
+                            <select id="courseId" class="form-control" name="courseId"  data-live-search="true">
                             </select>
                         </div>
                     </div>
                     <div class="form-group" id="belong_grade">
-                        <label for="grade" class="col-sm-2 control-label">所属年级</label>
+                        <label class="col-sm-2 control-label">所属年级</label>
                         <div class="col-sm-10">
-                            <select id="gradeId" class="selectpicker" name="gradeId" data-live-search="true">
+                            <select id="gradeId" class="form-control" name="gradeId" data-live-search="true">
                             </select>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="form-group" id="examPaperChoose">
                         <label for="examPaperId" class="col-sm-2 control-label">试卷选择</label>
                         <div class="col-sm-10">
-                            <select class="selectpicker" name="examPaperId" id="examPaperId" data-live-search="true">
+                            <select class="form-control" name="examPaperId" id="examPaperId" data-live-search="true">
                                 <c:if test="${examPapers != null }">
                                     <c:forEach items="${examPapers }" var="examPaper">
                                         <option value="${examPaper.examPaperId }">${examPaper.examPaperName }</option>
@@ -92,7 +92,7 @@
                     <div class="form-group importToNewPaper">
                         <label for="examPaperEasy" class="col-sm-2 control-label">难易程度</label>
                         <div class="col-sm-10">
-                            <select class="selectpicker" name="examPaperEasy" id="examPaperEasy" data-live-search="true">
+                            <select class="form-control" name="examPaperEasy" id="examPaperEasy" data-live-search="true">
                                 <option value="0">简单</option>
                                 <option value="1">普通</option>
                                 <option value="2">困难</option>
@@ -114,12 +114,12 @@
                     <div class="form-group">
                         <label for="inputfile" class="col-sm-2 control-label">选择文件</label>
                         <div class="col-sm-10">
-                            <input class="" name="inputfile" id="inputfile" type="file" />
+                            <input class="btn btn-default" name="inputfile" id="inputfile" type="file" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">提交</button>
+                            <button type="submit" class="btn btn-success">添加试题</button>
                         </div>
                     </div>
                 </form>

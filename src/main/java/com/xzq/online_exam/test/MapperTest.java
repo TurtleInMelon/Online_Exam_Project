@@ -103,10 +103,26 @@ public class MapperTest {
         }**/
         //SubjectInfo subjectWithId = subjectInfoService.getSubjectWithId(9);
         //System.out.println(subjectWithId);
+        /**
         List<SubjectInfo> subjectInfos = subjectInfoService.chooseSubjects(0, 1, 0);
         for(SubjectInfo subjectInfo:subjectInfos){
             System.out.println(subjectInfo);
-        }
+        }**/
+        /**
+        SubjectInfo subjectInfo=new SubjectInfo();
+        subjectInfo.setSubjectId(6549);
+        subjectInfo.setSubjectName("你是小瓜吗");
+        subjectInfo.setOptionA("是");
+        subjectInfo.setOptionB("不是");
+        subjectInfo.setOptionC("不是");
+        subjectInfo.setOptionD("不是");
+        subjectInfo.setRightResult("A");
+        subjectInfo.setSubjectType(1);
+        subjectInfo.setSubjectEasy(2);
+        subjectInfo.setCourse(new CourseInfo(3));
+        subjectInfo.setGrade(new GradeInfo(2));
+        subjectInfoService.updateSubject(subjectInfo);**/
+        subjectInfoService.deleteSubjectById(3);
     }
 
     @Test
