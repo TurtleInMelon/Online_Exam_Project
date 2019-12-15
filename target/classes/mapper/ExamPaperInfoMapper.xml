@@ -27,7 +27,7 @@
         JOIN gradeinfo b ON a.gradeId=b.gradeId
     </select>
 
-    <insert id="addExamPaper" parameterType="com.xzq.online_exam.domain.ExamPaperInfo">
+    <insert id="addExamPaper" parameterType="com.xzq.online_exam.domain.ExamPaperInfo" useGeneratedKeys="true" keyProperty="examPaperId">
         INSERT INTO exampaperinfo VALUES(NULL, #{examPaperName}, #{subjectNum}, #{examPaperTime}, #{examPaperScore}, #{grade.gradeId}, #{division}, #{examPaperEasy})
     </insert>
 

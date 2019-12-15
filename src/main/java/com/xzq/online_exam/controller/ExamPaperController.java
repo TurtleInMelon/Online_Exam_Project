@@ -106,6 +106,12 @@ public class ExamPaperController {
         //System.out.println("插入数据成功！！");
     }
 
+    @RequestMapping(value = "/getAllExamPaperNames",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getAllExamPaperNames(){
+        List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
+        return Msg.success().add("examPapers",allExamPapers);
+    }
 
     /**
      * 获取所有试题信息

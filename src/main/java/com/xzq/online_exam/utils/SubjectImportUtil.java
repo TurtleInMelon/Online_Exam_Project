@@ -34,6 +34,7 @@ public class SubjectImportUtil {
     public static List<SubjectInfo> parseSubjectExcel(String filePath, Integer courseId, Integer gradeId, Integer division) {
         List<SubjectInfo> subjects = new LinkedList<SubjectInfo>();
         try {
+            System.out.println(filePath);
             //读取工作本
             XSSFWorkbook workBook = new XSSFWorkbook(filePath);
             //读取工作簿

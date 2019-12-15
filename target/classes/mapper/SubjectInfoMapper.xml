@@ -50,7 +50,7 @@
 		WHERE division=#{division} AND gradeId=#{gradeId} AND subjectEasy=#{subjectEasy}
     </select>
 
-    <insert id="addSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo">
+    <insert id="addSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo" useGeneratedKeys="true" keyProperty="subjectId">
         INSERT INTO subjectinfo VALUES
 		(NULL, #{subjectName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{rightResult}, #{subjectScore}, #{subjectType}, #{course.courseId}, #{grade.gradeId}, #{subjectEasy}, #{division})
     </insert>

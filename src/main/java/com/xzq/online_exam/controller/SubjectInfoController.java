@@ -6,10 +6,7 @@ import com.xzq.online_exam.domain.CourseInfo;
 import com.xzq.online_exam.domain.ExamPaperInfo;
 import com.xzq.online_exam.domain.GradeInfo;
 import com.xzq.online_exam.domain.SubjectInfo;
-import com.xzq.online_exam.service.CourseInfoService;
-import com.xzq.online_exam.service.ExamPaperInfoService;
-import com.xzq.online_exam.service.GradeInfoService;
-import com.xzq.online_exam.service.SubjectInfoService;
+import com.xzq.online_exam.service.*;
 import com.xzq.online_exam.utils.Msg;
 import com.xzq.online_exam.utils.SubjectImportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,8 @@ public class SubjectInfoController {
 
     @Autowired
     ExamPaperInfoService examPaperInfoService;
+    @Autowired
+    private ExamSubjectMiddleInfoService examSubjectMiddleInfoService;
 
     @RequestMapping(value = "/dispatcherUpload")
     @ResponseBody
@@ -59,21 +58,84 @@ public class SubjectInfoController {
 
         String savePath="";
         try {
-            savePath=saveUploadFile(excel,request.getRealPath("/WEB-INF/upload"));
+
+
+            String fileName=excel.getOriginalFilename();
+            String rootPath=request.getSession().getServletContext().getRealPath("/")+"upload/";
+            File dir=new File(rootPath);
+            if(!dir.isDirectory()){
+                dir.mkdir();
+            }
+            System.out.println(rootPath+"/"+fileName);
+            try {
+                File upload=new File(rootPath+fileName);
+                excel.transferTo(upload);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            savePath=rootPath+"/"+fileName;
         } catch (Exception e) {
             e.printStackTrace();
         }
         List<SubjectInfo> subjectInfos = SubjectImportUtil.parseSubjectExcel(savePath, courseId, gradeId, division);
 
+        for(SubjectInfo subjectInfo:subjectInfos){
+            System.out.println(subjectInfo);
+        }
         /**
          * 只添加试题
          */
         if("0".equals(importOption)){
+            importSubejctOnly(subjectInfos);
+        }
+        else if("1".equals(importOption)){
+            dispatcherExamPaperAndSubject(subjectInfos,examPaperId);
+        }else{
+            ExamPaperInfo examPaperInfo=new ExamPaperInfo();
+            examPaperInfo.setExamPaperName(examPaperName);
+            examPaperInfo.setExamPaperEasy(examPaperEasy);
+            examPaperInfo.setExamPaperTime(examPaperTime);
+            GradeInfo gradeInfo=new GradeInfo(gradeId);
+            examPaperInfo.setGrade(gradeInfo);
+            examPaperInfo.setDivision(division);
+            examPaperInfoService.addExamPaper(examPaperInfo);
+            dispatcherExamPaperAndSubject(subjectInfos,examPaperInfo.getExamPaperId());
+        }
+        return Msg.success().add("mess","导入试题成功！！");
+    }
 
+    /**
+     * 将文件中的试题添加到指定试卷
+     * @param subjects
+     * @param examPaperId
+     */
+    private void dispatcherExamPaperAndSubject(List<SubjectInfo> subjects, Integer examPaperId) {
+        List<Integer> subjectIds = new ArrayList<Integer>();
+        //试题总量统计
+        int count = 0;
+        //试题总分统计
+        int score = 0;
+
+        /** 添加试题 */
+        for (SubjectInfo subjectInfo : subjects) {
+            subjectInfoService.addSubject(subjectInfo);
+            //System.out.println(subjectInfo);
+            examSubjectMiddleInfoService.addESMByOne(examPaperId,subjectInfo.getSubjectId());
         }
 
+    }
 
-        return Msg.success().add("mess","导入试题成功！！");
+    /**
+     * 只将试题导入
+     * @param subjectInfos
+     */
+    public void importSubejctOnly(List<SubjectInfo> subjectInfos){
+
+        if(subjectInfos!=null && subjectInfos.size()>0){
+            for(SubjectInfo subjectInfo:subjectInfos){
+                subjectInfoService.addSubject(subjectInfo);
+            }
+        }
     }
 
     /**
@@ -83,9 +145,15 @@ public class SubjectInfoController {
      * @return
      * @throws Exception
      */
-    private String saveUploadFile(MultipartFile file,String rootPath) throws Exception {
+    private String saveUploadFile(MultipartFile file,String rootPath){
         String fileName=file.getOriginalFilename();
-        file.transferTo(new File(rootPath+"/"+fileName));
+        System.out.println(rootPath+"/"+fileName);
+        try {
+            File upload=new File(rootPath+"/"+fileName);
+            file.transferTo(upload);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return rootPath+"/"+fileName;
     }
 

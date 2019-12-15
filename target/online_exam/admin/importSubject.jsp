@@ -34,7 +34,7 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-8 column">
-                <form class="form-horizontal" role="form" action="${APP_PATH}/dispatcherUpload" method="post" enctype="multipart/form-data">
+                <form id="subjects_Import" class="form-horizontal" role="form" action="${APP_PATH}/dispatcherUpload" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="division" class="col-sm-2 control-label">是否分科</label>
                         <div class="col-sm-10">
@@ -78,14 +78,9 @@
                         </div>
                     </div>
                     <div class="form-group" id="examPaperChoose">
-                        <label for="examPaperId" class="col-sm-2 control-label">试卷选择</label>
+                        <label  class="col-sm-2 control-label">试卷选择</label>
                         <div class="col-sm-10">
-                            <select class="form-control" name="examPaperId" id="examPaperId" data-live-search="true">
-                                <c:if test="${examPapers != null }">
-                                    <c:forEach items="${examPapers }" var="examPaper">
-                                        <option value="${examPaper.examPaperId }">${examPaper.examPaperName }</option>
-                                    </c:forEach>
-                                </c:if>
+                            <select class="form-control" name="examPaperId" id="examPaper_select" data-live-search="true">
                             </select>
                         </div>
                     </div>
@@ -135,7 +130,7 @@
            $.ajax({
                url:"${APP_PATH}/importSubject",
                success:function (result) {
-                   console.log(result);
+                   //console.log(result);
                    var grades=result.extend.grades;
                    var courses=result.extend.courses;
                    var examPapers=result.extend.examPapers;
@@ -149,6 +144,35 @@
                    })
                }
            });
+
+           $.ajax({
+               url:"${APP_PATH}/getAllExamPaperNames",
+               type:"GET",
+               success:function (result) {
+                   console.log(result);
+                   var examPapers=result.extend.examPapers;
+                   $.each(examPapers,function (index,item) {
+                       $("#examPaper_select").append($("<option></option>").append(item.examPaperName).attr("value",item.examPaperId));
+                   })
+               }
+           });
+
+            var option=$("#subjects_Import input[name='importOption'][checked]").val();
+            $(function() {
+                $("#alltips").css("font-size", "12px");
+                $("#only-subject").click(function() {
+                    $("#examPaperChoose").hide();
+                    $(".importToNewPaper").hide();
+                });
+                $("#radio-exists").click(function() {
+                    $("#examPaperChoose").show("slow");
+                    $(".importToNewPaper").hide();
+                });
+                $("#radio-new").click(function() {
+                    $("#examPaperChoose").hide();
+                    $(".importToNewPaper").show("slow");
+                });
+            });
         });
 
     </script>
