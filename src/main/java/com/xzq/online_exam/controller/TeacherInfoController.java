@@ -8,11 +8,20 @@ import com.xzq.online_exam.utils.Msg;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TeacherInfoController {
@@ -22,7 +31,105 @@ public class TeacherInfoController {
 
     private Logger logger=Logger.getLogger(TeacherInfoController.class);
 
+    /**
+     * 删除教师包括批量删除
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "teacher/{ids}",method = RequestMethod.DELETE)
+    public Msg deleteTeacherById(@PathVariable("ids") String ids){
+        //System.out.println(ids);
+        if(ids.contains("-")){
+            List<Integer> del_ids=new ArrayList<>();
+            String[] split=ids.split("-");
 
+            for(String s:split){
+                //System.out.println(s);
+                del_ids.add(Integer.parseInt(s));
+            }
+            teacherInfoService.deleteBatch(del_ids);
+
+        }else{
+            Integer id=Integer.parseInt(ids);
+            teacherInfoService.deleteTeacherById(id);
+        }
+        return Msg.success();
+    }
+
+
+    /**
+     * 更新教师信息
+     * @param teacherinfo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/teacher/{teacherId}",method = RequestMethod.PUT)
+    public Msg saveCourse(TeacherInfo teacherinfo){
+        //System.out.println(teacherinfo);
+        teacherInfoService.updateTeacher(teacherinfo);
+        return Msg.success();
+    }
+
+    /**
+     * 检查教师是否已经存在
+     * @param teacherName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/checkTeacherName")
+    public Msg checkCourse(@RequestParam("teacherName") String teacherName){
+        System.out.println(teacherName);
+        if(teacherInfoService.checkTeacherName(teacherName)){
+            return Msg.success();
+        }
+        else{
+            return Msg.fail().add("va_msg","教师名不可用！！");
+        }
+    }
+
+    /**
+     * 添加教师信息
+     * @param courseInfo
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/teacher",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg saveTeacher(@Valid TeacherInfo teacherInfo, BindingResult result){
+        System.out.println(teacherInfo);
+        if(result.hasErrors() && teacherInfo!=null){
+            Map<String, Object> map = new HashMap<>();
+            List<FieldError> errors = result.getFieldErrors();
+            for(FieldError fieldError:errors){
+                map.put(fieldError.getField(),fieldError.getDefaultMessage());
+            }
+            return Msg.fail().add("errorField",map);
+        }
+        //System.out.println(employee);
+        else{
+            teacherInfoService.addTeacher(teacherInfo);
+            return Msg.success();
+        }
+        //System.out.println("插入数据成功！！");
+    }
+
+    /**
+     * 获取所有教师的名字
+     * @return
+     */
+    @RequestMapping(value = "/getAllTeacherNames")
+    @ResponseBody
+    public Msg getAllGradeNames(){
+        List<TeacherInfo> allGradeNames=teacherInfoService.getALlTeacherInfo();
+        return Msg.success().add("list",allGradeNames);
+    }
+
+    /**
+     * 根据教师账户获取教师信息
+     * @param teacherAccount
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/teacherAccount/{teacherAccount}",method = RequestMethod.GET)
     public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount){
@@ -76,6 +183,11 @@ public class TeacherInfoController {
         return "redirect:admin/index.jsp";
     }
 
+    /**
+     * 获取所有教师信息
+     * @param pn
+     * @return
+     */
     @RequestMapping(value = "/getAllTeachers",method = RequestMethod.GET)
     @ResponseBody
     public Msg getAllTeacherInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
@@ -98,8 +210,10 @@ public class TeacherInfoController {
         return modelAndView;
     }
 
-
-
-
-
+    @RequestMapping("/exitTeacher")
+    public void exitTeacher(HttpSession session, HttpServletResponse response) throws IOException {
+        session.removeAttribute("loginTeacher");
+        session.removeAttribute("adminPower");
+        response.sendRedirect("admin/admin_login.jsp");
+    }
 }

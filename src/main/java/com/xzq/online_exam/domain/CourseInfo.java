@@ -16,6 +16,15 @@ public class CourseInfo implements Serializable {
     //年级信息
     private GradeInfo gradeInfo;
 
+    public CourseInfo(Integer courseId) {
+        super();
+        this.courseId = courseId;
+    }
+
+    public CourseInfo() {
+        super();
+    }
+
     @Override
     public String toString() {
         return "CourseInfo{" +

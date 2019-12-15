@@ -1,5 +1,9 @@
 package com.xzq.online_exam.service;
 
+import com.xzq.online_exam.domain.StudentInfo;
+
+import java.util.List;
+
 public interface StudentInfoService {
 
     /**
@@ -7,4 +11,7 @@ public interface StudentInfoService {
      * @return
      */
     public int getStudentTotal();
+
+
+    List<StudentInfo> getStudentsByClassId(Integer classId);
 }

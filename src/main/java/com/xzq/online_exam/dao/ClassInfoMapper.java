@@ -25,4 +25,32 @@ public interface ClassInfoMapper {
     //指定某一列的值为Map的键
     @MapKey("className")
     Map<String, Object> getStudentCountForClass(Integer gradeId);
+
+    /**
+     * 检查班级名是否可用
+     * @param className
+     * @return
+     */
+    int checkClassName(String className);
+
+    /**
+     * 添加班级信息
+     * @param classInfo
+     */
+    void addClass(ClassInfo classInfo);
+
+    /**
+     * 更新班级信息
+     * @param classInfo
+     */
+    void updateClass(ClassInfo classInfo);
+
+    void deleteClassById(Integer id);
+
+    /**
+     * 根据班主任编号获取班级信息
+     * @param teacherId
+     * @return
+     */
+    ClassInfo getClassByTeacherId(Integer teacherId);
 }

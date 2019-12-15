@@ -20,6 +20,72 @@
     <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/zeroModal/zeroModal.css"/>
 </head>
 <body>
+
+    <!--年级编辑模态框-->
+    <div class="modal fade" id="grade_Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">年级 编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="grade_edit_form">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">年级编号</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="gradeId" class="form-control" id="grade_Id_input" placeholder="年级编号">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">年级名称</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="gradeName" class="form-control" id="grade_edit_input" placeholder="年级名称">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="grade_edit_btn">更新</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--年级添加模态框-->
+    <div class="modal fade" id="grade_Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">年级 添加</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="grade_add_form">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">年级名称</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="gradeName" class="form-control" id="course_add_input" placeholder="年级名称">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="grade_add_btn">添加</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!---->
     <div>
         <table class="table table-hover" id="grades_table">
@@ -57,6 +123,8 @@
     </div>
 
     <script type="text/javascript">
+
+        var lastPage;
         $(function () {
            to_Page(1);
         });
@@ -67,7 +135,7 @@
                data:"pg="+pg,
                type:"GET",
                success:function (result) {
-                   console.log(result);
+                   //console.log(result);
                    build_grades_table(result);
                    emp_page_record(result)
                    build_page_nav(result)
@@ -107,6 +175,7 @@
                 result.extend.pageInfo.total+"条记录");
             lastpage=result.extend.pageInfo.pages;
             curpage=result.extend.pageInfo.pageNum;
+            lastPage=result.extend.pageInfo.pages;
         }
 
         //构建页框
@@ -183,6 +252,150 @@
             $("#check_all").prop("checked",flag);
 
         })
+
+        //点击新增按钮
+        $("#grades_model_btn").click(function () {
+            $("#grade_Add form")[0].reset();
+            $("#grade_Add form").find(".help-block").text("");
+            $('#grade_Add').modal('show');
+        });
+
+
+        //显示校验信息
+        function show_validate_info(ele,status,message){
+            $(ele).parent().removeClass("has-success has-error");
+            $(ele).next("span").text("");
+            if(status=="success"){
+                $(ele).parent().addClass("has-success");
+                $(ele).next("span").text(message);
+            }
+            else{
+                $(ele).parent().addClass("has-error");
+                $(ele).next("span").text(message);
+            }
+        }
+
+        //校验输入的用户名是否可用
+        $("#course_add_input").change(function () {
+            var gradeName=this.value;
+            alert(gradeName);
+            if(gradeName==null){
+                return;
+            }
+            $("#grade_add_btn").removeClass("disabled");
+            $("#grade_Add form").find(".help-block").text("");
+            $.ajax({
+                url:"${APP_PATH}/checkGrade",
+                data:"gradeName="+gradeName,
+                type:"POST",
+                success:function(result) {
+                    if(result.code==100){
+                        show_validate_info("#course_add_input","success","用户名可用")
+                        $("#grade_add_btn").attr("ajax-va","success");
+                        $("#grade_add_btn").removeClass("disabled");
+                    }
+                    else{
+                        show_validate_info("#course_add_input","error",result.extend.va_msg);
+                        $("#grade_add_btn").attr("ajax-va","fail");
+                        $("#grade_add_btn").addClass("disabled");
+                    }
+                }
+            })
+        });
+
+        //年级增加功能
+        $("#grade_add_btn").click(function () {
+            if($("#grade_add_form").serialize()=="gradeName="){
+                show_validate_info("#course_add_input","error","用户名不能为空");
+                return false;
+            }
+            $.ajax({
+                url:"${APP_PATH}/grade",
+                type:"POST",
+                data:$("#grade_add_form").serialize(),
+                success:function (result) {
+                    if(result.code==100){
+                        $("#grade_Add").modal("hide");
+                        to_Page(lastPage);
+                    }
+                    else{
+                        console.log(result);
+                    }
+                }
+            })
+        });
+
+
+        //点击编辑按钮
+        $(document).on("click",".edit_btn",function () {
+            var gradeId=$(this).parents("tr").find("td:eq(1)").text();
+            var gradeName=$(this).parents("tr").find("td:eq(2)").text();
+            //alert(gradeName+gradeId);
+            $("#grade_Edit form")[0].reset();
+            $("#grade_Edit form").find(".help-block").text("");
+            $('#grade_Edit').modal('show');
+            $("#grade_Id_input").val(gradeId);
+            $("#grade_edit_input").val(gradeName);
+        });
+
+        //更新年级
+        $("#grade_edit_btn").click(function () {
+            var gradeId=$("#grade_Id_input").val();
+            var gradeName=$("#grade_edit_input").val();
+            //alert($("#grade_edit_form").serialize());
+            $.ajax({
+                url:"${APP_PATH}/grade/"+gradeId,
+                type:"POST",
+                data:$("#grade_edit_form").serialize()+"&_method=PUT",
+                success:function (result) {
+                    $("#grade_Edit").modal("hide");
+                    to_Page(curpage);
+                }
+            })
+        });
+
+        //点击单个删除按钮
+        $(document).on("click",".del_btn",function () {
+            var gradeId=$(this).parents("tr").find("td:eq(1)").text();
+            var gradeName=$(this).parents("tr").find("td:eq(2)").text();
+            //alert(gradeId+gradeName);
+            if(confirm("确认删除【"+gradeName+"】吗？")){
+                $.ajax({
+                   url:"${APP_PATH}/grade/"+gradeId,
+                   type:"DELETE",
+                   success:function (result) {
+                       alert(result.msg);
+                       to_Page(curpage);
+                   }
+                });
+            }
+        });
+
+        //批量删除
+        $("#grades_del_model_btn").click(function () {
+            var gradeName="";
+            var del_strs="";
+            $.each($(".check_item:checked"),function () {
+                gradeName+=$(this).parents("tr").find("td:eq(2)").text()+",";
+                del_strs+=$(this).parents("tr").find("td:eq(1)").text()+"-";
+            })
+            alert(gradeName+del_strs);
+            gradeName=gradeName.substring(0,gradeName.length-1);
+            del_strs=del_strs.substring(0,del_strs.length-1);
+            if(confirm("确认删除【"+gradeName+"】吗？")){
+                $.ajax({
+                    url:"${APP_PATH}/grade/"+del_strs,
+                    type:"DELETE",
+                    success:function (result) {
+                        alert(result.msg);
+                        to_Page(curpage);
+                    }
+                })
+            }
+        });
+
+
+
 
 
 

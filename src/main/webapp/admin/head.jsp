@@ -12,7 +12,6 @@
     <title>后台主页头部</title>
     <%
         pageContext.setAttribute("APP_PATH",request.getContextPath());
-
     %>
     <script src="${APP_PATH}/static/js/jquery-3.4.1.min.js"></script>
     <link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +48,7 @@
                     未登录
                 </a>
             </c:if>
-            <a class="btn btn-default" href="../exitTeacher" target="_parent">退出登录</a>
+            <button id="exit_btn" class="btn btn-default" target="_parent">退出登录</button>
         </div>
     </div>
 
@@ -96,7 +95,17 @@
             }
             $("#date_time").text(year+"年"+month+"月"+day+"日"+hour+"时"+minutes+"分"+seconds+"秒");
         }
+
+        $("#exit_btn").click(function () {
+            if(confirm("确认退出系统吗？")){
+
+                top.location="${APP_PATH}/exitTeacher";
+            }
+        });
+
+
     </script>
 
 </body>
 </html>
+)

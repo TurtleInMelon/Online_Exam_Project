@@ -26,4 +26,29 @@ public interface TeacherInfoMapper {
      * @return
      */
     List<TeacherInfo> getALlTeacherInfo();
+
+    /**
+     * 添加教师信息
+     * @param teacherInfo
+     */
+    void addTeacher(TeacherInfo teacherInfo);
+
+    /**
+     * 检查教师名是否可用
+     * @param teacherName
+     * @return
+     */
+    int checkTeacherName(String teacherName);
+
+    /**
+     * 更新教师信息
+     * @param teacherinfo
+     */
+    void updateTeacher(TeacherInfo teacherinfo);
+
+    /**
+     * 根据teacherid删除
+     * @param id
+     */
+    void deleteTeacherById(Integer id);
 }

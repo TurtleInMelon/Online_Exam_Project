@@ -27,4 +27,23 @@
         JOIN gradeinfo b ON a.gradeId=b.gradeId
     </select>
 
+    <insert id="addExamPaper" parameterType="com.xzq.online_exam.domain.ExamPaperInfo" useGeneratedKeys="true" keyProperty="examPaperId">
+        INSERT INTO exampaperinfo VALUES(NULL, #{examPaperName}, #{subjectNum}, #{examPaperTime}, #{examPaperScore}, #{grade.gradeId}, #{division}, #{examPaperEasy})
+    </insert>
+
+    <select id="checkExamPaperName" resultType="int">
+        select count(*) from exampaperinfo where examPaperName=#{examPaperName}
+    </select>
+
+    <update id="updateExamPaperInfo" parameterType="com.xzq.online_exam.domain.ExamPaperInfo">
+        UPDATE exampaperinfo SET
+		examPaperName=#{examPaperName}, subjectNum=#{subjectNum}, examPaperTime=#{examPaperTime},
+		examPaperScore=#{examPaperScore}, division=#{division}, examPaperEasy=#{examPaperEasy}, gradeId=#{grade.gradeId}
+		WHERE examPaperId=#{examPaperId}
+    </update>
+
+    <delete id="deleteExamPaperById" parameterType="int">
+        DELETE FROM exampaperinfo WHERE examPaperId=#{id}
+    </delete>
+
 </mapper>

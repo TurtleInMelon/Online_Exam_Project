@@ -18,4 +18,37 @@ public class CourseInfoServiceImpl implements CourseInfoService {
     public List<CourseInfo> getAllCoursesWithGradeName(CourseInfo courseInfo) {
         return courseInfoMapper.getAllCoursesWithGradeName(courseInfo);
     }
+
+    @Override
+    public List<CourseInfo> getAllCourseNames() {
+        return courseInfoMapper.getAllCourseNames();
+    }
+
+    @Override
+    public void addCourse(CourseInfo courseInfo) {
+        courseInfoMapper.addCourse(courseInfo);
+    }
+
+    @Override
+    public boolean checkGradeName(String courseName) {
+        int count=courseInfoMapper.checkGradeName(courseName);
+        return count==0;
+    }
+
+    @Override
+    public void updateCourse(CourseInfo courseInfo) {
+        courseInfoMapper.updateCourse(courseInfo);
+    }
+
+    @Override
+    public void deleteCourseById(Integer id) {
+        courseInfoMapper.deleteCourseById(id);
+    }
+
+    @Override
+    public void deleteBatch(List<Integer> del_ids) {
+        for(Integer each:del_ids){
+            courseInfoMapper.deleteCourseById(each);
+        }
+    }
 }

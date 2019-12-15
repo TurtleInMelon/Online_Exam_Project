@@ -2,8 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzq.online_exam.dao.SubjectInfoMapper">
 
+    <resultMap id="querySubjects" type="com.xzq.online_exam.domain.SubjectInfo">
+        <id column="subjectId" property="subjectId"/>
+        <result column="subjectName" property="subjectName"/>
+        <result column="optionA" property="optionA"/>
+        <result column="optionB" property="optionB"/>
+        <result column="optionC" property="optionC"/>
+        <result column="optionD" property="optionD"/>
+        <result column="rightResult" property="rightResult"/>
+        <result column="subjectScore" property="subjectScore"/>
+        <result column="subjectType" property="subjectType"/>
+        <result column="subjectEasy" property="subjectEasy"/>
+        <result column="division" property="division"/>
+        <!--科目-->
+        <association property="course" javaType="com.xzq.online_exam.domain.CourseInfo">
+            <id column="courseId" property="courseId"/>
+            <result column="courseName" property="courseName"/>
+        </association>
+        <!--年级-->
+        <association property="grade" javaType="com.xzq.online_exam.domain.GradeInfo">
+            <id column="gradeId" property="gradeId"/>
+            <result column="gradeName" property="gradeName"/>
+        </association>
+    </resultMap>
+
     <!--获取试题总数-->
     <select id="getSubjectTotal" resultType="int">
         SELECT COUNT(subjectId) FROM subjectinfo
     </select>
+
+    <!--获取试题集合-->
+    <select id="getAllSubjects" resultMap="querySubjects">
+        SELECT a.*, b.courseName, c.gradeName FROM subjectinfo a
+		LEFT JOIN courseinfo b ON a.courseId=b.courseId
+		LEFT JOIN gradeinfo c ON a.gradeId=c.gradeId
+    </select>
+
+    <select id="getSubjectWithId" parameterType="int" resultMap="querySubjects">
+        SELECT a.*, b.courseName, c.gradeName FROM subjectinfo a
+		LEFT JOIN courseinfo b ON a.courseId=b.courseId
+		LEFT JOIN gradeinfo c ON a.gradeId=c.gradeId
+		WHERE subjectId=#{subjectId}
+    </select>
+
+    <select id="chooseSubjects" resultMap="querySubjects">
+        SELECT a.* FROM subjectinfo a
+		WHERE division=#{division} AND gradeId=#{gradeId} AND subjectEasy=#{subjectEasy}
+    </select>
+
+    <insert id="addSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo" useGeneratedKeys="true" keyProperty="subjectId">
+        INSERT INTO subjectinfo VALUES
+		(NULL, #{subjectName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{rightResult}, #{subjectScore}, #{subjectType}, #{course.courseId}, #{grade.gradeId}, #{subjectEasy}, #{division})
+    </insert>
+
+    <update id="updateSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo">
+        UPDATE subjectinfo SET
+		subjectName=#{subjectName}, optionA=#{optionA}, optionB=#{optionB}, optionC=#{optionC}, optionD=#{optionD}, rightResult=#{rightResult}, subjectScore=#{subjectScore}, subjectType=#{subjectType}, courseId=#{course.courseId}, gradeId=#{grade.gradeId}, subjectEasy=#{subjectEasy}, division=#{division}
+		WHERE subjectId=#{subjectId}
+    </update>
+
+    <delete id="deleteSubjectById" parameterType="int">
+        DELETE FROM subjectinfo WHERE subjectId=#{subjectId}
+    </delete>
 </mapper>

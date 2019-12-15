@@ -20,7 +20,117 @@
 
 </head>
 <body>
-    <!--表格信息-->
+
+<!--教师编辑模态框-->
+    <div class="modal fade" id="teacher_Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="teacherId-edit">教师 编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">教师编号</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static" id="teacherId_update_edit">  </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">后台权限：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="adminPower" id="adminPower_edit_select">
+                                    <option value="0">普通教职员工</option>
+                                    <option value="1">管理员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">教师姓名</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="teacherName" class="form-control" id="teacherName_edit_input" placeholder="教师姓名">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">教师账户</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="teacherAccount" class="form-control" id="teacherAccount_edit_input" placeholder="教师账户">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">登录密码</label>
+                            <div class="col-sm-5">
+                                <input type="password" name="teacherPwd" class="form-control" id="teacherPwd_edit_input" placeholder="登录密码">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="teacher_edit_btn">更新</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--教师添加添加模态框-->
+    <div class="modal fade" id="teacher_Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">教师 添加</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">后台权限：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="adminPower" id="subject_add_select">
+                                    <option value="0">普通教职员工</option>
+                                    <option value="1">管理员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">教师姓名</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="teacherName" class="form-control" id="teacherName_add_input" placeholder="教师姓名">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">教师账户</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="teacherAccount" class="form-control" id="teacherAccount_add_input" placeholder="教师账户">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">登录密码</label>
+                            <div class="col-sm-5">
+                                <input type="password" name="teacherPwd" class="form-control" id="teacherPwd_add_input" placeholder="登录密码">
+                                <span  class="help-block">    </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="teacher_add_btn">添加</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--表格信息-->
     <div>
         <table class="table table-hover" id="teachers_table">
             <thead>
@@ -61,7 +171,7 @@
     </div>
 
     <script type="text/javascript">
-
+        var curpage,lastpage;
         $(function () {
             to_Page(1);
             //查看密码
@@ -116,15 +226,21 @@
                     var adminPowerTd=$("<td></td>").append($("<span style=\"color: red;\"></span>").append("管理员"));
                 }
                 //var adminPowerTd=
+                var className;
+                if(item.classInfo==null){
+                    className="无";
+                }else {
+                    className=item.classInfo.className;
+                }
 
-                var classNameTd=$("<td></td>").append($("<a href=''></a>").append(item.classInfo.className));
+                var classNameTd=$("<td></td>").append($("<a href=''></a>").append(className));
 
                 var editBtn=$("<button></button>").addClass("btn btn-info btn-sm edit_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
-                editBtn.attr("edit-id",item.gradeId);
+                editBtn.attr("edit-id",item.adminPower);
                 var delBtn=$("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-trash")).append("删除");
-                delBtn.attr("del-id",item.gradeId);
+                delBtn.attr("del-id",item.adminPower);
                 var tdTd=$("<td></td>").append(editBtn).append(" ").append(delBtn);
                 $("<tr></tr>").append(checkBoxTd)
                     .append(teacherIdTd).append(teacherNameTd).append(teacherAccountTd).append(teacherPwdTd)
@@ -219,7 +335,155 @@
 
             $("#check_all").prop("checked",flag);
 
+        });
+
+        //显示校验信息
+        function show_validate_info(ele,status,message){
+            $(ele).parent().removeClass("has-success has-error");
+            $(ele).next("span").text("");
+            if(status=="success"){
+                $(ele).parent().addClass("has-success");
+                $(ele).next("span").text(message);
+            }
+            else{
+                $(ele).parent().addClass("has-error");
+                $(ele).next("span").text(message);
+            }
+        }
+
+        //校验输入的教师名是否可用
+        $("#teacherName_add_input").change(function () {
+            var teacherName=this.value;
+            alert(teacherName);
+            if(teacherName==null){
+                return;
+            }
+            $("#teacher_add_btn").removeClass("disabled");
+            $("#teacher_Add form").find(".help-block").text("");
+            $.ajax({
+                url:"${APP_PATH}/checkTeacherName",
+                data:"teacherName="+teacherName,
+                type:"POST",
+                success:function(result) {
+                    //console.log(result);
+                    if(result.code==100){
+                        show_validate_info("#teacherName_add_input","success","教师名可用")
+                        $("#teacher_add_btn").attr("ajax-va","success");
+                        $("#teacher_add_btn").removeClass("disabled");
+                    }
+                    else{
+                        show_validate_info("#teacherName_add_input","error",result.extend.va_msg);
+                        $("#teacher_add_btn").attr("ajax-va","fail");
+                        $("#teacher_add_btn").addClass("disabled");
+                    }
+                }
+            })
+        });
+
+        //点击新增
+        $("#teachers_add_model_btn").click(function () {
+            $("#teacher_Add form")[0].reset();
+            $("#teacher_Add form").find(".help-block").text("");
+            $('#teacher_Add').modal('show');
+        });
+
+        //点击添加按钮
+        $("#teacher_add_btn").click(function () {
+            alert($("#teacher_Add form").serialize());
+
+            $.ajax({
+                url:"${APP_PATH}/teacher",
+                type:"POST",
+                data:$("#teacher_Add form").serialize(),
+                success:function (result) {
+                    //console.log(result);
+                    if(result.code==100){
+                        $("#teacher_Add").modal("hide");
+                        to_Page(lastpage);
+                    }
+                    else{
+                        console.log(result);
+                    }
+                }
+            })
+        });
+
+        //点击编辑按钮
+        $(document).on("click",".edit_btn",function () {
+            var teacherId=$(this).parents("tr").find("td:eq(1)").text();
+            var teacherName=$(this).parents("tr").find("td:eq(2)").text();
+            var teacherAccount=$(this).parents("tr").find("td:eq(3)").text();
+            var teacherPwd=$(this).parents("tr").find("td:eq(4)").find("span:eq(1)").text();
+            var adminPower=$(this).attr("edit-id");
+            //alert(teacherPwd);
+            $("#teacher_Edit form")[0].reset();
+            $("#teacher_Edit form").find(".help-block").text("");
+            $('#teacher_Edit').modal('show');
+            $("#teacherId_update_edit").text(teacherId);
+            $("#teacherName_edit_input").val(teacherName);
+            $("#teacherPwd_edit_input").val(teacherPwd);
+            $("#teacherAccount_edit_input").val(teacherAccount);
+            $("#adminPower_edit_select").val(adminPower);
         })
+
+        //点击更新按钮
+        $("#teacher_edit_btn").click(function () {
+            var teacherId=$("#teacherId_update_edit").text();
+            //alert(teacherId);
+            $.ajax({
+                url:"${APP_PATH}/teacher/"+teacherId,
+                type:"PUT",
+                data:$("#teacher_Edit form").serialize(),
+                success:function (result) {
+                    //console.log(result);
+                    $("#teacher_Edit").modal("hide");
+                    to_Page(curpage);
+                }
+            })
+        });
+
+        //点击单个删除
+        $(document).on("click",".del_btn",function () {
+            var teacherId=$(this).parents("tr").find("td:eq(1)").text();
+            var teacherName=$(this).parents("tr").find("td:eq(2)").text();
+            //alert(courseId+courseName);
+            if(confirm("确认删除【"+teacherName+"】吗？")){
+                $.ajax({
+                    url:"${APP_PATH}/teacher/"+teacherId,
+                    type:"DELETE",
+                    success:function (result) {
+                        alert(result.msg);
+                        to_Page(curpage);
+                    }
+                });
+            }
+        });
+
+        //批量删除
+        $("#teachers_del_model_btn").click(function () {
+            var teacherName="";
+            var del_strs="";
+            $.each($(".check_item:checked"),function () {
+                teacherName+=$(this).parents("tr").find("td:eq(2)").text()+",";
+                del_strs+=$(this).parents("tr").find("td:eq(1)").text()+"-";
+            })
+
+            teacherName=teacherName.substring(0,teacherName.length-1);
+            del_strs=del_strs.substring(0,del_strs.length-1);
+            //alert(courseName+del_strs);
+            if(confirm("确认删除【"+teacherName+"】吗？")){
+                $.ajax({
+                    url:"${APP_PATH}/teacher/"+del_strs,
+                    type:"DELETE",
+                    success:function (result) {
+                        alert(result.msg);
+                        to_Page(curpage);
+                    }
+                })
+            }
+        });
+
+
     </script>
 </body>
 </html>

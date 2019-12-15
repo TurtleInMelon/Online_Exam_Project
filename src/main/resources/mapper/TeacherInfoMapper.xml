@@ -32,5 +32,23 @@
         Left join classinfo b ON a.teacherId=b.teacherId
     </select>
 
+    <insert id="addTeacher" parameterType="com.xzq.online_exam.domain.TeacherInfo">
+        INSERT INTO teacherinfo VALUES(NULL, #{teacherName}, #{teacherAccount}, #{teacherPwd}, #{adminPower}, 1)
+    </insert>
+
+    <select id="checkTeacherName" resultType="int">
+        select count(*) from teacherinfo where teacherName=#{teacherName}
+    </select>
+
+    <update id="updateTeacher" parameterType="com.xzq.online_exam.domain.TeacherInfo">
+        UPDATE teacherinfo SET teacherName=#{teacherName}, teacherAccount=#{teacherAccount},
+			teacherPwd=#{teacherPwd}, adminPower=#{adminPower}
+		WHERE teacherId=#{teacherId}
+    </update>
+
+    <delete id="deleteTeacherById" parameterType="int">
+        DELETE From teacherinfo WHERE teacherId=#{id}
+    </delete>
+
 
 </mapper>
