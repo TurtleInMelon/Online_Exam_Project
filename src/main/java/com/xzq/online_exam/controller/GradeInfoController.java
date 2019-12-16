@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -44,5 +46,11 @@ public class GradeInfoController {
         model.setViewName("admin/grades");
         //model.addObject("pageInfo","pageInfo");
         return model;
+    }
+
+    @RequestMapping("/getAllGrades")
+    @ResponseBody
+    public Msg getAllGrades(){
+        return Msg.success().add("grades",gradeInfoService.getAllGrades());
     }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 public interface CourseInfoMapper {
 
     List<CourseInfo> getAllCoursesWithGradeName(CourseInfo courseInfo);
+
+    public CourseInfo getCourseByName(String name);
 }

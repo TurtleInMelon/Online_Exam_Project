@@ -28,5 +28,8 @@
         </where>
         ORDER BY courseId DESC
     </select>
+    <select id="getCourseByName" resultType="com.xzq.online_exam.domain.CourseInfo">
+        select * from courseinfo where courseName=#{name}
+    </select>
 
 </mapper>

@@ -3,16 +3,14 @@ package com.xzq.online_exam.test;
 
 
 import com.xzq.online_exam.dao.TeacherInfoMapper;
-import com.xzq.online_exam.domain.ClassInfo;
-import com.xzq.online_exam.domain.CourseInfo;
-import com.xzq.online_exam.domain.GradeInfo;
-import com.xzq.online_exam.domain.TeacherInfo;
+import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.plugin.javascript.navig.LinkArray;
 
 import java.util.List;
 
@@ -41,6 +39,16 @@ public class MapperTest {
     @Autowired
     private ClassInfoService classInfoService;
 
+    @Autowired
+    private ExamPlanService examPlanService;
+
+    @Autowired
+    private ExamHistoryInfoService examHistoryInfoService;
+
+    @Autowired
+    private ExamChooseInfoService examChooseInfoService;
+
+
     @Test
     public void testTeacher(){
         TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
@@ -60,7 +68,29 @@ public class MapperTest {
         System.out.println("--------------------------------------");
         System.out.println(total);
     }
-
+    @Test
+    public void testStuInfo(){
+        List<StudentInfo> all=studentInfoService.getAllStudents();
+        for(StudentInfo studentInfo:all)
+            System.out.println(studentInfo);
+    }
+    @Test
+    public void testExamPlan(){
+        List<ExamPlanInfo>all=examPlanService.getExamPlan();
+        for(ExamPlanInfo e:all)
+            System.out.println(e);
+    }
+    @Test
+    public void testgetExamHistory()
+    {
+        List<ExamHistoryInfo>all=examHistoryInfoService.getExamHistory();
+        for(ExamHistoryInfo e:all)
+            System.out.println(e);
+    }
+    @Test
+    public void testdeleteOne(){
+        studentInfoService.deleteOne(98);
+    }
     @Test
     public void testSubjectInfo(){
         int total=subjectInfoService.getSubjectTotal();
@@ -91,5 +121,21 @@ public class MapperTest {
             System.out.println(classInfo);
         }
     }
-
+    @Test
+    public void test(){
+        System.out.println(examHistoryInfoService.JudgeStuExam(11,11));
+    }
+    @Test
+    public void testExam(){
+        String name="张君宝";
+        String paper="计算机常识";
+        List<ExamChooseInfo> all=examChooseInfoService.getAllExamChoose(name,paper);
+        Integer i=0;
+        for(ExamChooseInfo examChooseInfo:all)
+        {
+            System.out.println(examChooseInfo);
+            i++;
+        }
+        System.out.println(i);
+    }
 }

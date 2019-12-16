@@ -6,4 +6,8 @@
     <select id="getSubjectTotal" resultType="int">
         SELECT COUNT(subjectId) FROM subjectinfo
     </select>
+
+    <select id="getSubjectInfoById" resultType="com.xzq.online_exam.domain.SubjectInfo">
+        select * from subjectinfo where subjectId=#{id}
+    </select>
 </mapper>

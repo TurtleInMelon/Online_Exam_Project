@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.ESMInfoMapper">
+    <resultMap id="ESMInfo" type="com.xzq.online_exam.domain.ESMInfo">
+        <association property="subjectInfo" javaType="com.xzq.online_exam.domain.SubjectInfo">
+            <id property="subjectId" column="subjectId"/>
+            <result property="subjectName" column="subjectName"/>
+            <result property="optionA" column="optionA"/>
+            <result property="optionB" column="optionB"/>
+            <result property="optionC" column="optionC"/>
+            <result property="optionD" column="optionD"/>
+            <result property="rightResult" column="rightResult"/>
+            <result property="subjectScore" column="subjectScore"/>
+            <result property="subjectEasy" column="subjectEasy"/>
+            <result property="subjectType" column="subjectType"/>
+        </association>
+        <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+            <id property="examPaperId" column="examPaperId"></id>
+        </association>
+    </resultMap>
+
+    <select id="getAllESMWithSubjects" resultMap="ESMInfo" parameterType="java.lang.Integer">
+        select * from examsubjectmiddleinfo as es, subjectinfo as s where es.subjectId=s.subjectId and es.examPaperId=#{id};
+    </select>
+
+</mapper>

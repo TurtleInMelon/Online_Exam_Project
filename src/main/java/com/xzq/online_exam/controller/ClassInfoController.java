@@ -60,4 +60,10 @@ public class ClassInfoController {
         model.setViewName("admin/charts/studentCount");
         return model;
     }
+
+    @RequestMapping("/getAllClass")
+    @ResponseBody
+    public Msg getAllClass(){
+        return Msg.success().add("classes",classInfoService.getAllClassInfo());
+    }
 }

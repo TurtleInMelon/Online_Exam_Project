@@ -1,6 +1,7 @@
 package com.xzq.online_exam.service.impl;
 
 import com.xzq.online_exam.dao.SubjectInfoMapper;
+import com.xzq.online_exam.domain.SubjectInfo;
 import com.xzq.online_exam.service.SubjectInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,10 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     @Override
     public int getSubjectTotal() {
         return subjectInfoMapper.getSubjectTotal();
+    }
+
+    @Override
+    public SubjectInfo getSubjectInfoById(Integer id) {
+        return subjectInfoMapper.getSubjectInfoById(id);
     }
 }

@@ -18,4 +18,9 @@ public class CourseInfoServiceImpl implements CourseInfoService {
     public List<CourseInfo> getAllCoursesWithGradeName(CourseInfo courseInfo) {
         return courseInfoMapper.getAllCoursesWithGradeName(courseInfo);
     }
+
+    @Override
+    public CourseInfo getCourseByName(String name) {
+        return courseInfoMapper.getCourseByName(name);
+    }
 }

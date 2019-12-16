@@ -14,4 +14,8 @@ public interface ClassInfoMapper {
      * @return
      */
     public List<ClassInfo> getAllClassesWithTeacherName(ClassInfo classInfo);
+
+    public ClassInfo findClassByName(String className);
+
+    public List<ClassInfo> getAllClassInfo();
 }

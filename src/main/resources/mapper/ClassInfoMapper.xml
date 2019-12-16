@@ -37,4 +37,11 @@
         </where>
     </select>
 
+    <select id="findClassByName" resultType="com.xzq.online_exam.domain.ClassInfo" >
+        select * from classinfo where className=#{cName};
+    </select>
+
+    <select id="getAllClassInfo" resultType="com.xzq.online_exam.domain.ClassInfo">
+        select * from classinfo;
+    </select>
 </mapper>

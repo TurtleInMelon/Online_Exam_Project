@@ -11,4 +11,7 @@ public interface ClassInfoService {
     // 获取班级集合
     public List<ClassInfo> getAllClassesWithTeacherName(ClassInfo classInfo);
 
+    public ClassInfo findClassByName(String className);
+
+    public List<ClassInfo> getAllClassInfo();
 }

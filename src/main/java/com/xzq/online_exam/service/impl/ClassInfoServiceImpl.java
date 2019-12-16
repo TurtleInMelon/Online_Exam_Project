@@ -23,4 +23,14 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     public List<ClassInfo> getAllClassesWithTeacherName(ClassInfo classInfo) {
         return classInfoMapper.getAllClassesWithTeacherName(null);
     }
+
+    @Override
+    public ClassInfo findClassByName(String className) {
+        return classInfoMapper.findClassByName(className);
+    }
+
+    @Override
+    public List<ClassInfo> getAllClassInfo() {
+        return classInfoMapper.getAllClassInfo();
+    }
 }

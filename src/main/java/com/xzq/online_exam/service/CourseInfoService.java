@@ -7,4 +7,6 @@ import java.util.List;
 public interface CourseInfoService {
 
     List<CourseInfo> getAllCoursesWithGradeName(CourseInfo courseInfo);
+
+    public CourseInfo getCourseByName(String name);
 }
