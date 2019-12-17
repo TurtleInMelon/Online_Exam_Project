@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.plugin.javascript.navig.LinkArray;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,13 @@ public class MapperTest {
 
     @Autowired
     private ExamSubjectMiddleInfoService examSubjectMiddleInfoService;
+    private ExamPlanService examPlanService;
+
+    @Autowired
+    private ExamHistoryInfoService examHistoryInfoService;
+
+    @Autowired
+    private ExamChooseInfoService examChooseInfoService;
 
 
     @Test
@@ -88,7 +96,29 @@ public class MapperTest {
             System.out.println(studentInfo);
         }
     }
-
+    @Test
+    public void testStuInfo(){
+        List<StudentInfo> all=studentInfoService.getAllStudents();
+        for(StudentInfo studentInfo:all)
+            System.out.println(studentInfo);
+    }
+    @Test
+    public void testExamPlan(){
+        List<ExamPlanInfo>all=examPlanService.getExamPlan();
+        for(ExamPlanInfo e:all)
+            System.out.println(e);
+    }
+    @Test
+    public void testgetExamHistory()
+    {
+        List<ExamHistoryInfo>all=examHistoryInfoService.getExamHistory();
+        for(ExamHistoryInfo e:all)
+            System.out.println(e);
+    }
+    @Test
+    public void testdeleteOne(){
+        studentInfoService.deleteOne(98);
+    }
     @Test
     public void testSubjectInfo(){
         /**int total=subjectInfoService.getSubjectTotal();
@@ -251,4 +281,21 @@ public class MapperTest {
 
 
 
+    @Test
+    public void test(){
+        System.out.println(examHistoryInfoService.JudgeStuExam(11,11));
+    }
+    @Test
+    public void testExam(){
+        String name="张君宝";
+        String paper="计算机常识";
+        List<ExamChooseInfo> all=examChooseInfoService.getAllExamChoose(name,paper);
+        Integer i=0;
+        for(ExamChooseInfo examChooseInfo:all)
+        {
+            System.out.println(examChooseInfo);
+            i++;
+        }
+        System.out.println(i);
+    }
 }

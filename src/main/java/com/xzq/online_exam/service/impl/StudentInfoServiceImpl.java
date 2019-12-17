@@ -32,4 +32,38 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     public List<StudentInfo> getStudentsByClassId(Integer classId) {
         return studentInfoMapper.getStudentsByClassId(classId);
     }
+
+    @Override
+    public List<StudentInfo> getAllStudents() {
+        //System.out.println("service");
+        List<StudentInfo> all=studentInfoMapper.getAllStudents();
+        for(StudentInfo studentInfo: all)
+            System.out.println(studentInfo);
+        return all;
+    }
+
+    @Override
+    public void deleteOne(Integer id) {
+        studentInfoMapper.deleteOne(id);
+    }
+
+    @Override
+    public void addOne(StudentInfo studentInfo) {
+        studentInfoMapper.addOne(studentInfo);
+    }
+
+    @Override
+    public void updateOneStudent(StudentInfo studentInfo) {
+        studentInfoMapper.updateOneStudent(studentInfo);
+    }
+
+    @Override
+    public Integer checkUser(String studentName) {
+        return studentInfoMapper.checkUser(studentName);
+    }
+
+    @Override
+    public StudentInfo getStudentWithPwd(String studentAccount) {
+        return studentInfoMapper.getStudentWithPwd(studentAccount);
+    }
 }

@@ -44,4 +44,8 @@ public interface ClassInfoService {
 
     //根据当前班级班主任编号获取当前班级信息
     ClassInfo getClassByTeacherId(Integer teacherId);
+
+    public ClassInfo findClassByName(String className);
+
+    public List<ClassInfo> getAllClassInfo();
 }

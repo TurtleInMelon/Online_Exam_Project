@@ -24,7 +24,6 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     public List<ClassInfo> getAllClassesWithTeacherName(ClassInfo classInfo) {
         return classInfoMapper.getAllClassesWithTeacherName(null);
     }
-
     /**
      * 根据班级id获取每个班级学生的数量
      * @param gradeId
@@ -88,5 +87,14 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     @Override
     public ClassInfo getClassByTeacherId(Integer teacherId) {
         return classInfoMapper.getClassByTeacherId(teacherId);
+    }
+    @Override
+    public ClassInfo findClassByName(String className) {
+        return classInfoMapper.findClassByName(className);
+    }
+
+    @Override
+    public List<ClassInfo> getAllClassInfo() {
+        return classInfoMapper.getAllClassInfo();
     }
 }

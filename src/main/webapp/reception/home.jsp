@@ -18,6 +18,13 @@
     <link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/zeroModal/zeroModal.css"/>
+    <style>
+        .loginStatus{
+            font-size: 20px;
+            float: right;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body >
 
@@ -25,7 +32,7 @@
     <div style="padding: 20px;">
         <img src="${APP_PATH}/static/images/home-bg.png" width="100%"/>
         <p style="margin-top:20px;">
-            <a type="button" class="btn btn-info" href="http://cs.cumt.edu.cn/">了解更多</a>
+            <a type="button" class="btn btn-info" href="https://www.baidu.com/">了解更多</a>
         </p>
     </div>
 </div>

@@ -1,5 +1,4 @@
 package com.xzq.online_exam.domain;
-
 import java.io.Serializable;
 
 public class SubjectInfo implements Serializable {
@@ -17,6 +16,10 @@ public class SubjectInfo implements Serializable {
     private CourseInfo course;
     private GradeInfo grade;
 
+    public SubjectInfo (Integer subjectId){
+        this.subjectId=subjectId;
+    }
+    public SubjectInfo(){}
     public Integer getSubjectId() {
         return subjectId;
     }
@@ -72,7 +75,7 @@ public class SubjectInfo implements Serializable {
     public void setRightResult(String rightResult) {
         this.rightResult = rightResult;
     }
-
+	
     public int getSubjectScore() {
         return subjectScore;
     }
@@ -104,6 +107,7 @@ public class SubjectInfo implements Serializable {
     public void setDivision(int division) {
         this.division = division;
     }
+
 
     public CourseInfo getCourse() {
         return course;

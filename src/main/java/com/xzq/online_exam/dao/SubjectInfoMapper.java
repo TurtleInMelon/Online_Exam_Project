@@ -3,7 +3,10 @@ package com.xzq.online_exam.dao;
 import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.domain.SubjectInfo;
 import org.apache.ibatis.annotations.Param;
+
+import com.xzq.online_exam.domain.SubjectInfo;
 import org.springframework.stereotype.Repository;
+import sun.security.x509.SubjectAlternativeNameExtension;
 
 import java.util.List;
 
@@ -52,4 +55,6 @@ public interface SubjectInfoMapper {
 
     //删除试题
     void deleteSubjectById(Integer id);
+
+    public SubjectInfo getSubjectInfoById(Integer id);
 }

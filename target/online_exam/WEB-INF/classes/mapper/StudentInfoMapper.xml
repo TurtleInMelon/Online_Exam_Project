@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzq.online_exam.dao.StudentInfoMapper">
-
+<resultMap id="StudentsInformation" type="com.xzq.online_exam.domain.StudentInfo">
+    <id property="studentId" column="studentId"/>
+    <result property="studentName" column="studentName"/>
+    <result property="studentAccount" column="studentAccount"/>
+    <result property="studentPwd" column="studentPwd"/>
+    <association property="classInfo" javaType="com.xzq.online_exam.domain.ClassInfo">
+        <result property="className" column="className"/>
+        <association property="gradeInfo" javaType="com.xzq.online_exam.domain.GradeInfo">
+            <result property="gradeName" column="gradeName"/>
+        </association>
+    </association>
+</resultMap>
     <!--获取学生总数-->
     <select id="getStudentTotal" resultType="int">
-        SELECT COUNT(studentId) FROM studentinfo
+        SELECT COUNT(studentId) FROM studentinfo;
     </select>
 
+    <select id="getAllStudents" resultMap="StudentsInformation">
+        select s.studentId,s.studentName,s.studentAccount,s.studentPwd,cl.className,g.gradeName from studentinfo as s,classinfo as cl,gradeinfo as g where cl.classId=s.classId and g.gradeId=cl.gradeId and g.gradeId=cl.gradeId
+    </select>
+
+    <delete id="deleteOne">
+        delete from studentinfo where studentId=#{id};
+    </delete>
+
+    <insert id="addOne" parameterType="com.xzq.online_exam.domain.StudentInfo">
+        insert into studentinfo (studentName, studentAccount, studentPwd,classId) values (#{studentName},#{studentAccount},#{studentPwd},#{classInfo.classId});
+    </insert>
+
+    <update id="updateOneStudent" parameterType="com.xzq.online_exam.domain.StudentInfo">
+        update studentinfo set studentName=#{studentName}, studentAccount=#{studentAccount}, studentPwd=#{studentPwd},classId=#{classInfo.classId} where studentId=#{studentId}
+    </update>
+
+    <select id="checkUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)from studentinfo where studentAccount=#{studentAccount}
+    </select>
+
+    <select id="getStudentWithPwd" resultType="com.xzq.online_exam.domain.StudentInfo">
+        select * from studentinfo where studentAccount=#{studentAccount};
+    </select>
     <select id="getStudentsByClassId" resultType="com.xzq.online_exam.domain.StudentInfo" parameterType="int">
         SELECT studentId,studentName FROM studentinfo WHERE classId=#{classId}
     </select>
 
 </mapper>
+

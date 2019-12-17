@@ -14,10 +14,24 @@ public interface StudentInfoMapper {
      */
     public int getStudentTotal();
 
+
     /**
      * 根据班级编号获取学生信息
      * @param classId
      * @return
      */
     List<StudentInfo> getStudentsByClassId(Integer classId);
+
+    public List<StudentInfo> getAllStudents();
+
+    public void deleteOne(Integer id);
+
+    public void addOne(StudentInfo studentInfo);
+
+    public void updateOneStudent(StudentInfo studentInfo);
+
+    public Integer checkUser(String studentName);
+
+    public StudentInfo getStudentWithPwd(String studentAccount);
+
 }

@@ -44,4 +44,6 @@ public interface CourseInfoService {
      * @param del_ids
      */
     void deleteBatch(List<Integer> del_ids);
+
+    public CourseInfo getCourseByName(String name);
 }

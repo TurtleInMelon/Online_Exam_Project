@@ -169,4 +169,10 @@ public class ClassInfoController {
         model.addObject("grades",allGrades);
         return model;
     }
+
+    @RequestMapping("/getAllClass")
+    @ResponseBody
+    public Msg getAllClass(){
+        return Msg.success().add("classes",classInfoService.getAllClassInfo());
+    }
 }

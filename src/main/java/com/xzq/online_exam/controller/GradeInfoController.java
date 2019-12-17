@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -139,5 +141,11 @@ public class GradeInfoController {
         model.setViewName("admin/grades");
         //model.addObject("pageInfo","pageInfo");
         return model;
+    }
+
+    @RequestMapping("/getAllGrades")
+    @ResponseBody
+    public Msg getAllGrades(){
+        return Msg.success().add("grades",gradeInfoService.getAllGrades());
     }
 }

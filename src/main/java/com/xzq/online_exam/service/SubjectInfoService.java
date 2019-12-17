@@ -1,8 +1,5 @@
 package com.xzq.online_exam.service;
-
-import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.domain.SubjectInfo;
-
 import java.util.List;
 
 public interface SubjectInfoService {
@@ -11,8 +8,6 @@ public interface SubjectInfoService {
      * @return
      */
     public int getSubjectTotal();
-
-
     /**
      * 查询所有试卷信息
      * @return
@@ -59,4 +54,5 @@ public interface SubjectInfoService {
      * @param del_ids
      */
     void deleteBatch(List<Integer> del_ids);
+    public SubjectInfo getSubjectInfoById(Integer id);
 }

@@ -19,9 +19,11 @@
     
     <!--获取试卷的总数量-->
     <select id="getExamPaperTotal" resultType="int">
-		SELECT COUNT(examPaperId) FROM exampaperinfo
+		SELECT COUNT(examPaperId) FROM exampaperinfo;
 	</select>
-
+    <select id="getExamPaperByName" resultType="com.xzq.online_exam.domain.ExamPaperInfo">
+        select * from exampaperinfo where examPaperName=#{name}
+    </select>
     <select id="getAllExamPapers" resultMap="queryExamPaper">
         SELECT a.*,b.gradeName FROM exampaperinfo a INNER
         JOIN gradeinfo b ON a.gradeId=b.gradeId
@@ -46,4 +48,7 @@
         DELETE FROM exampaperinfo WHERE examPaperId=#{id}
     </delete>
 
+    <select id="getAllExamPaper" resultType="com.xzq.online_exam.domain.ExamPaperInfo">
+        select * from exampaperinfo;
+    </select>
 </mapper>
