@@ -4,7 +4,6 @@ import com.xzq.online_exam.domain.ExamPaperInfo;
 
 import java.util.List;
 
-
 public interface ExamPaperInfoService {
     /**
      * 获取总的试卷数量
@@ -45,4 +44,8 @@ public interface ExamPaperInfoService {
      * @param del_ids
      */
     void deleteBatch(List<Integer> del_ids);
+
+    public ExamPaperInfo getExamPaperByName(String name);
+
+    public List<ExamPaperInfo> getAllExamPaper();
 }

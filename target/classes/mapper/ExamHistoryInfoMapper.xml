@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.ExamHistroyInfoMapper">
+<resultMap id="examHistory" type="com.xzq.online_exam.domain.ExamHistoryInfo">
+    <result property="examScore" column="examScore"/>
+    <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+        <result column="examPaperName" property="examPaperName"/>
+        <result property="examPaperScore" column="examPaperScore"/>
+        <result property="subjectNum" column="subjectNum"/>
+        <result property="examPaperTime" column="examPaperTime"/>
+        <result property="examPaperEasy" column="examPaperEasy"/>
+    </association>
+    <association property="studentInfo" javaType="com.xzq.online_exam.domain.StudentInfo">
+        <result column="studentName" property="studentName"/>
+    </association>
+</resultMap>
+    <select id="getExamHistory" resultMap="examHistory">
+        select p.examPaperName,p.examPaperScore,h.examScore,p.subjectNum,h.examScore,s.studentName from examhistoryinfo as h,exampaperinfo as p,studentinfo as s where s.studentId=h.studentId and h.examPaperId=p.examPaperId
+    </select>
+
+    <select id="getExamHistoryOfOne" resultMap="examHistory"  parameterType="com.xzq.online_exam.domain.StudentInfo">
+        select * from examhistoryinfo,exampaperinfo where examhistoryinfo.examPaperId=exampaperinfo.examPaperId and studentId=#{studentId}
+    </select>
+
+    <insert id="saveHistoryRecord" parameterType="com.xzq.online_exam.domain.ExamHistoryInfo">
+        insert into examhistoryinfo (studentId, examPaperId, examScore) values (#{studentInfo.studentId},#{examPaperInfo.examPaperId},#{examScore});
+    </insert>
+
+    <select id="JudgeStuExam" resultType="com.xzq.online_exam.domain.ExamHistoryInfo" parameterType="java.lang.Integer">
+        select * from examhistoryinfo where studentId=#{sId} and examPaperId=#{eId}
+    </select>
+</mapper>

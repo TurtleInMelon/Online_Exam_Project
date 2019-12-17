@@ -17,11 +17,14 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="0"/>
         <property name="prefix" value=""/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
     <!--静态资源处理-->
     <mvc:default-servlet-handler/>
     <!--mvc注解驱动-->

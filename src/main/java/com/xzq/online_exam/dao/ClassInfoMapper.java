@@ -53,4 +53,8 @@ public interface ClassInfoMapper {
      * @return
      */
     ClassInfo getClassByTeacherId(Integer teacherId);
+    public ClassInfo findClassByName(String className);
+
+    public List<ClassInfo> getAllClassInfo();
+
 }

@@ -7,6 +7,9 @@ public class ExamChooseInfo implements Serializable {
     private StudentInfo student;
     private ExamPaperInfo examPaper;
     private SubjectInfo subject;
+    private StudentInfo studentInfo;
+    private ExamPaperInfo examPaperInfo;
+    private SubjectInfo subjectInfo;
     private String chooseResult;
 
     public Integer getChooseId() {
@@ -41,6 +44,26 @@ public class ExamChooseInfo implements Serializable {
         this.subject = subject;
     }
 
+    public void setStudentInfo(StudentInfo studentInfo) {
+        this.studentInfo = studentInfo;
+    }
+
+    public ExamPaperInfo getExamPaperInfo() {
+        return examPaperInfo;
+    }
+
+    public void setExamPaperInfo(ExamPaperInfo examPaperInfo) {
+        this.examPaperInfo = examPaperInfo;
+    }
+
+    public SubjectInfo getSubjectInfo() {
+        return subjectInfo;
+    }
+
+    public void setSubjectInfo(SubjectInfo subjectInfo) {
+        this.subjectInfo = subjectInfo;
+    }
+
     public String getChooseResult() {
         return chooseResult;
     }
@@ -56,6 +79,9 @@ public class ExamChooseInfo implements Serializable {
                 ", student=" + student +
                 ", examPaper=" + examPaper +
                 ", subject=" + subject +
+                ", studentInfo=" + studentInfo +
+                ", examPaperInfo=" + examPaperInfo +
+                ", subjectInfo=" + subjectInfo +
                 ", chooseResult='" + chooseResult + '\'' +
                 '}';
     }

@@ -7,6 +7,10 @@ public class StudentInfo {
     private String studentPwd;
     private ClassInfo classInfo;
 
+    public StudentInfo(Integer studentId){
+        this.studentId=studentId;
+    }
+    public StudentInfo(){}
     public Integer getStudentId() {
         return studentId;
     }

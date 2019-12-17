@@ -28,6 +28,9 @@
         </where>
         ORDER BY courseId DESC
     </select>
+    <select id="getCourseByName" resultType="com.xzq.online_exam.domain.CourseInfo">
+        select * from courseinfo where courseName=#{name}
+    </select>
 
     <!--获取所有年级名字-->
     <select id="getAllCourseNames" resultType="com.xzq.online_exam.domain.CourseInfo">

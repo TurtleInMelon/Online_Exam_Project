@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.ExamChooseInfoMapper">
+    <resultMap id="examChoose" type="com.xzq.online_exam.domain.ExamChooseInfo">
+        <result property="chooseResult" column="chooseResult"/>
+        <association property="subjectInfo" javaType="com.xzq.online_exam.domain.SubjectInfo">
+            <result property="subjectName" column="subjectName"/>
+            <result property="optionA" column="optionA"/>
+            <result property="optionB" column="optionB"/>
+            <result property="optionC" column="optionC"/>
+            <result property="optionD" column="optionD"/>
+            <result property="rightResult" column="rightResult"/>
+            <result property="subjectScore" column="subjectScore"/>
+            <result property="subjectEasy" column="subjectEasy"/>
+            <result property="subjectType" column="subjectType"/>
+        </association>
+        <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+            <result property="examPaperName" column="examPaperName"/>
+            <result property="examPaperEasy" column="examPaperEasy"/>
+            <result property="examPaperTime" column="examPaperTime"/>
+        </association>
+    </resultMap>
+    <select id="getAllExamChoose" resultMap="examChoose" parameterType="java.lang.String">
+        select *
+        from subjectinfo as s, studentinfo as st, exampaperinfo as ep, examchooseinfo as ec
+        where ec.studentId=st.studentId and ec.examPaperId=ep.examPaperId and ec.subjectId=s.subjectId and st.studentName=#{studentName} and ep.examPaperName=#{examPaperName}
+    </select>
+    <insert id="saveExamChoose" parameterType="com.xzq.online_exam.domain.ExamChooseInfo">
+        insert into examchooseinfo (studentId, examPaperId, subjectId, chooseResult) values (#{studentInfo.studentId},#{examPaperInfo.examPaperId},#{subjectInfo.subjectId},#{chooseResult})
+    </insert>
+</mapper>

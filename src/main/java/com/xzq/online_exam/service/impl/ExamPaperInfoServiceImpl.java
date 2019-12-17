@@ -81,4 +81,14 @@ public class ExamPaperInfoServiceImpl implements ExamPaperInfoService {
             examPaperInfoMapper.deleteExamPaperById(each);
         }
     }
+    @Override
+    public ExamPaperInfo getExamPaperByName(String name) {
+        return examPaperInfoMapper.getExamPaperByName(name);
+    }
+
+    @Override
+    public List<ExamPaperInfo> getAllExamPaper() {
+        return examPaperInfoMapper.getAllExamPaper();
+    }
+
 }

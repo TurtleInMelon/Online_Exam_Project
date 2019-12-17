@@ -72,9 +72,13 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
 
     @Override
     public void deleteBatch(List<Integer> del_ids) {
-        for(Integer each:del_ids){
+        for (Integer each : del_ids) {
             System.out.println(each);
             subjectInfoMapper.deleteSubjectById(each);
         }
+    }
+    @Override
+    public SubjectInfo getSubjectInfoById(Integer id) {
+        return subjectInfoMapper.getSubjectInfoById(id);
     }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.ExamPlanMapper">
+    <resultMap id="examPlan" type="com.xzq.online_exam.domain.ExamPlanInfo">
+        <id column="examPlanId" property="examPlanId"/>
+        <result column="beginTime" property="beginTime"/>
+        <association property="courseInfo" javaType="com.xzq.online_exam.domain.CourseInfo">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+        <association property="classInfo" javaType="com.xzq.online_exam.domain.ClassInfo">
+            <result property="className" column="className"/>
+        </association>
+        <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+            <id property="examPaperId" column="examPaperId"/>
+            <result property="examPaperName" column="examPaperName"/>
+            <result property="subjectNum" column="subjectNum"/>
+            <result property="examPaperTime" column="examPaperTime"/>
+            <result property="examPaperScore" column="examPaperScore"/>
+            <result property="examPaperEasy" column="examPaperEasy"/>
+        </association>
+    </resultMap>
+    <select id="getExamPlan" resultMap="examPlan">
+        select pl.examPlanId,cl.className,pr.*,pl.beginTime,cr.courseName,cr.courseId,pr.examPaperTime
+        from exampaperinfo as pr,examplaninfo as pl,classinfo as cl,courseinfo as cr
+        where cl.classId=pl.classId and pl.examPaperId=pr.examPaperId and pl.courseId=cr.courseId
+    </select>
+    <delete id="deleteOne">
+        delete from examplaninfo where examPlanId=#{id}
+    </delete>
+    <insert id="addOne" parameterType="com.xzq.online_exam.domain.ExamPlanInfo">
+        insert into examplaninfo (courseId,classId,examPaperId,beginTime) values (#{courseInfo.courseId},#{classInfo.classId},#{examPaperInfo.examPaperId},#{beginTime})
+    </insert>
+    <update id="updateOne" parameterType="com.xzq.online_exam.domain.ExamPlanInfo">
+        update examplaninfo set examPaperId=#{examPaperInfo.examPaperId}, courseId=#{courseInfo.courseId}, classId=#{classInfo.classId} where examPlanId=#{examPlanId};
+    </update>
+</mapper>

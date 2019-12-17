@@ -12,6 +12,10 @@ public class ClassInfo implements Serializable {
     //教师信息
     private TeacherInfo teacherInfo;
 
+    public ClassInfo(Integer classId){
+        this.classId=classId;
+    }
+    public ClassInfo(){}
     public Integer getClassId() {
         return classId;
     }

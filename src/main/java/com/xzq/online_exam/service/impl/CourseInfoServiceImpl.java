@@ -47,8 +47,11 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 
     @Override
     public void deleteBatch(List<Integer> del_ids) {
-        for(Integer each:del_ids){
+        for (Integer each : del_ids) {
             courseInfoMapper.deleteCourseById(each);
         }
+    }
+    public CourseInfo getCourseByName(String name) {
+        return courseInfoMapper.getCourseByName(name);
     }
 }

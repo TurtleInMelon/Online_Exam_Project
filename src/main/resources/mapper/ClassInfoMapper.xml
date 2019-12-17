@@ -40,7 +40,6 @@
         </where>
     </select>
 
-
     <select id="getStudentCountForClass" parameterType="int" resultType="com.xzq.online_exam.domain.ClassInfo">
         select count(s.studentId) as classId,c.className as className
         from studentinfo s,gradeinfo g,classinfo c
@@ -73,4 +72,11 @@
         SELECT classId,className FROM classinfo where teacherId=#{teacherId}
     </select>
 
+    <select id="findClassByName" resultType="com.xzq.online_exam.domain.ClassInfo" >
+        select * from classinfo where className=#{cName};
+    </select>
+
+    <select id="getAllClassInfo" resultType="com.xzq.online_exam.domain.ClassInfo">
+        select * from classinfo;
+    </select>
 </mapper>
