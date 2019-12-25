@@ -2,8 +2,6 @@ package com.xzq.online_exam.test;
 
 
 
-import com.xzq.online_exam.controller.SubjectInfoController;
-import com.xzq.online_exam.dao.TeacherInfoMapper;
 import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
 import org.junit.Test;
@@ -11,11 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import sun.plugin.javascript.navig.LinkArray;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -297,5 +292,19 @@ public class MapperTest {
             i++;
         }
         System.out.println(i);
+    }
+
+    @Test
+    public void testExamHistory(){
+        List<ExamHistoryInfo> infos = examHistoryInfoService.getExamHistoryOfOne(19);
+        for(ExamHistoryInfo info:infos){
+            System.out.println(info);
+        }
+        /**
+        List<ExamHistoryInfo> examHistory = examHistoryInfoService.getExamHistory();
+        for(ExamHistoryInfo each:examHistory){
+            System.out.println(each);
+        }**/
+
     }
 }

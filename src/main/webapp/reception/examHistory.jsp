@@ -26,7 +26,7 @@
 <script type="text/javascript">
     <c:forEach items="${examInfo}" var="t" varStatus="status">
     var paper=$("<ul>\n" +
-        "        <h5>"+"${t.examPaperInfo.examPaperName}"+"</h5>\n" +
+        "        <li>"+"${t.examPaperInfo.examPaperName}"+"</li>\n" +
         "        <li>题目数量"+"${t.examPaperInfo.subjectNum}"+"</li>\n" +
         "        <li>总分"+"${t.examPaperInfo.examPaperScore}"+"</li>\n" +
         "        <li>考试得分"+"${t.examScore}"+"</li>\n" +

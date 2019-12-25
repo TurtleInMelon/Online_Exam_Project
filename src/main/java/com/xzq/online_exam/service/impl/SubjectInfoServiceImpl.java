@@ -1,6 +1,5 @@
 package com.xzq.online_exam.service.impl;
 
-import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.dao.SubjectInfoMapper;
 import com.xzq.online_exam.domain.SubjectInfo;
 import com.xzq.online_exam.service.SubjectInfoService;

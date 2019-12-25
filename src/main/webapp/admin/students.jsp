@@ -90,6 +90,10 @@
                 "<div class='login'>\n"+
             "<div class='modal-dialog'>\n"+
             "<div class=\"modal-content\">\n"+
+            "<div class=\"modal-header\">\n" +
+            "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+            "                    <h4 class=\"modal-title\" id=\"teacherId-edit\">记录 编辑</h4>\n" +
+            "                </div>\n"+
                 "<div class=\"modal-body\">\n"+
             "        <div>\n" +
             "            <label>学生编号</label><input style='width: 100%' type=\"text\" name=\"sId\" readonly=\"readonly\" value="+$(this).siblings("td").eq(1).html()+">\n" +
@@ -108,7 +112,7 @@
             "    </div>\n"+
         "</div></div></div></div>");
         var thisClass=$(this).siblings("td").eq(5).html();
-        var thisGrade=$(this).siblings("td").eq(6).html()
+        var thisGrade=$(this).siblings("td").eq(6).html();
         $("body").append($stu);
         $.ajax({
             url:"${APP_PATH}/getAllClass",
@@ -137,6 +141,9 @@
             }
         });
         $(".cancel_btn").click(function () {
+            $(this).parents(".mask").remove();
+        })
+        $(".close").click(function () {
             $(this).parents(".mask").remove();
         })
         $(".sure_btn").click(function () {
@@ -179,32 +186,71 @@
 
     $(".add_btn").click(function () {
         var $stu=$("<div class=\"mask\">\n" +
-            "    <div class=\"login\">\n" +
+            "    <div class=\"login\" >\n" +
+            "    <div class='modal-dialog' >\n"+
+            "    <div class='modal-content' >\n"+
+            "<div class=\"modal-header\">\n" +
+            "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+            "                    <h4 class=\"modal-title\" id=\"teacherId-edit\">记录 编辑</h4>\n" +
+            "                </div>\n"+
+            "<div class=\"modal-body\">\n"+
             "        <div>\n" +
-            "            <label>学生编号</label><input type=\"text\" name=\"sId\" readonly=\"readonly\">\n" +
-            "            <label>学生姓名</label><input type=\"text\" name=\"sName\">\n" +
-            "            <label>学生账户</label><input type=\"text\" name=\"sAccount\">\n" +
-            "            <label>学生密码</label><input type=\"text\" name=\"sPassword\">\n" +
-            "            <label>就读班级</label><input type=\"text\" name=\"sClass\">\n" +
-            "            <label>就读年级</label><input type=\"text\" name=\"sGrade\">\n" +
+            "            <label>学生姓名</label><input style='width: 100%'  type=\"text\" name=\"sName\">\n" +
+            "            <label>学生账户</label><input style='width: 100%' type=\"text\" name=\"sAccount\">\n" +
+            "            <label>学生密码</label><input style='width: 100%' type=\"text\" name=\"sPassword\">\n" +
+            "            <label>就读班级</label>\n" +
+            "            <select class=\"form-control\" id=\"class_selector\">\n" +
+            "            </select>\n" +
+            "            <label>就读年级</label>\n" +
+            "            <select class=\"form-control\" id=\"grade_selector\">\n" +
+            "            </select>\n" +
             "        </div>\n" +
             "        <button class=\"btn btn-info sure_btn\">确认</button>\n" +
             "        <button class=\"btn btn-info cancel_btn\">取消</button>\n" +
             "    </div>\n" +
+            "    </div>\n" +
+            "    </div>\n" +
             "</div>");
         $("body").append($stu);
+        $.ajax({
+            url:"${APP_PATH}/getAllClass",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.classes).each(function (i,obj) {
+                    var className=$("<option>"+obj.className+"</option>");
+                    $("#class_selector").append(className);
+                })
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/getAllGrades",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.grades).each(function (i,obj) {
+                    var gradeName=$("<option>"+obj.gradeName+"</option>");
+                    $("#grade_selector").append(gradeName);
+                })
+            }
+        });
+        $(".close").click(function () {
+            $(this).parents(".mask").remove();
+        })
         $(".sure_btn").click(function () {
             var id=$("input[name='sId']").val();
             var name=$("input[name='sName']").val();
             var account=$("input[name='sAccount']").val();
             var pwd=$("input[name='sPassword']").val();
-            var cls=$("input[name='sClass']").val();
-            var grade=$("input[name='sGrade']").val();
+            var cls=$("#class_selector").val();
+            var grade=$("#grade_selector").val();
             console.log(id+name+account+pwd+cls+grade);
             $.ajax({
                 url:"${APP_PATH}/addOneStudent",
                 type:"GET",
-                data:{"studentId":id,"studentName":name,"studentAccount":account,"studentPwd":pwd,"classId":cls,"gradeId":grade},
+                data:{"studentName":name,"studentAccount":account,"studentPwd":pwd,"classId":cls,"gradeId":grade},
                 dataType:"json",
                 success:function (result) {
                     alert("添加成功！");

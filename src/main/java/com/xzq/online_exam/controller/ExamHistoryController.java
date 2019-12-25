@@ -50,7 +50,7 @@ public class ExamHistoryController {
         }
         else {
 
-            List<ExamHistoryInfo> all=examHistoryInfoService.getExamHistoryOfOne(new StudentInfo(studentId));
+            List<ExamHistoryInfo> all=examHistoryInfoService.getExamHistoryOfOne(studentId);
             System.out.println(all);
             model.addAttribute("examInfo",all);
             return "/reception/examHistory";

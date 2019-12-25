@@ -138,4 +138,11 @@ public class ExamPaperController {
         //model.addObject("pageInfo","pageInfo");
         return model;
     }
+
+    @RequestMapping("/getAllPaperNames")
+    @ResponseBody
+    public Msg getAll(){
+        System.out.println(examPaperInfoService.getAllPaperName());
+        return Msg.success().add("papers",examPaperInfoService.getAllPaperName());
+    }
 }

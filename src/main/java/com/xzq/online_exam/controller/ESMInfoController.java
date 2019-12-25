@@ -58,6 +58,12 @@ public class ESMInfoController {
         return "/reception/exam";
     }
 
+    @RequestMapping("/initScore")
+    @ResponseBody
+    public void setScoreZero(){
+        examScore=0;
+    }
+
     @RequestMapping("/Ha/submitResult")
     @ResponseBody
     public Msg submitSuccess(HttpServletRequest request){
