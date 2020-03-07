@@ -47,6 +47,8 @@ public interface ExamPaperInfoMapper {
      */
     void deleteExamPaperById(Integer id);
 
+    public List<ExamPaperInfo> getAllPaperName();
+
      public ExamPaperInfo getExamPaperByName(String name);
 
      public List<ExamPaperInfo> getAllExamPaper();

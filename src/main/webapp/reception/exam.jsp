@@ -49,14 +49,15 @@
     </style>
 </head>
 <body style="background-color: #F4F4F4;">
-<div style="margin-top: 50px" id="countdown"></div>
+<div style="margin-top: 50px" id="countdown">
+    <a></a>
+</div>
 <div class="container" style="margin-top: 150px">
     <div style="width: 60%; height: 100%; float: left;">
         <div style="width: 100%; height: 80%;" >
             <dl subject="1" style="width:100%;">
                 <div id="exam">
 
-                    </p>
                 </div>
             </dl>
             <div style="width:100%; height:20%; margin-top: 170px;">
@@ -98,7 +99,15 @@
 
     });
     $("#countdown").timeTo(parseInt(${examPaperTime}), function() {
-        var examScore=0;
+        $.ajax({
+            url:"${APP_PATH}/initScore",
+            data:{},
+            dataType:"JSON",
+            type:"POST",
+            success:function () {
+                
+            }
+        })
         $(".question").each(function () {
             var subjectId=$(this).attr("id");
             var type=$(this).attr("subType");
@@ -138,7 +147,7 @@
                 
             }
         });
-        $(this).attr("href","${APP_PATH}/reception/submitSuccess.jsp");
+        $(this).children("a").href="${APP_PATH}/reception/submitSuccess.jsp";
     });
     $(".btn_next").click(function () {
         var now=parseInt($("dl").attr("subject"));
@@ -181,7 +190,15 @@
     );
 
     $("#submit").click(function () {
-        var examScore;
+        $.ajax({
+            url:"${APP_PATH}/initScore",
+            data:{},
+            dataType:"JSON",
+            type:"POST",
+            success:function () {
+
+            }
+        })
         $(".question").each(function () {
             var subjectId=$(this).attr("id");
             var type=$(this).attr("subType");
@@ -215,7 +232,7 @@
         });
         $.ajax({
             url:"${APP_PATH}/saveHistory",
-            data:{"studentId":${sessionScope.studentId},"examPaperId":"${examPaperId}","examScore":examScore},
+            data:{"studentId":${sessionScope.studentId},"examPaperId":"${examPaperId}"},
             dataType:"JSON",
             type:"POST"
 

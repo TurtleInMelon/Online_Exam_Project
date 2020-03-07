@@ -48,4 +48,6 @@ public interface ExamPaperInfoService {
     public ExamPaperInfo getExamPaperByName(String name);
 
     public List<ExamPaperInfo> getAllExamPaper();
+
+    public List<ExamPaperInfo> getAllPaperName();
 }

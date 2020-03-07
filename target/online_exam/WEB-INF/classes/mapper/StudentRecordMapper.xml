@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.StudentRecordMapper">
+    <resultMap id="record" type="com.xzq.online_exam.domain.ESMInfo">
+        <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+            <id column="examPaperId" property="examPaperId"/>
+            <result property="examPaperName" column="examPaperName"/>
+        </association>
+        <association property="subjectInfo" javaType="com.xzq.online_exam.domain.SubjectInfo">
+            <id column="subjectId" property="subjectId"/>
+            <result property="subjectType" column="subjectType"/>
+            <result property="subjectEasy" column="subjectEasy"/>
+            <result property="subjectScore" column="subjectScore"/>
+            <result property="subjectName" column="subjectName"/>
+        </association>
+    </resultMap>
+    <select id="getRecordByStudentId" resultMap="record">
+        select * from examsubjectmiddleinfo as esm, studentrecordinfo as r,exampaperinfo as e,subjectinfo as s
+        where studentId=#{id} and esm.examPaperId=e.examPaperId and esm.subjectId=s.subjectId and esm.esmId=r.esmId;
+    </select>
+
+    <insert id="addOne" parameterType="com.xzq.online_exam.domain.StudentRecordInfo">
+        insert into studentrecordinfo (studentId, esmId) VALUES (#{studentInfo.studentId},#{esmInfo.esmId})
+    </insert>
+</mapper>

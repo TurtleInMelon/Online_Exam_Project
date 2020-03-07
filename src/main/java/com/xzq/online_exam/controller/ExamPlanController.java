@@ -88,6 +88,7 @@ public class ExamPlanController {
         ClassInfo classInfo = classInfoService.findClassByName(request.getParameter("className"));
         CourseInfo courseInfo = courseInfoService.getCourseByName(request.getParameter("courseName"));
         ExamPaperInfo examPaperInfo = examPaperInfoService.getExamPaperByName(request.getParameter("examPaperName"));
+        System.out.println(classInfo+""+courseInfo+""+examPaperInfo);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date beginTime = format.parse(request.getParameter("beginTime"));

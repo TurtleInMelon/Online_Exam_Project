@@ -1,6 +1,5 @@
 package com.xzq.online_exam.service.impl;
 
-import com.xzq.online_exam.controller.SubjectInfoController;
 import com.xzq.online_exam.dao.SubjectInfoMapper;
 import com.xzq.online_exam.domain.SubjectInfo;
 import com.xzq.online_exam.service.SubjectInfoService;
@@ -81,4 +80,10 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     public SubjectInfo getSubjectInfoById(Integer id) {
         return subjectInfoMapper.getSubjectInfoById(id);
     }
+
+    @Override
+    public List<SubjectInfo> getSubjectByKey(Integer keyId) {
+        return subjectInfoMapper.getSubjectByKey(keyId);
+    }
+
 }

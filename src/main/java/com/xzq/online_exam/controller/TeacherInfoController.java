@@ -132,9 +132,10 @@ public class TeacherInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/teacherAccount/{teacherAccount}",method = RequestMethod.GET)
-    public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount){
+    public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount,HttpSession session){
         TeacherInfo teacherByAccount = teacherInfoService.getTeacherByAccount(teacherAccount);
         if(teacherByAccount!=null){
+            session.setAttribute("teacherId",teacherByAccount.getTeacherId());
             return Msg.success().add("teachInfo",teacherByAccount);
         }
         else{

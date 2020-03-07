@@ -70,6 +70,7 @@
                         $("#helpBlock_account").text("存在该用户信息");
                         var realpassword=result.extend.teachInfo.teacherPwd;
                         if(inputpassword==realpassword){
+                            //sessionStorage.setItem("teacherId",result.extend.teacherInfo.teacherId);
                             alert("密码正确！！");
                         }
                         else{

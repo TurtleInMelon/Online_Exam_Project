@@ -213,18 +213,71 @@
 
     $("tbody").delegate(".edit_btn","click",function () {
         var $plan=$("<div class=\"mask\">\n" +
-            "    <div class=\"login\">\n" +
+            "    <div class=\"login\" style='position: center;'>\n" +
+            "<div class='modal-dialog'>\n"+
+            "<div class=\"modal-content\">\n"+
+            "<div class=\"modal-header\">\n" +
+            "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+            "                    <h4 class=\"modal-title\" id=\"teacherId-edit\">记录 编辑</h4>\n" +
+            "                </div>\n"+
+            "<div class=\"modal-body\">\n"+
             "        <div>\n" +
-            "            <label>编号</label><input type=\"text\" name=\"id\" value="+$(this).siblings("td").eq(1).html()+">\n" +
-            "            <label>考试班级</label><input type=\"text\" name=\"className\" value="+$(this).siblings("td").eq(2).html()+">\n" +
-            "            <label>考试科目</label><input type=\"text\" name=\"courseName\"value="+$(this).siblings("td").eq(3).html()+">\n" +
-            "            <label>试卷名称</label><input type=\"text\" name=\"examPaperName\"value="+$(this).siblings("td").eq(4).html()+">\n" +
+            "            <label>编号</label><input type=\"text\" name=\"id\"  style='width: 100%'readonly='true' value="+$(this).siblings("td").eq(1).html()+">\n" +
+            "            <label>考试班级</label><select id='class_selector' style='width: 100%; height: 30px'></select>\n" +
+            "            <label>考试科目</label><select id='course_selector' style='width: 100%; height: 30px'></select>\n" +
+            "            <label>试卷名称</label><select id='paper_selector' style='width: 100%; height: 30px'></select>" +
+                "        "+
             "        </div>\n" +
             "        <button class=\"btn btn-info sure_btn\">保存</button>\n" +
             "        <button class=\"btn btn-info cancel_btn\">取消</button>\n" +
             "    </div>\n" +
-            "</div>");
+            "</div></div></div></div>");
         $("body").append($plan);
+        var thisclass=$(this).siblings("td").eq(2).html();
+        var thiscourse=$(this).siblings("td").eq(3).html();
+        var thispaper=$(this).siblings("td").eq(4).html();
+        $.ajax({
+            url:"${APP_PATH}/getAllClass",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.classes).each(function (i,obj) {
+                    var className=$("<option>"+obj.className+"</option>");
+                    $("#class_selector").append(className);
+                    $("#class_selector").val(thisclass);
+                })
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/getAllCourseNames",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.list).each(function (i,obj) {
+                    var courseName=$("<option>"+obj.courseName+"</option>");
+                    $("#course_selector").append(courseName);
+                    $("#course_selector").val(thiscourse);
+                })
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/getAllPaperNames",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.papers).each(function (i,obj) {
+                    var paperName=$("<option>"+obj+"</option>");
+                    $("#paper_selector").append(paperName);
+                    $("#paper_selector").val(thispaper);
+                })
+            }
+        });
+        $(".close").click(function () {
+            $(this).parents(".mask").remove();
+        })
         $(".cancel_btn").click(function () {
             $(this).parents(".mask").remove();
         })
@@ -232,7 +285,7 @@
             $.ajax({
                 url:"${APP_PATH}/updateOneRecord",
                 type:"GET",
-                data:{"id":$("input[name='id']").val(),"className":$("input[name='className']").val(),"courseName":$("input[name='courseName']").val(),"examPaperName":$("input[name='examPaperName']").val()},
+                data:{"id":$("input[name='id']").val(),"className":$("#class_selector").val(),"courseName":$("#course_selector").val(),"examPaperName":$("#paper_selector").val()},
                 dataType:"json",
                 success:function (result) {
                     alert("更新成功！");
@@ -244,25 +297,72 @@
             $(this).parents(".mask").remove();
         })
 
-    })
+    });
+
     $(".add_btn").click(function () {
         var $plan=$("<div class=\"mask\">\n" +
             "    <div class=\"login\">\n" +
+            "<div class='modal-dialog'>\n"+
+            "<div class=\"modal-content\">\n"+
+                "<div class=\"modal-header\">\n" +
+            "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+            "                    <h4 class=\"modal-title\" id=\"teacherId-edit\">记录 新增</h4>\n" +
+            "                </div>\n"+
+            "<div class=\"modal-body\">\n"+
             "        <div>\n" +
-            "            <label>考试班级</label><input type=\"text\" name=\"className\">\n" +
-            "            <label>考试科目</label><input type=\"text\" name=\"courseName\">\n" +
-            "            <label>试卷名称</label><input type=\"text\" name=\"examPaperName\">\n" +
-            "            <label>开考时间</label><input type=\"text\" name=\"beginTime\">\n" +
+            "            <label>考试班级</label><select id='class_selector' style='width: 100%; height: 30px'></select>\n" +
+            "            <label>考试科目</label><select id='course_selector' style='width: 100%; height: 30px'></select>\n" +
+            "            <label>试卷名称</label><select id='paper_selector' style='width: 100%; height: 30px'></select>\n" +
+            "            <label>开考时间</label><input type=\"text\" name=\"beginTime\" style='width: 100%; height: 30px'>\n" +
             "        </div>\n" +
             "        <button class=\"btn btn-info sure_btn\">确认</button>\n" +
             "        <button class=\"btn btn-info cancel_btn\">取消</button>\n" +
             "    </div>\n" +
-            "</div>");
+            "</div></div></div></div>");
         $("body").append($plan);
+        $.ajax({
+            url:"${APP_PATH}/getAllClass",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.classes).each(function (i,obj) {
+                    var className=$("<option>"+obj.className+"</option>");
+                    $("#class_selector").append(className);
+                })
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/getAllCourseNames",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.list).each(function (i,obj) {
+                    var courseName=$("<option>"+obj.courseName+"</option>");
+                    $("#course_selector").append(courseName);
+                })
+            }
+        });
+        $.ajax({
+            url:"${APP_PATH}/getAllPaperNames",
+            data:{},
+            dataType:"JSON",
+            type:"GET",
+            success:function (result) {
+                $(result.extend.papers).each(function (i,obj) {
+                    var paperName=$("<option>"+obj+"</option>");
+                    $("#paper_selector").append(paperName);
+                })
+            }
+        });
+        $(".close").click(function () {
+            $(this).parents(".mask").remove();
+        })
         $(".sure_btn").click(function () {
-            var name=$("input[name='className']").val();
-            var courseName=$("input[name='courseName']").val();
-            var examPaperName=$("input[name='examPaperName']").val();
+            var name=$("#class_selector").val();
+            var courseName=$("#course_selector").val();
+            var examPaperName=$("#paper_selector").val();
             var beginTime=$("input[name='beginTime']").val();
             //alert(id+name+courseName+subjectNum+examPaperName+beginTime);
             $.ajax({

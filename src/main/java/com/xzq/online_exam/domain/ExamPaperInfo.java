@@ -16,6 +16,9 @@ public class ExamPaperInfo {
         this.examPaperId=examPaperId;
     }
     public ExamPaperInfo(){}
+    public ExamPaperInfo(String Name){
+        this.examPaperName=Name;
+    }
     public Integer getExamPaperId() {
         return examPaperId;
     }

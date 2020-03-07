@@ -91,4 +91,9 @@ public class ExamPaperInfoServiceImpl implements ExamPaperInfoService {
         return examPaperInfoMapper.getAllExamPaper();
     }
 
+    @Override
+    public List<ExamPaperInfo> getAllPaperName() {
+        return examPaperInfoMapper.getAllPaperName();
+    }
+
 }

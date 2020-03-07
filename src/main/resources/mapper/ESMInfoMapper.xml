@@ -23,4 +23,7 @@
         select * from examsubjectmiddleinfo as es, subjectinfo as s where es.subjectId=s.subjectId and es.examPaperId=#{id};
     </select>
 
+    <select id="getCertain" resultType="com.xzq.online_exam.domain.ESMInfo">
+        select * from examsubjectmiddleinfo where subjectId=#{subjectId} and examPaperId=#{examPaperId}
+    </select>
 </mapper>

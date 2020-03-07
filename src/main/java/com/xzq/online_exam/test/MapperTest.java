@@ -2,8 +2,6 @@ package com.xzq.online_exam.test;
 
 
 
-import com.xzq.online_exam.controller.SubjectInfoController;
-import com.xzq.online_exam.dao.TeacherInfoMapper;
 import com.xzq.online_exam.domain.*;
 import com.xzq.online_exam.service.*;
 import org.junit.Test;
@@ -11,11 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import sun.plugin.javascript.navig.LinkArray;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -55,7 +51,56 @@ public class MapperTest {
     @Autowired
     private ExamChooseInfoService examChooseInfoService;
 
+    @Autowired
+    private StudentRecordService studentRecordService;
 
+    @Autowired
+    private ESMInfoService esmInfoService;
+
+    @Autowired
+    private StudentKeyInfoService studentKeyInfoService;
+
+    @Autowired
+    private KeyInfoService keyInfoService;
+
+    @Autowired
+    private TeachingInfoService teachingInfoService;
+
+    @Test
+    public void s(){
+        TeachingInfo teachingInfo =new TeachingInfo();
+        teachingInfo.setClassInfo(new ClassInfo(1));
+        teachingInfo.setCourseInfo(new CourseInfo(1));
+        teachingInfo.setTeacherInfo(new TeacherInfo(1));
+        List<StudentKeyInfo> all=studentKeyInfoService.getAllStudentsWithTheThirdKeys(teachingInfo);
+        for(StudentKeyInfo c:all)
+            System.out.println(c);
+    }
+
+    @Test
+    public void testKeyInfo(){
+
+        List<KeyInfo>all=keyInfoService.getKeyByCourseId(1);
+        for(KeyInfo c:all)
+            System.out.println(c);
+    }
+
+    @Test
+    public void bd(){
+        System.out.println(studentKeyInfoService.theThirdKey(1));
+    }
+
+    @Test
+    public void a(){
+        List<SubjectInfo> exam=new ArrayList<SubjectInfo>();
+        List<Integer> keys=studentKeyInfoService.theThirdKey(1);
+        for(Integer k:keys){
+            List<SubjectInfo>sub=subjectInfoService.getSubjectByKey(k);
+            for(SubjectInfo s:sub)
+                exam.add(s);
+        }
+        System.out.println(exam);
+    }
     @Test
     public void testTeacher(){
         /**TeacherInfo fangzheng = teacherInfoService.getTeacherByAccount("fangzheng");
@@ -152,7 +197,12 @@ public class MapperTest {
         subjectInfo.setCourse(new CourseInfo(3));
         subjectInfo.setGrade(new GradeInfo(2));
         subjectInfoService.updateSubject(subjectInfo);**/
-        subjectInfoService.deleteSubjectById(3);
+        //subjectInfoService.deleteSubjectById(3);
+
+        List<SubjectInfo>all=subjectInfoService.getSubjectByKey(1);
+        for(SubjectInfo s:all){
+            System.out.println(s);
+        }
     }
 
     @Test
@@ -297,5 +347,25 @@ public class MapperTest {
             i++;
         }
         System.out.println(i);
+    }
+
+    @Test
+    public void testExamHistory(){
+        List<ExamHistoryInfo> infos = examHistoryInfoService.getExamHistoryOfOne(19);
+        for(ExamHistoryInfo info:infos){
+            System.out.println(info);
+        }
+        /**
+        List<ExamHistoryInfo> examHistory = examHistoryInfoService.getExamHistory();
+        for(ExamHistoryInfo each:examHistory){
+            System.out.println(each);
+        }**/
+
+    }
+
+    @Test
+    public void t(){
+        ExamChooseInfo examChooseInfo=examChooseInfoService.getExamChoose(1,8,6544);
+        System.out.println(examChooseInfo);
     }
 }

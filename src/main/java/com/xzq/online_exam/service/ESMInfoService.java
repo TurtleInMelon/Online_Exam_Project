@@ -10,4 +10,6 @@ public interface ESMInfoService {
     public List<ESMInfo> getAllESMInfo();
 
     public List<ESMInfo> getAllESMWithSubjects(Integer id);
+
+    public ESMInfo getCertain(Integer subjectId, Integer examPaperId);
 }

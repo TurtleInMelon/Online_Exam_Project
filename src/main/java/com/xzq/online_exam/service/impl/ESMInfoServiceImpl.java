@@ -22,4 +22,9 @@ public class ESMInfoServiceImpl implements ESMInfoService {
     public List<ESMInfo> getAllESMWithSubjects(Integer id) {
         return esmInfoMapper.getAllESMWithSubjects(id);
     }
+
+    @Override
+    public ESMInfo getCertain(Integer subjectId, Integer examPaperId) {
+        return esmInfoMapper.getCertain(subjectId,examPaperId);
+    }
 }

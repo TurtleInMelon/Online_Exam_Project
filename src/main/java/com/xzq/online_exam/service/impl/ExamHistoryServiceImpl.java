@@ -22,8 +22,8 @@ public class ExamHistoryServiceImpl implements ExamHistoryInfoService {
     }
 
     @Override
-    public List<ExamHistoryInfo> getExamHistoryOfOne(StudentInfo studentInfo) {
-        return examHistroyInfoMapper.getExamHistoryOfOne(studentInfo);
+    public List<ExamHistoryInfo> getExamHistoryOfOne(Integer studentId) {
+        return examHistroyInfoMapper.getExamHistoryOfOne(studentId);
     }
 
     @Override

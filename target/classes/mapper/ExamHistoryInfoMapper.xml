@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzq.online_exam.dao.ExamHistroyInfoMapper">
 <resultMap id="examHistory" type="com.xzq.online_exam.domain.ExamHistoryInfo">
+    <result property="historyId" column="historyId"/>
     <result property="examScore" column="examScore"/>
     <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
+        <id column="examPaperId" property="examPaperId"/>
         <result column="examPaperName" property="examPaperName"/>
         <result property="examPaperScore" column="examPaperScore"/>
         <result property="subjectNum" column="subjectNum"/>
@@ -18,7 +20,7 @@
         select p.examPaperName,p.examPaperScore,h.examScore,p.subjectNum,h.examScore,s.studentName from examhistoryinfo as h,exampaperinfo as p,studentinfo as s where s.studentId=h.studentId and h.examPaperId=p.examPaperId
     </select>
 
-    <select id="getExamHistoryOfOne" resultMap="examHistory"  parameterType="com.xzq.online_exam.domain.StudentInfo">
+    <select id="getExamHistoryOfOne" resultMap="examHistory">
         select * from examhistoryinfo,exampaperinfo where examhistoryinfo.examPaperId=exampaperinfo.examPaperId and studentId=#{studentId}
     </select>
 

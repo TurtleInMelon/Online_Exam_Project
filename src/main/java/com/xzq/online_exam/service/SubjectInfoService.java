@@ -55,4 +55,6 @@ public interface SubjectInfoService {
      */
     void deleteBatch(List<Integer> del_ids);
     public SubjectInfo getSubjectInfoById(Integer id);
+
+    public List<SubjectInfo> getSubjectByKey(Integer keyId);
 }

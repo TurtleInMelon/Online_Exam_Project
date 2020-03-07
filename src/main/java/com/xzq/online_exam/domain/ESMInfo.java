@@ -5,6 +5,10 @@ public class ESMInfo {
     private ExamPaperInfo examPaperInfo;
     private SubjectInfo subjectInfo;
 
+    public ESMInfo(Integer esmId){
+        this.esmId=esmId;
+    }
+    public ESMInfo(){}
     public Integer getEsmId() {
         return esmId;
     }

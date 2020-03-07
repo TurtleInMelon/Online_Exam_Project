@@ -31,6 +31,8 @@ public class ESMInfoController {
     private ExamHistoryInfoService examHistoryInfoService;
     @Autowired
     private SubjectInfoService subjectInfoService;
+    @Autowired
+    private StudentRecordService studentRecordService;
 
     private static Integer examScore=0;
 
@@ -58,6 +60,13 @@ public class ESMInfoController {
         return "/reception/exam";
     }
 
+    @RequestMapping("/initScore")
+    @ResponseBody
+    public void setScoreZero(){
+        examScore=0;
+    }
+
+
     @RequestMapping("/Ha/submitResult")
     @ResponseBody
     public Msg submitSuccess(HttpServletRequest request){
@@ -66,9 +75,11 @@ public class ESMInfoController {
         examChooseInfo.setStudentInfo(studentInfo);
         ExamPaperInfo examPaperInfo=new ExamPaperInfo(Integer.valueOf(request.getParameter("examPaperId")));
         examChooseInfo.setExamPaperInfo(examPaperInfo);
+
         SubjectInfo subjectInfo=new SubjectInfo(Integer.valueOf(request.getParameter("subjectId")));
         examChooseInfo.setSubjectInfo(subjectInfo);
         examChooseInfo.setChooseResult(request.getParameter("answer"));
+        System.out.println(examChooseInfo);
         examChooseInfoService.saveExamChoose(examChooseInfo);
 
         SubjectInfo right=subjectInfoService.getSubjectInfoById(Integer.valueOf(request.getParameter("subjectId")));
@@ -77,8 +88,12 @@ public class ESMInfoController {
         }
         else {
             examScore+=0;
+            StudentRecordInfo studentRecordInfo=new StudentRecordInfo();
+            ESMInfo esmInfo=esmInfoService.getCertain(Integer.valueOf(request.getParameter("subjectId")),Integer.valueOf(request.getParameter("examPaperId")));
+            studentRecordInfo.setStudentInfo(studentInfo);
+            studentRecordInfo.setEsmInfo(esmInfo);
+            studentRecordService.addOne(studentRecordInfo);
         }
-        System.out.println(examScore+"=====================================================");
         return Msg.success().add("examScore",examScore);
     }
 

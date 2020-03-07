@@ -8,7 +8,7 @@ import java.util.List;
 public interface ExamHistoryInfoService {
     public List<ExamHistoryInfo>getExamHistory();
 
-    public List<ExamHistoryInfo>getExamHistoryOfOne(StudentInfo studentInfo);
+    public List<ExamHistoryInfo>getExamHistoryOfOne(Integer studentId);
 
     public void saveHistoryRecord(ExamHistoryInfo examHistoryInfo);
 

@@ -10,7 +10,6 @@
 <html>
 <head>
     <title>Person</title>
-    <title>学生管理</title>
     <%
         pageContext.setAttribute("APP_PATH",request.getContextPath());
         //System.out.println(session.getAttribute("adminPower"));
@@ -33,33 +32,33 @@
     $(function () {
         var easy="${info[0].examPaperInfo.examPaperEasy}";
 
-        var titleP=$("<h3></h3>").append("${info[0].examPaperInfo.examPaperName}")
-        var paperInfo=$("<p></p>").append("试卷难度："+judgeEasy(easy)+"    考试时间："+"${info[0].examPaperInfo.examPaperTime}");
+        var titleP=$("<h1 align='center'></h1>").append("${info[0].examPaperInfo.examPaperName}")
+        var paperInfo=$("<h3 align='center'></h3>").append("试卷难度："+"<u>"+judgeEasy(easy)+"</u>"+"    考试时间："+"${info[0].examPaperInfo.examPaperTime}");
         $(".List").prepend(paperInfo).prepend(titleP);
         <c:forEach items="${info}" var="t" varStatus="status">
         var index="${status.index+1}";
         <c:if test="${t.subjectInfo.subjectType==2}">
-        var subjectName="${t.subjectInfo.subjectName}";
-        var subjectEasy=$("<span>难易程度</span><span style=\"color: green; \"> "+judgeEasy("${t.subjectInfo.subjectEasy}")+"</span>");
-        var subjectScore=$("<span>分值</span><span style=\"color: green; \"> "+"${t.subjectInfo.subjectScore}"+"</span>");
-        var rightResult=$("<span>正确答案</span><span style=\"color: yellow; \"> "+"${t.subjectInfo.rightResult}"+"</span>");
-        var chooseResult=$("<span>选择答案</span><span style=\"color: red; \"> "+"${t.chooseResult}"+"</span>");
-        var p=$("<p></p>").append(index).append(subjectName+"<br>")
-            .append(rightResult).append(chooseResult).append(subjectScore).append(subjectEasy);
+        var subjectName=$("<p class='lead'>"+index+"&nbsp;${t.subjectInfo.subjectName}"+"</p>");
+        var subjectEasy=$("<span>难易程度</span><span style=\"color: green; \"> "+judgeEasy("${t.subjectInfo.subjectEasy}")+"&nbsp;</span>");
+        var subjectScore=$("<span>分值</span><span style=\"color: green; \"> "+"${t.subjectInfo.subjectScore}"+"&nbsp;</span>");
+        var rightResult=$("<span><strong>正确答案<strong></span><span style=\"color: yellow; \"> "+"${t.subjectInfo.rightResult}"+"&nbsp;</span>");
+        var chooseResult=$("<span>选择答案</span><span style=\"color: red; \"> "+"${t.chooseResult}"+"&nbsp;</span>");
+        var answer=$("<strong></strong>").append(rightResult).append(chooseResult).append(subjectScore).append(subjectEasy);
+        var p=$("<p></p>").append(subjectName).append(answer);
         $("ul").append(p);
         </c:if>
         <c:if test="${t.subjectInfo.subjectType==0||t.subjectInfo.subjectType==1}">
-        var subjectName="${t.subjectInfo.subjectName}";
-        var optionA="${t.subjectInfo.optionA}";
-        var optionB="${t.subjectInfo.optionB}";
-        var optionC="${t.subjectInfo.optionC}";
-        var optionD="${t.subjectInfo.optionD}";
-        var subjectEasy=$("<span>难易程度</span><span style=\"color: green; \"> "+judgeEasy("${t.subjectInfo.subjectScore}")+"</span>");
-        var subjectScore=$("<span>分值</span><span style=\"color: green; \"> "+"${t.subjectInfo.subjectEasy}"+"</span>");
-        var rightResult=$("<span>正确答案</span><span style=\"color: yellow; \"> "+"${t.subjectInfo.rightResult}"+"</span>");
-        var chooseResult=$("<span>选择答案</span><span style=\"color: red; \"> "+"${t.chooseResult}"+"</span>");
-        var p=$("<p></p>").append(index).append(subjectName+"<br>").append("A"+optionA+"<br>").append("B"+optionB+"<br>").append("C"+optionC+"<br>").append("D"+optionD+"<br>")
-            .append(rightResult).append(chooseResult).append(subjectScore).append(subjectEasy);
+        var subjectName=$("<p class='lead'>"+index+"&nbsp;${t.subjectInfo.subjectName}"+"</p>");
+        var optionA=$("<p>"+"A&nbsp;"+"<em>${t.subjectInfo.optionA}</em>"+"</p>");
+        var optionB=$("<p>"+"B&nbsp;"+"<em>${t.subjectInfo.optionB}</em>"+"</p>");
+        var optionC=$("<p>"+"C&nbsp;"+"<em>${t.subjectInfo.optionC}</em>"+"</p>");
+        var optionD=$("<p>"+"D&nbsp;"+"<em>${t.subjectInfo.optionD}</em>"+"</p>");
+        var subjectEasy=$("<span>难易程度</span><span style=\"color: green; \"> "+judgeEasy("${t.subjectInfo.subjectScore}")+"&nbsp;</span>");
+        var subjectScore=$("<span>分值</span><span style=\"color: green; \"> "+"${t.subjectInfo.subjectEasy}"+"&nbsp;</span>");
+        var rightResult=$("<span>正确答案</span><span style=\"color: yellow; \"> "+"${t.subjectInfo.rightResult}"+"&nbsp;</span>");
+        var chooseResult=$("<span>选择答案</span><span style=\"color: red; \"> "+"${t.chooseResult}"+"&nbsp;</span>");
+        var answer=$("<strong></strong>").append(rightResult).append(chooseResult).append(subjectScore).append(subjectEasy);
+        var p=$("<p></p>").append(subjectName).append(optionA).append(optionB).append(optionC).append(optionD).append(answer);
         $("ul").append(p);
         </c:if>
 
