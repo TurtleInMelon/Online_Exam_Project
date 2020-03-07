@@ -80,4 +80,10 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     public SubjectInfo getSubjectInfoById(Integer id) {
         return subjectInfoMapper.getSubjectInfoById(id);
     }
+
+    @Override
+    public List<SubjectInfo> getSubjectByKey(Integer keyId) {
+        return subjectInfoMapper.getSubjectByKey(keyId);
+    }
+
 }

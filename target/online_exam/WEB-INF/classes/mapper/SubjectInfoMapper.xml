@@ -67,4 +67,8 @@
     <select id="getSubjectInfoById" resultType="com.xzq.online_exam.domain.SubjectInfo">
         select * from subjectinfo where subjectId=#{id}
     </select>
+
+    <select id="getSubjectByKey" resultType="com.xzq.online_exam.domain.SubjectInfo">
+        select * from subjectinfo where keyId=#{keyId};
+    </select>
 </mapper>

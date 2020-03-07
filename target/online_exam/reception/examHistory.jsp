@@ -20,25 +20,28 @@
     <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/zeroModal/zeroModal.css"/>
 </head>
 <body>
-<div style="margin-top: 100px" class="myExamList">
+<div style="margin-top: 100px">
+    <ul class="myExamList" style='width: 400px'>
+
+    </ul>
 </div>
 
 <script type="text/javascript">
     <c:forEach items="${examInfo}" var="t" varStatus="status">
-    var paper=$("<ul>\n" +
-        "        <li>"+"${t.examPaperInfo.examPaperName}"+"</li>\n" +
-        "        <li>题目数量"+"${t.examPaperInfo.subjectNum}"+"</li>\n" +
-        "        <li>总分"+"${t.examPaperInfo.examPaperScore}"+"</li>\n" +
-        "        <li>考试得分"+"${t.examScore}"+"</li>\n" +
-        "        <li>考试时间"+"${t.examPaperInfo.examPaperTime}"+"</li>\n" +
-        "        <li>难易程度"+"${t.examPaperInfo.examPaperEasy}"+"</li>\n" +
-        "        <a type='button' class='btn btn-lg btn_detail' id="+"${t.examPaperInfo.examPaperId}"+">查看详情</a>\n"+
-        "    </ul>");
+    var paper=$("<li style='width: 400px' id='${t.examPaperInfo.examPaperName}'>\n" +
+        "        <p class='lead text-center'>"+"${t.examPaperInfo.examPaperName}"+"</p>\n" +
+        "        <p><em>题目数量&nbsp;&nbsp;"+"${t.examPaperInfo.subjectNum}"+"</em></p>\n" +
+        "        <p><em>总分&nbsp;&nbsp;"+"${t.examPaperInfo.examPaperScore}"+"</em></p>\n" +
+        "        <p><em>考试得分&nbsp;&nbsp;"+"${t.examScore}"+"</em></p>\n" +
+        "        <p><em>考试时间&nbsp;&nbsp;"+"${t.examPaperInfo.examPaperTime}"+"</em></p>\n" +
+        "        <p><em>难易程度&nbsp;&nbsp;"+"${t.examPaperInfo.examPaperEasy}"+"</em></p>\n" +
+        "        <p><a type='button' class='btn btn-info btn-primary btn-block btn_detail' id="+"${t.examPaperInfo.examPaperId}"+">查看详情</a></p>\n"+
+        "    </li>");
     $(".myExamList").append(paper);
     </c:forEach>
     
     $(".btn_detail").click(function () {
-        var examPaperName=$(this).siblings().eq(0).html();
+        var examPaperName=$(this).parents("li").prop("id");
         var address="${APP_PATH}/Choose/ha/"+"${sessionScope.studentName}"+"/"+examPaperName;
 
         $(this).attr("href",address);

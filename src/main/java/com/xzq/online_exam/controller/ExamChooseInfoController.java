@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.xzq.online_exam.domain.ExamChooseInfo;
 import com.xzq.online_exam.service.ExamChooseInfoService;
+import com.xzq.online_exam.utils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,5 +36,13 @@ public class ExamChooseInfoController {
         return "/admin/personalExamPaper";
     }
 
-
+    @RequestMapping("/recordDetail")
+    @ResponseBody
+    public Msg getDetail(HttpServletRequest request,HttpSession session){
+        Integer studentId=(Integer) session.getAttribute("studentId");
+        Integer examPaperId=Integer.valueOf(request.getParameter("examPaperId"));
+        Integer subjectId=Integer.valueOf(request.getParameter("subjectId"));
+        ExamChooseInfo examChooseInfo=examChooseInfoService.getExamChoose(studentId,examPaperId,subjectId);
+        return Msg.success().add("details",examChooseInfo);
+    }
 }

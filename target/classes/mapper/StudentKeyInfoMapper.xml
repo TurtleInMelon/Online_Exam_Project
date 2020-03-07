@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.StudentKeyInfoMapper">
+    <resultMap id="studentKeys" type="com.xzq.online_exam.domain.StudentKeyInfo">
+        <id property="skId" column="skId"/>
+        <result property="times" column="times"/>
+        <association property="studentInfo" javaType="com.xzq.online_exam.domain.StudentInfo">
+            <result column="studentName" property="studentName"/>
+        </association>
+        <association property="keyInfo" javaType="com.xzq.online_exam.domain.KeyInfo">
+            <id property="keyId" column="keyId"/>
+            <result property="keyName" column="keyName"/>
+        </association>
+    </resultMap>
+    <select id="theThirdKey" resultType="java.lang.Integer">
+        select * from studentkeyinfo where studentId=#{studentId};
+    </select>
+    <select id="getAllStudentsWithTheThirdKeys" resultMap="studentKeys" parameterType="com.xzq.online_exam.domain.TeachingInfo">
+        select * from studentinfo as s, studentkeyinfo as sk, keyinfo as k, teachinginfo as t
+        where s.studentId=sk.studentId and k.keyId=sk.keyId and t.courseId=sk.courseId and
+        t.courseId=#{courseInfo.courseId} and t.classId=#{classInfo.classId} and t.teacherId=#{teacherInfo.teacherId} and sk.times>0
+        order by k.keyId asc, sk.times desc
+    </select>
+
+    <select id="getRecordByKey" resultType="java.lang.String">
+        select studentName from studentkeyinfo,studentinfo where studentinfo.studentId=studentkeyinfo.studentId
+        and keyId=#{keyId} and
+        studentkeyinfo.times>0 order by times desc limit 3
+    </select>
+</mapper>
+
+
+
+
+
+

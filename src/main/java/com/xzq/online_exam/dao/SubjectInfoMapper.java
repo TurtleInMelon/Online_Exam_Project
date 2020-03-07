@@ -54,4 +54,6 @@ public interface SubjectInfoMapper {
     void deleteSubjectById(Integer id);
 
     public SubjectInfo getSubjectInfoById(Integer id);
+
+    public List<SubjectInfo> getSubjectByKey(Integer keyId);
 }

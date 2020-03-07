@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzq.online_exam.dao.TeachingInfoMapper">
+    <resultMap id="classCourse" type="com.xzq.online_exam.domain.TeachingInfo">
+        <id property="teachingId" column="teachingId"/>
+        <association property="classInfo" javaType="com.xzq.online_exam.domain.ClassInfo">
+            <id property="classId" column="classId"/>
+            <result property="className" column="className"/>
+        </association>
+        <association property="courseInfo" javaType="com.xzq.online_exam.domain.CourseInfo">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+    </resultMap>
+    <select id="getAllClassesByTeacherId" resultMap="classCourse">
+        select teachingId,classinfo.classId,className,courseinfo.courseId,courseName from teachinginfo,classinfo,courseinfo
+        where teachinginfo.teacherId=#{tId} and teachinginfo.classId=classinfo.classId and courseinfo.courseId=teachinginfo.courseId
+        order by courseinfo.courseId asc
+    </select>
+    <select id="getTeachingInfoById" resultType="com.xzq.online_exam.domain.TeachingInfo">
+        select * from teachinginfo where teachingId=#{teachingId}
+    </select>
+</mapper>

@@ -13,4 +13,5 @@ public interface ExamChooseInfoMapper {
 
     public void saveExamChoose(ExamChooseInfo examChooseInfo);
 
+    public ExamChooseInfo getExamChoose(@Param("studentId") Integer studentId,@Param("examPaperId") Integer examPaperId,@Param("subjectId") Integer subjectId);
 }
