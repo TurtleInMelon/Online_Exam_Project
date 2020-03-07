@@ -111,6 +111,7 @@ $("#btn-sure").click(function () {
                     no=no+1;
                 }
             });
+            //
             var tr=$("<tr><td>"+no+"</td><td>"+keyName+"</td><td>"+studentList+"</td><td>"+times+"</td></tr>");
             $("#checkList").append(tr);
         }
