@@ -35,11 +35,8 @@ import java.util.Map;
 
 @Controller
 public class SubjectInfoController {
-    @Autowired private SubjectInfoService subjectInfoService;
-
-    @RequestMapping("/getWrongRecord")
-    public String getWrong(){
-        return "/reception/wrongRecord";
+    @Autowired 
+	private SubjectInfoService subjectInfoService;
 
     @Autowired
     private CourseInfoService courseInfoService;
