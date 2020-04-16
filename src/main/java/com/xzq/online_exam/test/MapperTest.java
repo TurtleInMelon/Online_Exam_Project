@@ -115,7 +115,8 @@ public class MapperTest {
                 exam.add(s);
         }
         System.out.println(exam);
-
+	}
+	@Test
     public void testKey(){
 //        List<SubjectInfo> exam=new ArrayList<SubjectInfo>();
 //        List<Integer> keys=studentKeyInfoService.theThirdKey(1);
