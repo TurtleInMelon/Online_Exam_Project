@@ -51,4 +51,8 @@
     <select id="getAllExamPaper" resultType="com.xzq.online_exam.domain.ExamPaperInfo">
         select * from exampaperinfo;
     </select>
+
+    <select id="getExamPaperIdByExamPaperName" resultType="int">
+        select examPaperId from exampaperinfo where examPaperName=#{examPaperName}
+    </select>
 </mapper>

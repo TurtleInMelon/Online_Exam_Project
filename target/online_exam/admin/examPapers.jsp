@@ -42,7 +42,7 @@
                             <th>选项D</th>
                             <th>正确答案</th>
                             <th>分值</th>
-                            <th>试题类型</th>
+                            <th>知识点</th>
                             <th>难易程度</th>
                             <th>所属科目</th>
                             <th>所属年级</th>
@@ -96,6 +96,7 @@
                             <th>选项D</th>
                             <th>分值</th>
                             <th>难易程度</th>
+                            <th>知识点</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -516,7 +517,7 @@
                     to_Page(item);
                 });
                 ul.append(numli);
-            })
+            });
 
             ul.append(nextPage).append(lastPage);
             var navEle=$("<nav></nav>").append(ul)
@@ -579,7 +580,7 @@
         //校验输入的试卷名称名是否可用
         $("#exampapername_add_input").change(function () {
             var examPaperName=this.value;
-            alert(examPaperName);
+            // alert(examPaperName);
             if(examPaperName==null){
                 return;
             }
@@ -607,7 +608,7 @@
 
         //点击新增按钮
         $("#exampaper_add_btn").click(function () {
-            alert($("#exampaper_Add form").serialize());
+            // alert($("#exampaper_Add form").serialize());
             /**if($("#course_Add form").serialize()=="gradeName="){
                 show_validate_info("#course_add_input","error","用户名不能为空");
                 return false;
@@ -779,6 +780,7 @@
 
         //构建查看试卷表格
         function build_examPaper_look_table(result) {
+            // console.log(result);
             $("#examPaper_look_table tbody").empty();
             var examPapers=result.extend.list;
             $.each(examPapers,function (index,item) {
@@ -805,21 +807,26 @@
                     examPaperEasy="简单";
                 }
                 var examPaperEasyTd=$("<td></td>").append(examPaperEasy);
+                var keyNameTd = $("<td></td>").append(item.subject.keyInfo.keyName);
+                var keyId = item.subject.keyInfo.keyId;
+
                 var delBtn=$("<button></button>").addClass("btn btn-danger btn-sm remove_btn")
                     .append($("<span><span>").addClass("glyphicon glyphicon-trash")).append("移除");
                 delBtn.attr("examPaperEasy",item.subject.examPaperEasy)
-                    .attr("examPaperId",examPaperId).attr("subjectId",subjectId);
+                    .attr("examPaperId",examPaperId).attr("subjectId",subjectId)
+                    .attr("keyId",keyId);
 
                 var tdTd=$("<td></td>").append(delBtn);
 
                 $("<tr></tr>").append(examPaperDsbTd)
                     .append(optionATd).append(optionBTd).append(optionCTd).append(optionDTd)
-                    .append(subjectScoreTd).append(examPaperEasyTd).append(tdTd)
+                    .append(subjectScoreTd).append(examPaperEasyTd).append(keyNameTd).append(tdTd)
                     .appendTo("#examPaper_look_table tbody");
 
             })
 
         };
+
         //点击查看按钮
         $(document).on("click",".lookup",function () {
             if(islookup==true){
@@ -874,6 +881,7 @@
             $('#examPapers_Add_Hand').modal('show');
             getAllSubject(1);
         });
+
         //获取所有试题
         function getAllSubject(pg) {
             //获取所有试题
@@ -882,7 +890,7 @@
                 data:"pn="+pg,
                 type:"GET",
                 success:function (result) {
-                    //console.log(result);
+                    console.log(result);
                     build_subjects_table(result);
                     subject_page_record(result);
                     build_add_page_nav(result);
@@ -910,8 +918,14 @@
                 var optionDTd=$("<td></td>").append(item.optionD);
                 var rightResultTd=$("<td></td>").append(item.rightResult);
                 var subjectScoreTd=$("<td></td>").append(item.subjectScore);
-                var subjectTypeTd=$("<td></td>").append(item.subjectType);
-                var subjectEasyTd=$("<td></td>").append(item.subjectEasy);
+                var subjectTypeTd=$("<td></td>").append(item.keyInfo.keyName);
+                var isEasy = "";
+                if(item.subjectEasy ==0){
+                    isEasy = "简单";
+                }else{
+                    isEasy = "困难";
+                }
+                var subjectEasyTd=$("<td></td>").append(isEasy);
                 var courseNameTd=$("<td></td>").append(item.course.courseName);
                 var gradeNameTd=$("<td></td>").append(item.grade.gradeName);
 
@@ -1061,6 +1075,7 @@
             $("#examPaper_autoAdd form").find(".help-block").text("");
             $("#grade_auto_add_select").empty();
             $("#subject_auto_add_btn").attr("examPaperId",examPaperId);
+            // 获取所有年级名
             $.ajax({
                 url:"${APP_PATH}/getAllGradeNames",
                 type:"GET",

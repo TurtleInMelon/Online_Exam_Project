@@ -53,4 +53,8 @@
         DELETE From courseinfo WHERE courseId=#{id}
     </delete>
 
+    <select id="getCourseNameById" parameterType="int" resultType="string">
+        select courseinfo.courseName from courseinfo where courseId=#{courseId}
+    </select>
+
 </mapper>

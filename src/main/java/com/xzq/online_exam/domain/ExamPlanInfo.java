@@ -9,7 +9,7 @@ public class ExamPlanInfo {
     private Integer examPlanId;
     private CourseInfo courseInfo;
     private ClassInfo classInfo;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date beginTime;
     private ExamPaperInfo examPaperInfo;
 

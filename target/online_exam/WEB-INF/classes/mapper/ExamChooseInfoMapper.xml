@@ -17,6 +17,7 @@
         <association property="examPaperInfo" javaType="com.xzq.online_exam.domain.ExamPaperInfo">
             <result property="examPaperName" column="examPaperName"/>
             <result property="examPaperEasy" column="examPaperEasy"/>
+            <result property="examPaperType" column="examPaperType"/>
             <result property="examPaperTime" column="examPaperTime"/>
         </association>
     </resultMap>
@@ -28,4 +29,11 @@
     <insert id="saveExamChoose" parameterType="com.xzq.online_exam.domain.ExamChooseInfo">
         insert into examchooseinfo (studentId, examPaperId, subjectId, chooseResult) values (#{studentInfo.studentId},#{examPaperInfo.examPaperId},#{subjectInfo.subjectId},#{chooseResult})
     </insert>
+    <select id="getExamChoose" resultMap="examChoose" parameterType="java.lang.Integer">
+        select *
+        from subjectinfo as s, exampaperinfo as ep, examchooseinfo as ec
+        where ec.examPaperId=ep.examPaperId and ec.subjectId=s.subjectId
+        and ec.studentId=#{studentId} and ep.examPaperId=#{examPaperId} and ec.subjectId=#{subjectId}
+    </select>
 </mapper>
+

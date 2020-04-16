@@ -39,4 +39,6 @@ public interface CourseInfoMapper {
     void deleteCourseById(Integer id);
 
     public CourseInfo getCourseByName(String name);
+
+    String getCourseNameById(Integer courseId);
 }

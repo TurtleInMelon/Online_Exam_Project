@@ -15,6 +15,10 @@ public class SubjectInfo implements Serializable {
     private int division;
     private CourseInfo course;
     private GradeInfo grade;
+    private String tag1;
+    private String tag2;
+    private String tag3;
+    private KeyInfo keyInfo;
 
     public SubjectInfo (Integer subjectId){
         this.subjectId=subjectId;
@@ -30,6 +34,14 @@ public class SubjectInfo implements Serializable {
 
     public String getSubjectName() {
         return subjectName;
+    }
+
+    public KeyInfo getKeyInfo() {
+        return keyInfo;
+    }
+
+    public void setKeyInfo(KeyInfo keyInfo) {
+        this.keyInfo = keyInfo;
     }
 
     public void setSubjectName(String subjectName) {
@@ -125,6 +137,30 @@ public class SubjectInfo implements Serializable {
         this.grade = grade;
     }
 
+    public String getTag1() {
+        return tag1;
+    }
+
+    public void setTag1(String tag1) {
+        this.tag1 = tag1;
+    }
+
+    public String getTag2() {
+        return tag2;
+    }
+
+    public void setTag2(String tag2) {
+        this.tag2 = tag2;
+    }
+
+    public String getTag3() {
+        return tag3;
+    }
+
+    public void setTag3(String tag3) {
+        this.tag3 = tag3;
+    }
+
     @Override
     public String toString() {
         return "SubjectInfo{" +
@@ -141,6 +177,10 @@ public class SubjectInfo implements Serializable {
                 ", division=" + division +
                 ", course=" + course +
                 ", grade=" + grade +
+                ", tag1='" + tag1 + '\'' +
+                ", tag2='" + tag2 + '\'' +
+                ", tag3='" + tag3 + '\'' +
+                ", keyInfo=" + keyInfo +
                 '}';
     }
 }

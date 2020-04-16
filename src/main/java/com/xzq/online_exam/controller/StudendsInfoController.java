@@ -57,7 +57,6 @@ public class StudendsInfoController {
     @ResponseBody
     public Msg addOne(HttpServletRequest request){
         StudentInfo studentInfo = new StudentInfo();
-        studentInfo.setStudentId(Integer.valueOf(request.getParameter("studentId")));
         studentInfo.setStudentName(request.getParameter("studentName"));
         studentInfo.setStudentPwd(request.getParameter("studentPwd"));
         studentInfo.setStudentAccount(request.getParameter("studentAccount"));

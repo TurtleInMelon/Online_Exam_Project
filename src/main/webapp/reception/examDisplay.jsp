@@ -33,11 +33,21 @@
             background-size: cover;
             background-position: center center;
         }
+        .btn_big{
+            height: 50px;
+            width: 150px;
+            float: right;
+            font-size: 150%;
+        }
     </style>
 </head>
 <body>
     <h2 style="margin-top: 150px"></h2>
     <div class="examList">
+
+    </div>
+    <div style="margin-right: 20%; margin-top: 50px">
+        <a id="autoExam" class="btn btn-info btn_big text-center" href="${APP_PATH}/autoShow">自动出题</a>
 
     </div>
 
@@ -70,6 +80,17 @@
         else
             return "困难";
     }
+    $("#autoExam").click(function () {
+       $.ajax({
+           url:"${APP_PATH}/autoShow",
+           dataType:"JSON",
+           data:{},
+           type:"POST",
+           success:function (result) {
+
+           }
+       })
+    });
 </script>
 
 </body>

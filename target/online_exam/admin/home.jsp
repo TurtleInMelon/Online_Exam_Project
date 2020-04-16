@@ -102,7 +102,7 @@
             $.ajax({
                 url:"${APP_PATH}/homeInfo",
                 success:function (result) {
-                    //console.log(result);
+                    console.log(result);
                     //试卷数量
                     $("#examPaperTotal").css("background-color","#6CCAC9");
                     $("#examPaperTotal").children("h1").text("试卷数量");
@@ -114,7 +114,7 @@
                     //教师数量
                     $("#teacherTotal").css("background-color", "#F8D347");
                     $("#teacherTotal").children("h1").text("教师人数");
-                    $("#teacherTotal").siblings(".totalValue").children("span").text(result.extend.homeInfo.studentTotal+"人");
+                    $("#teacherTotal").siblings(".totalValue").children("span").text(result.extend.homeInfo.teacherTotal+"人");
                     //学生数量
                     $("#studentTotal").css("background-color", "#57C8F2");
                     $("#studentTotal").children("h1").text("学生人数");

@@ -111,15 +111,20 @@
                                 <a href="index.jsp">首页</a>
                             </li>
                             <li>
-                                <a id="examCenter-link" target="home" style="cursor: pointer;" href="${APP_PATH}/getAllExamInfo">题库训练中心</a>
+                                <a id="examCenter-link" target="home" style="cursor: pointer;" href="${APP_PATH}/getAllExamInfo" onclick="return check(this)">题库训练中心</a>
                             </li>
                             <li>
-                                <a id="mineCenter-link" target="home" style="cursor: pointer;" href="${APP_PATH}/showHistory">训练历史</a>
+                                <a id="mineCenter-link" target="home" style="cursor: pointer;" href="${APP_PATH}/showHistory" onclick="return check(this)">训练历史</a>
+                            </li>
+                            <li>
+                                <a id="recordCenter-link" target="home" style="cursor: pointer;" href="${APP_PATH}/getWrongRecord" onclick="return check(this)">错题记录</a>
+                            </li>
+                            <li>
+                                <p class="loginStatus">
+                                    <strong></strong>
+                                </p>
                             </li>
                         </ul>
-                        <div>
-                            <span class="loginStatus"></span>
-                        </div>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 10px;">
                             <li class="dropdown">
                                     <div class="btn-group" style="margin-top: 5px;">
@@ -143,10 +148,19 @@
 <script type="text/javascript">
 
     if(${sessionScope.studentName==null}){
-        $(".loginStatus").text("请先登录！");
+        $(".loginStatus").children("strong").text("请先登录！");
     }
     else {
-        $(".loginStatus").text("${sessionScope.studentName}"+",已登录");
+        $(".loginStatus").children("strong").text("${sessionScope.studentName}"+",已登录");
+    }
+
+    function check(){
+        if(${sessionScope.studentName==null})
+        {
+            alert("请先登录！");
+            return false;
+        }
+        return true;
     }
 
     $(function () {

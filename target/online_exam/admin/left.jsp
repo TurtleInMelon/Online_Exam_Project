@@ -107,6 +107,22 @@
             <dd class="first_dd"><a href="${APP_PATH}/historys" target="right" id="10" class="handle-view">&emsp;所有记录&emsp;&emsp;&emsp;</a></dd>
         </dl>
 
+        <dl class="cloud">
+            <dt onClick="changeImage()">知识点管理<img src="${APP_PATH}/static/images/left/select_xl01.png" /></dt>
+            <dd class="first_dd"><a href="${APP_PATH}/showKeyDB" target="right" id="11" class="handle-view">&emsp;知识点库&emsp;&emsp;&emsp;</a></dd>
+            <dd class="first_dd"><a href="${APP_PATH}/admin/viewway.jsp" target="right" id="12" class="handle-view">&emsp;掌握情况&emsp;&emsp;&emsp;</a></dd>
+        </dl>
+
+        <dl class="source">
+            <dt>知识图谱<img src="${APP_PATH}/static/images/left/select_xl01.png" /></dt>
+            <dd class="first_dd"><a href="${APP_PATH}/admin/charts/knowledgeMap.jsp" target="right" id="10" class="handle-view">&emsp;所有记录&emsp;&emsp;&emsp;</a></dd>
+        </dl>
+
+        <dl class="source">
+            <dt>个性化推荐<img src="${APP_PATH}/static/images/left/select_xl01.png" /></dt>
+            <dd class="first_dd"><a href="${APP_PATH}/admin/personalRecommendation.jsp" target="right" id="10" class="handle-view">&emsp;详细信息&emsp;&emsp;&emsp;</a></dd>
+        </dl>
+
     </div>
 
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/dropdown.js"></script>

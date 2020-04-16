@@ -43,5 +43,9 @@ Import-Package: javax.net.ssl;javax.crypto;resolution:=optional,javax.
  ource.adapter.jdbc;org.jboss.resource.adapter.jdbc.vendor;resolution:
  =optional,org.slf4j;resolution:=optional,javax.xml.datatype;org.hiber
  nate;org.hibernate.cfg;org.hibernate.service;org.hibernate.service.jd
- bc.connections.spi;resolution:=optional
+ bc.connections.spi;resolution:=optional,
+ javax.servlet,
+ org.apache.ibatis.io,
+ org.apache.ibatis.session,
+ com.google.gson
 

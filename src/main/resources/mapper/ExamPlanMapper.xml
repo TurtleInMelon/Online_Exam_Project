@@ -28,9 +28,11 @@
     <delete id="deleteOne">
         delete from examplaninfo where examPlanId=#{id}
     </delete>
+
     <insert id="addOne" parameterType="com.xzq.online_exam.domain.ExamPlanInfo">
         insert into examplaninfo (courseId,classId,examPaperId,beginTime) values (#{courseInfo.courseId},#{classInfo.classId},#{examPaperInfo.examPaperId},#{beginTime})
     </insert>
+
     <update id="updateOne" parameterType="com.xzq.online_exam.domain.ExamPlanInfo">
         update examplaninfo set examPaperId=#{examPaperInfo.examPaperId}, courseId=#{courseInfo.courseId}, classId=#{classInfo.classId} where examPlanId=#{examPlanId};
     </update>

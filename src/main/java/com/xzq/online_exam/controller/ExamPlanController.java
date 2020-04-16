@@ -47,6 +47,7 @@ public class ExamPlanController {
         mv.setViewName("admin/examPlans");
         return mv;
     }
+
     @RequestMapping(value = "/getExamPlans",method = RequestMethod.GET)
     @ResponseBody
     public Msg getExamPlans(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
@@ -88,9 +89,10 @@ public class ExamPlanController {
         ClassInfo classInfo = classInfoService.findClassByName(request.getParameter("className"));
         CourseInfo courseInfo = courseInfoService.getCourseByName(request.getParameter("courseName"));
         ExamPaperInfo examPaperInfo = examPaperInfoService.getExamPaperByName(request.getParameter("examPaperName"));
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try {
             Date beginTime = format.parse(request.getParameter("beginTime"));
+//            System.out.println(beginTime.toString());
             examPlanInfo.setBeginTime(beginTime);
             examPlanInfo.setExamPaperInfo(examPaperInfo);
             examPlanInfo.setClassInfo(classInfo);

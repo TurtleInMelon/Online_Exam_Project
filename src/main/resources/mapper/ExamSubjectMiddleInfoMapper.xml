@@ -32,16 +32,21 @@
                 <id column="gradeId" property="gradeId"/>
                 <result column="gradeName" property="gradeName"/>
             </association>
+            <association property="keyInfo" javaType="com.xzq.online_exam.domain.KeyInfo">
+                <id column="keyId" property="keyId"/>
+                <result column="keyName" property="keyName"/>
+            </association>
         </association>
     </resultMap>
 
     <select id="getAllESMByExamPaperId" parameterType="int" resultMap="queryExamSubjectMiddle">
-        SELECT a.esmId, a.exampaperId, b.examPaperName, b.examPaperTime, c.*, d.courseName, e.gradeName
+        SELECT a.esmId, a.exampaperId, b.examPaperName, b.examPaperTime, c.*, d.courseName, e.gradeName, k.keyName
 		FROM examsubjectmiddleinfo a
 		INNER JOIN exampaperinfo b ON a.examPaperId=b.examPaperId
 		INNER JOIN subjectinfo c ON a.subjectId=c.subjectId
 		INNER JOIN courseinfo d ON c.courseId=d.courseId
 		INNER JOIN gradeinfo e ON c.gradeId=e.gradeId
+		INNER JOIN keyinfo k ON c.keyId = k.keyId
 		where a.examPaperId=#{examPaper.examPaperId}
     </select>
 

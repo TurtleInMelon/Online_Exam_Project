@@ -21,4 +21,9 @@ public class ExamChooseInfoServiceImpl implements ExamChooseInfoService {
     public void saveExamChoose(ExamChooseInfo examChooseInfo) {
         examChooseInfoMapper.saveExamChoose(examChooseInfo);
     }
+
+    @Override
+    public ExamChooseInfo getExamChoose(Integer studentId, Integer examPaperId, Integer subjectId) {
+        return examChooseInfoMapper.getExamChoose(studentId,examPaperId,subjectId);
+    }
 }

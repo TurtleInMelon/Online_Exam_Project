@@ -2,6 +2,8 @@ package com.xzq.online_exam.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.xzq.online_exam.domain.CourseInfo;
 import com.xzq.online_exam.domain.ExamPaperInfo;
 import com.xzq.online_exam.domain.GradeInfo;
@@ -10,17 +12,20 @@ import com.xzq.online_exam.service.*;
 import com.xzq.online_exam.utils.Msg;
 import com.xzq.online_exam.utils.SubjectImportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import sun.util.calendar.Gregorian;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +33,8 @@ import java.util.Map;
 
 @Controller
 public class SubjectInfoController {
+    @Autowired private SubjectInfoService subjectInfoService;
 
-    @Autowired
-    private SubjectInfoService subjectInfoService;
 
     @Autowired
     private CourseInfoService courseInfoService;
@@ -233,19 +237,19 @@ public class SubjectInfoController {
     @RequestMapping(value = "deleteSubject")
     public Msg deleteCourseById(@RequestParam("ids") String ids){
         System.out.println(ids);
-            if(ids.contains("-")){
-                List<Integer> del_ids=new ArrayList<>();
-                String[] split=ids.split("-");
+        if(ids.contains("-")){
+            List<Integer> del_ids=new ArrayList<>();
+            String[] split=ids.split("-");
 
-                for(String s:split){
-                    //System.out.println(s);
-                    del_ids.add(Integer.parseInt(s));
-                }
-                subjectInfoService.deleteBatch(del_ids);
-            }else{
-                Integer id=Integer.parseInt(ids);
-                subjectInfoService.deleteSubjectById(id);
+            for(String s:split){
+                //System.out.println(s);
+                del_ids.add(Integer.parseInt(s));
             }
+            subjectInfoService.deleteBatch(del_ids);
+        }else{
+            Integer id=Integer.parseInt(ids);
+            subjectInfoService.deleteSubjectById(id);
+        }
         return Msg.success();
     }
 
@@ -272,6 +276,37 @@ public class SubjectInfoController {
         return null;
     }
 
+    @RequestMapping(value = "/getSubjectsByKeyIds")
+    @ResponseBody
+    public Msg getSubjectsByKeyIds(@RequestParam("ids")String ids,HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView();
+//        System.out.println(ids);
+        String[] KeyIds = ids.split(",");
+//        System.out.println(KeyIds.toString());
+        List<SubjectInfo> totalSubjects = new ArrayList<>();
+        for(String keyId: KeyIds){
+//            System.out.println(keyId);
+            if(!subjectInfoService.checkKeyId(Integer.valueOf(keyId))){
+//                System.out.println(keyId);
+                List<SubjectInfo> subjects = subjectInfoService.getSubjectsByKeyId(Integer.valueOf(keyId));
+                for(SubjectInfo each : subjects){
+                    System.out.println(each);
+                    totalSubjects.add(each);
+                }
+//                System.out.println(subjects.toString());
+            }
+
+        }
+        HttpSession session = request.getSession();
+        Gson gson = new Gson();
+//        System.out.println(totalSubjects.toString());
+        session.setAttribute("subjects", gson.toJson(totalSubjects));
+//        System.out.println(totalSubjects.toString());
+//        modelAndView.addObject("recommendSubjects", totalSubjects);
+//        modelAndView.setViewName("/admin/showRecommendSubjects");
+        return Msg.success().add("subjects",totalSubjects);
+    }
+
     /**
      * 获取所有页面的分页信息
      * @param pn
@@ -296,5 +331,10 @@ public class SubjectInfoController {
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("admin/subjects");
         return modelAndView;
+    }
+
+    @RequestMapping("/getWrongRecord")
+    public String getWrong(){
+        return "/reception/wrongRecord";
     }
 }

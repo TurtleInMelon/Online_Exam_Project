@@ -1,16 +1,32 @@
 package com.xzq.online_exam.utils;
 
+import com.xzq.online_exam.dao.KeyInfoMapper;
 import com.xzq.online_exam.domain.CourseInfo;
 import com.xzq.online_exam.domain.GradeInfo;
+import com.xzq.online_exam.domain.KeyInfo;
 import com.xzq.online_exam.domain.SubjectInfo;
+import com.xzq.online_exam.service.KeyInfoService;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
 public class SubjectImportUtil {
     private static int subjectNameIndex;
     private static int optionAIndex;
@@ -21,6 +37,18 @@ public class SubjectImportUtil {
     private static int subjectScoreIndex;
     private static int subjectTypeIndex;
     private static int subjectEasyIndex;
+    private static int keyWordIndex;
+
+    @Autowired
+    private KeyInfoService keyInfoService;
+
+    private static SubjectImportUtil subjectImportUtil;
+
+    @PostConstruct
+    public void init(){
+        subjectImportUtil = this;
+        subjectImportUtil.keyInfoService = this.keyInfoService;
+    }
 
     /**
      * 解析导入 excel 生成试题对象
@@ -31,6 +59,7 @@ public class SubjectImportUtil {
      * @param division
      * @return
      */
+//    @RequestMapping(value = "/")
     public static List<SubjectInfo> parseSubjectExcel(String filePath, Integer courseId, Integer gradeId, Integer division) {
         List<SubjectInfo> subjects = new LinkedList<SubjectInfo>();
         try {
@@ -69,6 +98,7 @@ public class SubjectImportUtil {
 
                 subject.setRightResult(rightResult.toString());
                 subject.setSubjectScore(Integer.parseInt(subjectScore.toString()));
+
                 //试题类型
                 if("单选".equals(row.getCell(subjectTypeIndex).toString())){
                     subject.setSubjectType(0);
@@ -85,11 +115,20 @@ public class SubjectImportUtil {
                 } else {
                     subject.setSubjectEasy(2);
                 }
+                String keyWord = row.getCell(keyWordIndex).toString();
+                System.out.println(keyWord);
+                int keyId = subjectImportUtil.keyInfoService.getKeyIdByKeyName(keyWord);
+                System.out.println(keyId);
+                KeyInfo keyInfo = new KeyInfo();
+                keyInfo.setKeyName(keyWord);
+                keyInfo.setKeyId(keyId);
+
                 subject.setCourse(new CourseInfo(courseId));
                 subject.setGrade(new GradeInfo(gradeId));
                 subject.setDivision(division);
-
+                subject.setKeyInfo(keyInfo);
                 subjects.add(subject);
+                System.out.println(subject);
             }
 
             workBook.close();
@@ -143,6 +182,10 @@ public class SubjectImportUtil {
             }
             if ("难易程度".equals(cell)) {
                 subjectEasyIndex = i;
+                continue;
+            }
+            if ("知识点".equals(cell)){
+                keyWordIndex = i;
                 continue;
             }
         }

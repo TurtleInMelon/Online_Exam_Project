@@ -10,6 +10,11 @@ public class TeacherInfo implements Serializable {
     private int adminPower;
     private Integer isWork;
     //查找时把相应的班级信息一起找出
+
+    public TeacherInfo (Integer teacherId){
+        this.teacherId=teacherId;
+    }
+    public TeacherInfo(){};
     private ClassInfo classInfo;
 
     public ClassInfo getClassInfo() {

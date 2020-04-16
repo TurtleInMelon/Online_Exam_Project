@@ -132,9 +132,10 @@ public class TeacherInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/teacherAccount/{teacherAccount}",method = RequestMethod.GET)
-    public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount){
+    public Msg getTeacherInfoByAccount(@PathVariable("teacherAccount") String teacherAccount,HttpSession session){
         TeacherInfo teacherByAccount = teacherInfoService.getTeacherByAccount(teacherAccount);
         if(teacherByAccount!=null){
+            session.setAttribute("teacherId",teacherByAccount.getTeacherId());
             return Msg.success().add("teachInfo",teacherByAccount);
         }
         else{
@@ -179,7 +180,7 @@ public class TeacherInfoController {
         //将当前登录教师 后台权限存入 Session
         request.getSession().setAttribute("adminPower", teacherInfo.getAdminPower());
         request.getSession().setAttribute("loginTeacher", teacherInfo);
-
+        //request.getSession().setAttribute("loginTeacherId",teacherInfo.getTeacherId());
         return "redirect:admin/index.jsp";
     }
 
