@@ -53,4 +53,5 @@ public interface ExamPaperInfoMapper {
 
      public List<ExamPaperInfo> getAllExamPaper();
 
+    int getExamPaperIdByExamPaperName(String examPaperName);
 }

@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,6 +46,8 @@ public class MapperTest {
 
     @Autowired
     private ExamSubjectMiddleInfoService examSubjectMiddleInfoService;
+
+    @Autowired
     private ExamPlanService examPlanService;
 
     @Autowired
@@ -66,6 +71,7 @@ public class MapperTest {
     @Autowired
     private TeachingInfoService teachingInfoService;
 
+
     @Test
     public void s(){
         TeachingInfo teachingInfo =new TeachingInfo();
@@ -80,9 +86,18 @@ public class MapperTest {
     @Test
     public void testKeyInfo(){
 
-        List<KeyInfo>all=keyInfoService.getKeyByCourseId(1);
-        for(KeyInfo c:all)
-            System.out.println(c);
+//        List<KeyInfo>all=keyInfoService.getKeyByCourseId(1);
+//        for(KeyInfo c:all)
+//            System.out.println(c);
+//        boolean result = keyInfoService.checkKeyWords("lalala");
+//        System.out.println(result);
+
+//        int keyId = keyInfoService.getKeyIdByKeyName("谢尼玛");
+//        System.out.println(keyId);
+        List<KeyInfo> keyWords = keyInfoService.getKeyWords();
+        for(KeyInfo keyInfo:keyWords){
+            System.out.println(keyInfo);
+        }
     }
 
     @Test
@@ -100,6 +115,26 @@ public class MapperTest {
                 exam.add(s);
         }
         System.out.println(exam);
+
+    public void testKey(){
+//        List<SubjectInfo> exam=new ArrayList<SubjectInfo>();
+//        List<Integer> keys=studentKeyInfoService.theThirdKey(1);
+//        for(Integer k:keys){
+//            List<SubjectInfo>sub=subjectInfoService.getSubjectByKey(k);
+//            for(SubjectInfo s:sub)
+//                exam.add(s);
+//        }
+//        System.out.println(exam);
+//        KeyInfo keyInfo = new KeyInfo();
+//        keyInfo.setKeyId(7);
+//        keyInfo.setPriority(3);
+//        keyInfo.setKeyName("张猪头");
+//        CourseInfo courseInfo = new CourseInfo();
+//        courseInfo.setCourseId(1);
+//        keyInfo.setCourseInfo(courseInfo);
+//        keyInfoService.updateKeyWordById(keyInfo);
+        String keyName = keyInfoService.geyKeyNameByKeyId(1);
+        System.out.println(keyName);
     }
     @Test
     public void testTeacher(){
@@ -126,9 +161,11 @@ public class MapperTest {
 
     @Test
     public void testExamPaperInfo(){
-        int total=examPaperInfoService.getExamPaperTotal();
-        System.out.println("--------------------------------------");
-        System.out.println(total);
+//        int total=examPaperInfoService.getExamPaperTotal();
+//        System.out.println("--------------------------------------");
+//        System.out.println(total);
+        int examPaperId = examPaperInfoService.getExamPaperIdByExamPaperName("张尼玛");
+        System.out.println(examPaperId);
     }
 
     @Test
@@ -183,26 +220,35 @@ public class MapperTest {
         for(SubjectInfo subjectInfo:subjectInfos){
             System.out.println(subjectInfo);
         }**/
-        /**
-        SubjectInfo subjectInfo=new SubjectInfo();
-        subjectInfo.setSubjectId(6549);
-        subjectInfo.setSubjectName("你是小瓜吗");
-        subjectInfo.setOptionA("是");
-        subjectInfo.setOptionB("不是");
-        subjectInfo.setOptionC("不是");
-        subjectInfo.setOptionD("不是");
-        subjectInfo.setRightResult("A");
-        subjectInfo.setSubjectType(1);
-        subjectInfo.setSubjectEasy(2);
-        subjectInfo.setCourse(new CourseInfo(3));
-        subjectInfo.setGrade(new GradeInfo(2));
-        subjectInfoService.updateSubject(subjectInfo);**/
+
+//        SubjectInfo subjectInfo=new SubjectInfo();
+//        subjectInfo.setSubjectId(9);
+//        subjectInfo.setSubjectName("你是小瓜吗");
+//        subjectInfo.setOptionA("是");
+//        subjectInfo.setOptionB("不是");
+//        subjectInfo.setOptionC("不是");
+//        subjectInfo.setOptionD("不是");
+//        subjectInfo.setRightResult("A");
+//        subjectInfo.setSubjectType(1);
+//        subjectInfo.setSubjectEasy(2);
+//        subjectInfo.setCourse(new CourseInfo(3));
+//        subjectInfo.setGrade(new GradeInfo(2));
+//        KeyInfo keyInfo = new KeyInfo();
+//        keyInfo.setKeyId(2);
+//        subjectInfo.setKeyInfo(keyInfo);
+//        subjectInfoService.updateSubject(subjectInfo);
+        List<SubjectInfo> subjects = subjectInfoService.getSubjectsByKeyId(3);
+        for(SubjectInfo each :subjects){
+            System.out.println(each);
+        }
+//        boolean re = subjectInfoService.checkKeyId(3);
+//        System.out.println(re);
         //subjectInfoService.deleteSubjectById(3);
 
-        List<SubjectInfo>all=subjectInfoService.getSubjectByKey(1);
-        for(SubjectInfo s:all){
-            System.out.println(s);
-        }
+//        List<SubjectInfo>all=subjectInfoService.getSubjectByKey(1);
+//        for(SubjectInfo s:all){
+//            System.out.println(s);
+//        }
     }
 
     @Test
@@ -253,7 +299,9 @@ public class MapperTest {
         courseInfo.setGradeInfo(gradeInfo);
         System.out.println(courseInfo);
         courseInfoService.updateCourse(courseInfo);**/
-        courseInfoService.deleteCourseById(21);
+//        courseInfoService.deleteCourseById(21);
+        String courseNameById = courseInfoService.getCourseNameById(1);
+        System.out.println(courseNameById);
     }
 
     @Test
@@ -351,10 +399,6 @@ public class MapperTest {
 
     @Test
     public void testExamHistory(){
-        List<ExamHistoryInfo> infos = examHistoryInfoService.getExamHistoryOfOne(19);
-        for(ExamHistoryInfo info:infos){
-            System.out.println(info);
-        }
         /**
         List<ExamHistoryInfo> examHistory = examHistoryInfoService.getExamHistory();
         for(ExamHistoryInfo each:examHistory){
@@ -368,4 +412,28 @@ public class MapperTest {
         ExamChooseInfo examChooseInfo=examChooseInfoService.getExamChoose(1,8,6544);
         System.out.println(examChooseInfo);
     }
-}
+
+    @Test
+    public void TestPython(){
+    }
+
+    @Test
+    public void testExamPlan1() throws ParseException {
+        ExamPlanInfo examPlanInfo = new ExamPlanInfo();
+        ClassInfo classInfo = new ClassInfo();
+        classInfo.setClassId(1);
+        examPlanInfo.setClassInfo(classInfo);
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setCourseId(1);
+        examPlanInfo.setCourseInfo(courseInfo);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date beginTime = format.parse("2020-04-15 08:38");
+//            System.out.println(beginTime.toString());
+        examPlanInfo.setBeginTime(beginTime);
+        ExamPaperInfo examPaperInfo = new ExamPaperInfo();
+        examPaperInfo.setExamPaperName("小瓜瓜");
+        examPlanInfo.setExamPaperInfo(examPaperInfo);
+        examPlanService.addOne(examPlanInfo);
+    }
+
+    }

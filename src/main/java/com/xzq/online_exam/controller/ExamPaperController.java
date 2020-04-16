@@ -128,6 +128,26 @@ public class ExamPaperController {
     }
 
     /**
+     * 获取所有试题信息
+     * @param pn
+     * @return
+     */
+    @RequestMapping(value = "/getAllExamPapers1",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getAllExamPaperInfo(){
+        List<ExamPaperInfo> allExamPapers = examPaperInfoService.getAllExamPapers();
+        return Msg.success().add("examPaper",allExamPapers);
+    }
+
+    @RequestMapping(value = "/getExamPaperIdByExamPaperName",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getExamPaperIdByExamPaperName(@RequestParam("examPaperName")String examPaperName){
+        int examPaperId = examPaperInfoService.getExamPaperIdByExamPaperName(examPaperName);
+        return Msg.success().add("examPaperId",examPaperId);
+    }
+
+
+    /**
      * 跳转到examPapers.jsp页面
      * @return
      */

@@ -52,7 +52,7 @@
         select * from exampaperinfo;
     </select>
 
-    <select id="getAllPaperName" resultType="java.lang.String">
-        select examPaperName from exampaperinfo;
+    <select id="getExamPaperIdByExamPaperName" resultType="int">
+        select examPaperId from exampaperinfo where examPaperName=#{examPaperName}
     </select>
 </mapper>

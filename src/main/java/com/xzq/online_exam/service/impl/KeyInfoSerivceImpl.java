@@ -49,5 +49,30 @@ public class KeyInfoSerivceImpl implements KeyInfoService {
         return keyInfoMapper.getAllPriority(courseId);
     }
 
+    @Override
+    public boolean checkKeyWords(String extraKeyWords) {
+        int count = keyInfoMapper.checkKeyWords(extraKeyWords);
+        return count==0;
+    }
 
+    @Override
+    public int getKeyIdByKeyName(String each) {
+        return keyInfoMapper.getKeyIdByKeyName(each);
+    }
+
+    @Override
+    public List<KeyInfo> getKeyWords() {
+        return keyInfoMapper.getKeyWords();
+    }
+
+    @Override
+    public void updateKeyWordById(KeyInfo keyInfo) {
+//        int keyId = keyInfo.getKeyId();
+        keyInfoMapper.updateKeyWordById(keyInfo);
+    }
+
+    @Override
+    public String geyKeyNameByKeyId(Integer valueOf) {
+        return keyInfoMapper.geyKeyNameByKeyId(valueOf);
+    }
 }

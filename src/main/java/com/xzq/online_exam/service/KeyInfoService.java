@@ -21,4 +21,16 @@ public interface KeyInfoService {
 
     public List<Integer>getAllPriority(Integer courseId);
 
+
+    boolean checkKeyWords(String extraKeyWords);
+
+
+    int getKeyIdByKeyName(String each);
+
+    List<KeyInfo> getKeyWords();
+
+    void updateKeyWordById(KeyInfo keyInfo);
+
+    String geyKeyNameByKeyId(Integer valueOf);
+
 }

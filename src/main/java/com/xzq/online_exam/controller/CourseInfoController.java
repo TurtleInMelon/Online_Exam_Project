@@ -132,6 +132,14 @@ public class CourseInfoController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    @RequestMapping(value = "/getCourseNameById",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getCourseNameById(@RequestParam("courseId") String courseId){
+        //System.out.println(pn);
+        String courseName = courseInfoService.getCourseNameById(Integer.valueOf(courseId));
+        return Msg.success().add("courseName",courseName);
+    }
+
     /**
      * 跳转到前端courses.jsp页面
      * @return

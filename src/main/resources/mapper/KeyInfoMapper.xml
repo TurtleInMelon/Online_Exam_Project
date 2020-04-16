@@ -7,10 +7,11 @@
         <result property="priority" column="priority"/>
         <association property="courseInfo" javaType="com.xzq.online_exam.domain.CourseInfo">
             <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
         </association>
     </resultMap>
     <select id="getKeyByCourseId" resultMap="keyMap">
-        select * from keyinfo where courseId=#{courseId} order by priority asc;
+        select k.* from keyinfo k where courseId=#{courseId}
     </select>
 
     <select id="getKeyPriorityBefore" resultType="com.xzq.online_exam.domain.KeyInfo">
@@ -25,6 +26,10 @@
         delete from keyinfo where keyName=#{keyName};
     </delete>
 
+    <update id="updateKeyWordById" parameterType="com.xzq.online_exam.domain.KeyInfo">
+        update keyinfo set keyName = #{keyName}, priority = #{priority} where keyId=#{keyId};
+    </update>
+
     <update id="editOne" parameterType="com.xzq.online_exam.domain.KeyInfo">
         update keyinfo set keyName = #{keyName} where keyId=#{keyId};
     </update>
@@ -35,5 +40,21 @@
 
     <select id="getAllPriority" resultType="java.lang.Integer">
         select distinct priority from keyinfo where courseId=#{courseId} order by priority asc;
+    </select>
+
+    <select id="checkKeyWords" resultType="int">
+        select count(*) from keyinfo where keyName=#{keyName}
+    </select>
+
+    <select id="getKeyIdByKeyName" resultType="int">
+        select keyId from keyinfo where keyName=#{keyName}
+    </select>
+
+    <select id="getKeyWords" resultMap="keyMap">
+        select * from keyinfo
+    </select>
+
+    <select id="geyKeyNameByKeyId" resultType="string">
+        select keyName from keyinfo where keyId=#{keyId}
     </select>
 </mapper>

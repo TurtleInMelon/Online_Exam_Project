@@ -56,4 +56,9 @@ public interface SubjectInfoMapper {
     public SubjectInfo getSubjectInfoById(Integer id);
 
     public List<SubjectInfo> getSubjectByKey(Integer keyId);
+
+    List<SubjectInfo> getSubjectsByKeyId(Integer keyid);
+
+    int checkKeyId(Integer keyId);
+
 }

@@ -54,4 +54,9 @@ public class CourseInfoServiceImpl implements CourseInfoService {
     public CourseInfo getCourseByName(String name) {
         return courseInfoMapper.getCourseByName(name);
     }
+
+    @Override
+    public String getCourseNameById(int courseId) {
+        return courseInfoMapper.getCourseNameById(Integer.valueOf(courseId));
+    }
 }

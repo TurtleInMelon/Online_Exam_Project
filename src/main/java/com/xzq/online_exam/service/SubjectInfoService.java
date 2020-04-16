@@ -1,5 +1,7 @@
 package com.xzq.online_exam.service;
 import com.xzq.online_exam.domain.SubjectInfo;
+import jnr.ffi.annotations.In;
+
 import java.util.List;
 
 public interface SubjectInfoService {
@@ -57,4 +59,10 @@ public interface SubjectInfoService {
     public SubjectInfo getSubjectInfoById(Integer id);
 
     public List<SubjectInfo> getSubjectByKey(Integer keyId);
+
+
+    List<SubjectInfo> getSubjectsByKeyId(Integer valueOf);
+
+    boolean checkKeyId(Integer keyId);
+
 }

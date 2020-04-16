@@ -180,7 +180,7 @@ public class TeacherInfoController {
         //将当前登录教师 后台权限存入 Session
         request.getSession().setAttribute("adminPower", teacherInfo.getAdminPower());
         request.getSession().setAttribute("loginTeacher", teacherInfo);
-
+        //request.getSession().setAttribute("loginTeacherId",teacherInfo.getTeacherId());
         return "redirect:admin/index.jsp";
     }
 

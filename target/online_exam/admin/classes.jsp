@@ -325,6 +325,7 @@
                 }
             })
         });
+
         //点击新增
         $("#classes_add_model_btn").click(function () {
             $("#class_Add form")[0].reset();
@@ -409,6 +410,7 @@
 
                 }
             });
+
             //获取所有教师名称
             $.ajax({
                 url:"${APP_PATH}/getAllTeacherNames",

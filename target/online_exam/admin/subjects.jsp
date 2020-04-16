@@ -115,6 +115,13 @@
                             <input name="subjectScore" type="text" class="form-control" placeholder="Text input" id="subjectScore_edit">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label >知识点：</label>
+                        <div >
+                            <select class="form-control" name="keyInfo.keyId" id="keyName_edit_select">
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -225,6 +232,13 @@
                             <input name="subjectScore" type="text" class="form-control" placeholder="Text input">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label >知识点：</label>
+                        <div >
+                            <select class="form-control" name="keyInfo.keyId" id="keyName_add_select">
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -257,6 +271,7 @@
                 <th>难易程度</th>
                 <th>所属科目</th>
                 <th>所属年级</th>
+                <th>知识点</th>
                 <th>操作
                     <button type="button" id="subjects_add_model_btn" class="btn btn-success btn-sm">新增</button>
                     <button type="button" id="subjects_del_model_btn" class="btn btn-danger btn-sm">删除</button>
@@ -299,7 +314,7 @@
             data:"pn="+pg,
             type:"GET",
             success:function (result) {
-                //console.log(result);
+                console.log(result);
                 build_subjects_table(result);
                 subject_page_record(result);
                 build_page_nav(result);
@@ -347,11 +362,13 @@
             var subjectEasyTd=$("<td></td>").append(subjectEasy);
             var courseNameTd=$("<td></td>").append(item.course.courseName);
             var gradeNameTd=$("<td></td>").append(item.grade.gradeName);
+            var keyNameTd=$("<td></td>").append(item.keyInfo.keyName);
 
             var editBtn=$("<button></button>").addClass("btn btn-info btn-sm edit_btn")
                 .append($("<span><span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
             editBtn.attr("gradeId",item.grade.gradeId).attr("courseId",item.course.courseId)
-                .attr("subjectEasy",item.subjectEasy).attr("subjectType",item.subjectType);
+                .attr("subjectEasy",item.subjectEasy).attr("subjectType",item.subjectType)
+                .attr("keyId",item.keyInfo.keyId);
             var delBtn=$("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span><span>").addClass("glyphicon glyphicon-trash")).append("删除");
             delBtn.attr("gradeId",item.grade.gradeId).attr("courseId",item.course.courseId)
@@ -360,7 +377,7 @@
             $("<tr></tr>").append(checkBoxTd)
                 .append(subjectIdTd).append(subjectNameTd).append(optionATd).append(optionBTd).append(optionCTd)
                 .append(optionDTd).append(rightResultTd).append(subjectScoreTd).append(subjectTypeTd)
-                .append(subjectEasyTd).append(courseNameTd).append(gradeNameTd).append(tdTd)
+                .append(subjectEasyTd).append(courseNameTd).append(gradeNameTd).append(keyNameTd).append(tdTd)
                 .appendTo("#subjects_table tbody");
 
         })
@@ -472,6 +489,8 @@
     $("#subjects_add_model_btn").click(function () {
         $('#subject_Add').modal('show');
         $("#grade_add_select").empty();
+        $("#keyName_add_select").empty();
+        var courseId;
         //获取所有年级
         $.ajax({
             url:"${APP_PATH}/getAllGradeNames",
@@ -490,13 +509,26 @@
             url:"${APP_PATH}/getAllCourseNames",
             type:"GET",
             success:function (result) {
-                //console.log(result);
+                console.log(result);
                 var courses=result.extend.list;
                 $.each(courses,function (index,item) {
                     var optionEle=$("<option></option>").append(item.courseName).attr("value",item.courseId);
                     optionEle.appendTo("#course_add_select");
                 })
             }
+        });
+        //获取所有知识点
+        $.ajax({
+            url:"${APP_PATH}/getKeyWords",
+            type:"GET",
+            success:function (result) {
+               console.log(result);
+               var keyInfo = result.extend.keyWordsList;
+               $.each(keyInfo,function (index,item) {
+                   var optionEle = $("<option></option>").append(item.keyName).attr("value",item.keyId);
+                   optionEle.appendTo("#keyName_add_select")
+               })
+           }
         });
     });
 
@@ -539,12 +571,14 @@
         var subjectEasy=$(this).attr("subjectEasy");
         var courseId=$(this).attr("courseId");
         var gradeId=$(this).attr("gradeId");
+        var keyId = $(this).attr("keyId");
         //alert(subjectName+" "+optionA+" "+optionB+" "+optionC+" "+optionD+
          //     ""+rightResult+" "+subjectScore+" "+subjectType+" "+subjectEasy+" "+courseId+" "+gradeId);
         //点击新增题目按钮
         $('#subject_Edit').modal('show');
         $("#grade_edit_select").empty();
         $("#course_edit_select").empty();
+        $("#keyName_edit_select").empty();
         //获取所有年级
         $.ajax({
             url:"${APP_PATH}/getAllGradeNames",
@@ -569,10 +603,26 @@
                 $.each(courses,function (index,item) {
                     var optionEle=$("<option></option>").append(item.courseName).attr("value",item.courseId);
                     optionEle.appendTo("#course_edit_select");
-                })
+                });
                 $("#course_edit_select").val(courseId);
             }
         });
+        //获取所有知识点
+        //获取所有知识点
+        $.ajax({
+            url:"${APP_PATH}/getKeyWords",
+            type:"GET",
+            success:function (result) {
+                console.log(result);
+                var keyInfo = result.extend.keyWordsList;
+                $.each(keyInfo,function (index,item) {
+                    var optionEle = $("<option></option>").append(item.keyName).attr("value",item.keyId);
+                    optionEle.appendTo("#keyName_edit_select")
+                });
+                $("#keyName_edit_select").val(keyId);
+            }
+        });
+
         $("#subjectName_edit").text(subjectName);
         $("#subjectType_edit_select").val(subjectType);
         $("#optionA_edit").val(optionA);
@@ -582,11 +632,12 @@
         $("#rightResult_edit").val(rightResult);
         $("#subjectScore_edit").val(subjectScore);
         $("#subject_edit_btn").attr("subjectId",subjectId);
+        $("#subject_edit_btn").attr("keyId", keyId);
     });
 
     //点击保存按钮
     $("#subject_edit_btn").click(function () {
-        console.log($("#subject_Edit form").serialize());
+       // alert($("#subject_Edit form").serialize());
         $.ajax({
             url:"${APP_PATH}/updateSubject",
             type:"POST",

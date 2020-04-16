@@ -24,6 +24,11 @@
             <id column="gradeId" property="gradeId"/>
             <result column="gradeName" property="gradeName"/>
         </association>
+        <!--关键字-->
+        <association property="keyInfo" javaType="com.xzq.online_exam.domain.KeyInfo">
+            <id column="keyId" property="keyId"></id>
+            <result column="keyName" property="keyName"></result>
+        </association>
     </resultMap>
 
     <!--获取试题总数-->
@@ -33,9 +38,10 @@
 
     <!--获取试题集合-->
     <select id="getAllSubjects" resultMap="querySubjects">
-        SELECT a.*, b.courseName, c.gradeName FROM subjectinfo a
+        SELECT a.*, b.courseName, c.gradeName, d.keyName FROM subjectinfo a
 		LEFT JOIN courseinfo b ON a.courseId=b.courseId
 		LEFT JOIN gradeinfo c ON a.gradeId=c.gradeId
+		LEFT JOIN keyinfo d ON a.keyId = d.keyId
     </select>
 
     <select id="getSubjectWithId" parameterType="int" resultMap="querySubjects">
@@ -52,12 +58,12 @@
 
     <insert id="addSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo" useGeneratedKeys="true" keyProperty="subjectId">
         INSERT INTO subjectinfo VALUES
-		(NULL, #{subjectName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{rightResult}, #{subjectScore}, #{subjectType}, #{course.courseId}, #{grade.gradeId}, #{subjectEasy}, #{division})
+		(NULL, #{subjectName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{rightResult}, #{subjectScore}, #{subjectType}, #{course.courseId}, #{grade.gradeId}, #{subjectEasy}, #{division},#{keyInfo.keyId})
     </insert>
 
     <update id="updateSubject" parameterType="com.xzq.online_exam.domain.SubjectInfo">
         UPDATE subjectinfo SET
-		subjectName=#{subjectName}, optionA=#{optionA}, optionB=#{optionB}, optionC=#{optionC}, optionD=#{optionD}, rightResult=#{rightResult}, subjectScore=#{subjectScore}, subjectType=#{subjectType}, courseId=#{course.courseId}, gradeId=#{grade.gradeId}, subjectEasy=#{subjectEasy}, division=#{division}
+		subjectName=#{subjectName}, optionA=#{optionA}, optionB=#{optionB}, optionC=#{optionC}, optionD=#{optionD}, rightResult=#{rightResult}, subjectScore=#{subjectScore}, subjectType=#{subjectType}, courseId=#{course.courseId}, gradeId=#{grade.gradeId}, subjectEasy=#{subjectEasy}, division=#{division}, keyId=#{keyInfo.keyId}
 		WHERE subjectId=#{subjectId}
     </update>
 
@@ -65,10 +71,17 @@
         DELETE FROM subjectinfo WHERE subjectId=#{subjectId}
     </delete>
     <select id="getSubjectInfoById" resultType="com.xzq.online_exam.domain.SubjectInfo">
-        select * from subjectinfo where subjectId=#{id}
+        select * from subjectinfo where subjectId=#{subjectId}
+    </select>
+
+    <select id="getSubjectsByKeyId" resultMap="querySubjects">
+        select * from subjectinfo where keyId=#{keyInfo.keyId}
     </select>
 
     <select id="getSubjectByKey" resultType="com.xzq.online_exam.domain.SubjectInfo">
         select * from subjectinfo where keyId=#{keyId};
+    </select>
+    <select id="checkKeyId" resultType="int">
+        select count(*) from subjectinfo where keyId=#{keyInfo.keyId}
     </select>
 </mapper>

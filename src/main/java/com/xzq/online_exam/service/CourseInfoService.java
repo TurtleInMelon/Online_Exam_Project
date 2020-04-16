@@ -46,4 +46,6 @@ public interface CourseInfoService {
     void deleteBatch(List<Integer> del_ids);
 
     public CourseInfo getCourseByName(String name);
+
+    String getCourseNameById(int courseId);
 }

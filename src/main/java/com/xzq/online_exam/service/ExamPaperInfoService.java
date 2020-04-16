@@ -50,4 +50,7 @@ public interface ExamPaperInfoService {
     public List<ExamPaperInfo> getAllExamPaper();
 
     public List<ExamPaperInfo> getAllPaperName();
+
+    int getExamPaperIdByExamPaperName(String examPaperName);
+
 }
