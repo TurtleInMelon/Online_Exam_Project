@@ -448,6 +448,7 @@
             $(this).parents(".mask").remove();
         })
 
+
     })
     <%--$(".add_btn").click(function () {--%>
     <%--    var $plan=$("<div class=\"mask\">\n" +--%>

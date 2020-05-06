@@ -24,6 +24,7 @@
 
 </div>
 <script type="text/javascript">
+
     <c:forEach items="${keyDB}" var="t" varStatus="status">
         var key=$("<p><a class='btn btn-lg btn-det'>"+"${t.courseName}"+"</a></p>").attr("id",${t.courseId});
         $("#keyList").append(key);

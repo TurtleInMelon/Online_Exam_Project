@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Online_Exam_Project:war2">
+    <output-path>$PROJECT_DIR$/classes/artifacts/Online_Exam_Project_war2</output-path>
+    <root id="archive" name="Online_Exam_Project_war.war">
+      <element id="artifact" artifact-name="Online_Exam_Project:war exploded" />
+    </root>
+  </artifact>
+</component>

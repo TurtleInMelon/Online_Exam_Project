@@ -42,7 +42,6 @@
         select distinct priority from keyinfo where courseId=#{courseId} order by priority asc;
     </select>
 
-
     <select id="checkKeyWords" resultType="int">
         select count(*) from keyinfo where keyName=#{keyName}
     </select>

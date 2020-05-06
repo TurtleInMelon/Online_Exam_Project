@@ -26,13 +26,10 @@
         delete from keyinfo where keyName=#{keyName};
     </delete>
 
-<<<<<<< HEAD
-=======
     <update id="updateKeyWordById" parameterType="com.xzq.online_exam.domain.KeyInfo">
         update keyinfo set keyName = #{keyName}, priority = #{priority} where keyId=#{keyId};
     </update>
 
->>>>>>> c70c3a4e55c4aca24247ee7fac7772b07190c00d
     <update id="editOne" parameterType="com.xzq.online_exam.domain.KeyInfo">
         update keyinfo set keyName = #{keyName} where keyId=#{keyId};
     </update>
@@ -44,8 +41,6 @@
     <select id="getAllPriority" resultType="java.lang.Integer">
         select distinct priority from keyinfo where courseId=#{courseId} order by priority asc;
     </select>
-<<<<<<< HEAD
-=======
 
     <select id="checkKeyWords" resultType="int">
         select count(*) from keyinfo where keyName=#{keyName}
@@ -62,5 +57,4 @@
     <select id="geyKeyNameByKeyId" resultType="string">
         select keyName from keyinfo where keyId=#{keyId}
     </select>
->>>>>>> c70c3a4e55c4aca24247ee7fac7772b07190c00d
 </mapper>
