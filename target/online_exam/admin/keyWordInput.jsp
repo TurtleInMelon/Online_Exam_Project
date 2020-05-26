@@ -35,6 +35,7 @@
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
                             <p class="text-success" id="keyWordsWithNoPageInfo">${keyWordsWithNoPageInfo}</p>
+                            <p>${test}</p>
 
                         </div>
                     </div>

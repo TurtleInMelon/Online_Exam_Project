@@ -24,12 +24,12 @@ public class PythonTest {
 //            e.printStackTrace();
 //        }
 
-        PPTKeywordUtil util = new PPTKeywordUtil();
-        String filePath = "/home/xzq/桌面/1.pptx";
-        String pageNums = "1,2,3";
-        String result = util.getKeyWord(filePath,pageNums);
+//        PPTKeywordUtil util = new PPTKeywordUtil();
+//        String filePath = "/home/xzq/桌面/1.pptx";
+//        String pageNums = "1,2,3";
+////        String result = util.getKeyWord(filePath,pageNums);
+////        System.out.println(result);
+//        result = util.SplitString(result);
 //        System.out.println(result);
-        result = util.SplitString(result);
-        System.out.println(result);
     }
 }

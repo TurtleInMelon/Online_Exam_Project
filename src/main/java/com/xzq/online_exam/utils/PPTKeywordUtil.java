@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 
 public class PPTKeywordUtil {
 
-    public String getKeyWord(String filePath,String pageNums){
+    public String getKeyWord(String PythonProgram, String stopWordDir, String filePath, String pageNums){
         String result = "";
         Process proc;
         try{
-            String command = "python /home/xzq/桌面/PPT提取/PPTkeyword.py "+filePath + " "+pageNums;
-//            "python /home/xzq/桌面/PPT提取/PPTkeyword.py /home/xzq/桌面/1.pptx 1,2,3"
+            String command = "python " + PythonProgram+ " " + stopWordDir + " " +filePath + " "+pageNums;
+//            "python PPTkeyword.py /home/xzq/桌面/stopWord /home/xzq/桌面/1.pptx 1,2,3"
             proc = Runtime.getRuntime().exec(command);
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;

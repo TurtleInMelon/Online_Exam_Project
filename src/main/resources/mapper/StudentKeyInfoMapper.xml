@@ -12,9 +12,11 @@
             <result property="keyName" column="keyName"/>
         </association>
     </resultMap>
+
     <select id="theThirdKey" resultType="java.lang.Integer">
-        select * from studentkeyinfo where studentId=#{studentId};
+        select keyId from studentkeyinfo where studentId=#{studentId};
     </select>
+
     <select id="getAllStudentsWithTheThirdKeys" resultMap="studentKeys" parameterType="com.xzq.online_exam.domain.TeachingInfo">
         select * from studentinfo as s, studentkeyinfo as sk, keyinfo as k, teachinginfo as t
         where s.studentId=sk.studentId and k.keyId=sk.keyId and t.courseId=sk.courseId and

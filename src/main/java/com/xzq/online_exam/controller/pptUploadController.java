@@ -27,6 +27,8 @@ public class pptUploadController {
                                    @RequestParam("inputPPTFile") MultipartFile PPT,
                                    @RequestParam(value = "PPTPageNums") String pageNums){
         String savePath="";
+        String pythonProgram="";
+        String stopWordDir = "";
         try {
 //            System.out.println(PPT);
             String fileName=PPT.getOriginalFilename();
@@ -42,7 +44,9 @@ public class pptUploadController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            savePath=rootPath+"/"+fileName;
+            savePath=rootPath+""+fileName;
+            stopWordDir = rootPath + "stopWord";
+            pythonProgram=rootPath+"PPTkeyword.py";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,9 +55,16 @@ public class pptUploadController {
         }
 //        System.out.println(pageNums);
         PPTKeywordUtil util = new PPTKeywordUtil();
-        String keyWord = util.getKeyWord(savePath, pageNums);
+//        System.out.println(pythonProgram);
+//        System.out.println(stopWordDir);
+//        System.out.println(savePath);
+//        System.out.println(pageNums);
+        String keyWord = util.getKeyWord(pythonProgram, stopWordDir, savePath, pageNums);
+        System.out.println("关键子================"+ keyWord);
+//        if()
         String keyWordsWithNoPageInfo = util.SplitString(keyWord);
         System.out.println(keyWord);
+//        request.setAttribute("test", pythonProgram+"*****"+stopWordDir+"*****"+savePath+pageNums);
         request.setAttribute("keyWords", keyWord);
         request.setAttribute("keyWordsWithNoPageInfo", keyWordsWithNoPageInfo);
         return "admin/keyWordInput";

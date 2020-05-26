@@ -35,6 +35,7 @@ public class StudentKeyInfoController {
         Integer studentId=(Integer)session.getAttribute("studentId");
         List<SubjectInfo> exam=new ArrayList<SubjectInfo>();
         List<Integer> keys=studentKeyInfoService.theThirdKey(studentId);
+        System.out.println(keys.toString());
         for(Integer k:keys){
             List<SubjectInfo>sub=subjectInfoService.getSubjectByKey(k);
             for(SubjectInfo s:sub)
